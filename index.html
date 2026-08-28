@@ -2192,7 +2192,6 @@
         }
 
         function saveAllData() {
-            window._localDirtyUntil = Date.now() + 4500;
             localStorage.setItem('adv_ic_v5', JSON.stringify(DB));
             localStorage.setItem('cases_v2', JSON.stringify(CASES));
             localStorage.setItem('feeDataV1', JSON.stringify(feeData));
@@ -3667,7 +3666,7 @@
         function manageNakalCourts(){const courts=getNakalCourts();g('preview-modal-title').textContent='🏛️ Manage Nakal Court Names';g('preview-body').innerHTML=`<div class="text-sm mb-1">Add, edit, or remove court names. These lists are used in the Nakal form and print.</div><div id="courtManageList">${courts.map((x,i)=>`<div class="flex-row" style="margin-bottom:4px"><input id="nmc-${i}" value="${esc(x)}" class="fi" style="flex:1"><button class="btn btn-xs btn-danger" onclick="removeNakalCourt(${i})">🗑</button></div>`).join('')}</div><button class="btn btn-sm" onclick="addNakalCourtRow()">➕ Add Court</button><div class="flex-row mt-1" style="justify-content:flex-end"><button class="btn btn-sm" onclick="closeModal('m-preview')">Cancel</button><button class="btn btn-primary btn-sm" onclick="saveNakalCourts()">💾 Save Courts</button></div>`;g('m-preview').classList.remove('hidden');}
         function addNakalCourtRow(){const box=g('courtManageList'),i=box.children.length;box.insertAdjacentHTML('beforeend',`<div class="flex-row" style="margin-bottom:4px"><input id="nmc-${i}" value="" placeholder="Court name" class="fi" style="flex:1"><button class="btn btn-xs btn-danger" onclick="this.parentElement.remove()">🗑</button></div>`);}
         function removeNakalCourt(i){g('nmc-'+i)?.parentElement.remove();}
-        function saveNakalCourts(){const courts=Array.from(g('courtManageList').querySelectorAll('input')).map(x=>x.value.trim()).filter(Boolean);if(!courts.length){showToast('Add at least one court');return;}localStorage.setItem('nakalCourtsV1',JSON.stringify(courts));applyNakalCourts();closeModal('m-preview');showToast('✅ Court list saved');}
+        function saveNakalCourts(){const courts=Array.from(g('courtManageList').querySelectorAll('input')).map(x=>x.value.trim()).filter(Boolean);if(!courts.length){showToast('Add at least one court');return;}localStorage.setItem('nakalCourtsV1',JSON.stringify(courts));applyNakalCourts();closeModal('m-preview');audit('Nakal court list updated',courts.length+' court(s)');saveAllData();showToast('✅ Court list saved');}
 
         function setNakalFontPreview(){const form=g('nakalForm');if(!form)return;const sz=+(g('nkFontSize')?.value||14.5),bold=g('nkFontBold')?.checked?'700':'400';form.style.fontSize=sz+'px';form.style.fontWeight=bold;try{localStorage.setItem('nakalPrintFontV1',JSON.stringify({sz,bold}));}catch(e){}}
         function loadNakalFontPreference(){try{const p=JSON.parse(localStorage.getItem('nakalPrintFontV1'));if(p){g('nkFontSize').value=String(p.sz||14.5);g('nkFontBold').checked=p.bold==='700';}}catch(e){}setNakalFontPreview();}
@@ -4409,20 +4408,26 @@
             if (cloud.auditLog) auditLog = cloud.auditLog;
             if (cloud.caseProfiles) caseProfiles = cloud.caseProfiles;
             if (cloud.compareCases) compareCases = cloud.compareCases;
+            if (Array.isArray(cloud.nakalCourts) && cloud.nakalCourts.length) localStorage.setItem('nakalCourtsV1', JSON.stringify(cloud.nakalCourts));
             normalizeCaseIndexes();
             localStorage.setItem('cases_v2', JSON.stringify(CASES));
             localStorage.setItem('adv_ic_v5', JSON.stringify(DB));
             localStorage.setItem('feeDataV1', JSON.stringify(feeData));
             localStorage.setItem('nakalRecV1', JSON.stringify(nakalRecords));
             localStorage.setItem('ledgerDataV1', JSON.stringify(ledgerData));
+            localStorage.setItem('billingLedgerV1', JSON.stringify(billingLedger));
+            localStorage.setItem('courtAssignmentsV1', JSON.stringify(courtAssignments));
+            localStorage.setItem('auditLogV1', JSON.stringify(auditLog));
             localStorage.setItem('caseProfilesV1', JSON.stringify(caseProfiles));
             localStorage.setItem('compareCasesV1', JSON.stringify(compareCases));
             buildCourtGrid(); populateAllCaseFilters(); renderAllCases(); renderCauseList(); updateHomeStats();
+            applyNakalCourts();
             // Refresh open advanced tabs immediately when a Realtime Database update arrives.
-            if (typeof renderCompare==='function') renderCompare();
-            if (typeof renderDocuments==='function') renderDocuments();
-            if (typeof renderMaintenance==='function') renderMaintenance();
-            if (typeof renderPropertyMap==='function') renderPropertyMap();
+            // Each refresh is individually guarded: a tab whose DOM is not present yet
+            // (e.g. Maintenance workspace) must not abort the rest of the sync handler.
+            ['renderCompare','renderDocuments','renderMaintenance','renderPropertyMap'].forEach(function(fn){
+                try { if (typeof window[fn] === 'function') window[fn](); } catch (e) { /* tab not open yet — skip */ }
+            });
             if (showNotice) showToast('☁️ Live changes received');
         }
         function startFirebaseRealtime() {
@@ -4435,14 +4440,14 @@
                 if (remote === lastCloudSnapshot) return;
                 try { applyCloudSnapshot(remote, !!lastCloudSnapshot); lastCloudSnapshot = remote; document.getElementById('saveStatus').textContent = 'Live cloud sync ✓'; }
                 catch (err) { console.error('Live sync data error', err); }
-            }, err => { console.error('Live sync error', err); document.getElementById('saveStatus').textContent = 'Live sync unavailable'; showToast('⚠️ Firebase live sync error: '+err.code); });
+            }, err => { console.error('Live sync error', err); stopRealtimeSync = null; document.getElementById('saveStatus').textContent = 'Live sync unavailable'; showToast('⚠️ Firebase live sync error: '+err.code); });
         }
 
         // ── FIREBASE REALTIME DATABASE CLOUD SYNC ──
         // The Firebase module below initializes Firestore cloud sync.
         let cloudSyncTimer = null, lastCloudSnapshot = '';
         function cloudSnapshot() {
-            return JSON.stringify({ cases: CASES, DB: DB, feeData: feeData, nakalRecords: nakalRecords, ledgerData: ledgerData, caseProfiles: caseProfiles, compareCases: compareCases });
+            return JSON.stringify({ cases: CASES, DB: DB, feeData: feeData, nakalRecords: nakalRecords, ledgerData: ledgerData, billingLedger: billingLedger, courtAssignments: courtAssignments, auditLog: auditLog, caseProfiles: caseProfiles, compareCases: compareCases, nakalCourts: getNakalCourts() });
         }
         function scheduleCloudSync() {
             if (!window._pinUnlocked || !window._fbReady) return;
@@ -4455,6 +4460,9 @@
             if (snap === lastCloudSnapshot) return;
             try {
                 document.getElementById('saveStatus').textContent = 'Saving to cloud…';
+                // Ignore the echo of our own write for a short window so a device
+                // never overwrites its fresh local state with its own reflected data.
+                window._localDirtyUntil = Date.now() + 4500;
                 await window._fb.set(window._fb.ref(window._fb.db, window._cloudRecordId), {
                     accessMode: 'PIN-only',
                     snapshot: snap,
@@ -4471,6 +4479,7 @@
         }
         window.loadCloudData = async function() {
             if (!window._pinUnlocked || !window._fbReady) return;
+            if (window._cloudLoadRunning) return; window._cloudLoadRunning = true;
             try {
                 document.getElementById('statusMsg').textContent = 'Loading secure cloud data…';
                 const ref = window._fb.ref(window._fb.db, window._cloudRecordId);
@@ -4487,10 +4496,12 @@
             if (cloud.auditLog) auditLog = cloud.auditLog;
             if (cloud.caseProfiles) caseProfiles = cloud.caseProfiles;
             if (cloud.compareCases) compareCases = cloud.compareCases;
+            if (Array.isArray(cloud.nakalCourts) && cloud.nakalCourts.length) localStorage.setItem('nakalCourtsV1', JSON.stringify(cloud.nakalCourts));
                     normalizeCaseIndexes();
                     lastCloudSnapshot = cloudSnapshot();
                     saveAllData();
                     buildCourtGrid(); populateAllCaseFilters(); renderAllCases(); renderCauseList(); updateHomeStats();
+                    applyNakalCourts();
                     showToast('☁️ Secure cloud data loaded');
                 } else {
                     lastCloudSnapshot = '';
@@ -4502,8 +4513,41 @@
             } catch (err) {
                 console.error('Firebase load error', err);
                 showToast('⚠️ Could not load cloud data; using this device data.');
+                // Still listen for live updates — the listener will deliver the cloud
+                // snapshot automatically as soon as the connection works again.
+                startFirebaseRealtime();
+            } finally {
+                window._cloudLoadRunning = false;
             }
         };
+
+        // If the Firebase module finishes loading AFTER the user already unlocked the
+        // PIN, cloud sync was silently skipped before — start it now instead.
+        document.addEventListener('fb-ready', function() {
+            if (window._pinUnlocked && !window._cloudLoadRunning) window.loadCloudData();
+        });
+
+        // Phones/tablets suspend the page in the background: the live socket can drop
+        // and a cloud save may have failed while offline. When the app becomes visible
+        // or the network returns, re-arm the listener and pull the latest snapshot.
+        function resyncFromCloud() {
+            if (!window._pinUnlocked || !window._fbReady || document.hidden) return;
+            if (Date.now() < (window._localDirtyUntil || 0)) return;
+            if (Date.now() - (window._lastResyncAt || 0) < 10000) return;
+            window._lastResyncAt = Date.now();
+            startFirebaseRealtime(); // no-op if already listening; re-arms if it dropped
+            try {
+                window._fb.get(window._fb.ref(window._fb.db, window._cloudRecordId)).then(function(snap) {
+                    if (!snap.exists() || !snap.val().snapshot) return;
+                    const remote = snap.val().snapshot;
+                    if (remote === lastCloudSnapshot) return;
+                    try { applyCloudSnapshot(remote, !!lastCloudSnapshot); lastCloudSnapshot = remote; }
+                    catch (e) { console.error('Resync data error', e); }
+                }).catch(function(){});
+            } catch (e) {}
+        }
+        document.addEventListener('visibilitychange', resyncFromCloud);
+        window.addEventListener('online', resyncFromCloud);
 
         window.refreshAdvancedTabs = function(){ try { renderCompare();renderDocuments();renderMaintenance();renderPropertyMap(); } catch(e) { console.error('Advanced tab error',e); showToast('Feature error: '+e.message); } };
 
