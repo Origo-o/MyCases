@@ -1475,6 +1475,89 @@
             font-size: 10px;
             color: #444;
         }
+
+/* ══ Modern ordering-app style (KFC / McDonald's-like) ══ */
+html { -webkit-text-size-adjust: 100%; }
+body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; background:#f5f5f7; }
+.desktop { background:#f5f5f7; }
+.legal-modern, .win { background: #fff; }
+.title-bar { background: linear-gradient(135deg, #c30000, #e21b1b); color: #fff; height: 46px; }
+.title-bar .title { font-size: 13px; letter-spacing: .2px; }
+.title-btns button { border: 0; background: rgba(255,255,255,.16); color: #fff; border-radius: 8px; min-width: 26px; min-height: 24px; }
+.menu-bar { background: #fff; border-bottom: 1px solid #eee; }
+.menu-bar .menu-item { border-radius: 20px; padding: 5px 9px; color: #333; font-weight: 600; }
+.menu-bar .menu-item:hover, .menu-bar .menu-item.active { background: #c30000; color: #fff; border-color: #c30000; }
+.toolbar { background: #fff; border-bottom: 1px solid #eee; }
+.toolbar input, .toolbar select { border-radius: 9px; border-color: #ddd #bbb #bbb #ddd; }
+.btn { border-radius: 10px; font-weight: 700; border: 0; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.btn-primary { background: #c30000; color: #fff; }
+.btn-primary:hover { background: #a80000; }
+.btn-gold { background: #ffb400; color: #241400; }
+.btn-success { background: #12852a; color: #fff; }
+.btn-danger { background: #b50000; color: #fff; }
+.panel { background: #fff; border: 1px solid #eee; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 10px; }
+.panel-title { background: transparent; color: #c30000; font-size: 13px; font-weight: 800; border-bottom: 2px solid #f1c40f; padding-bottom: 6px; margin-bottom: 8px; }
+.fgroup label { font-size: 11px; color: #444; }
+.fi { border-radius: 9px; }
+.home-card { border: 1px solid #eee; border-radius: 16px; background: #fff; box-shadow: 0 3px 10px rgba(0,0,0,.07); padding: 14px 8px; transition: transform .08s ease, box-shadow .08s ease; }
+.home-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.1); background: #fffaf0; }
+.home-card .ico { font-size: 30px; }
+.home-card .title { font-size: 13px; color: #1d1d1d; }
+.home-card .desc { font-size: 10px; color: #666; }
+.law-box, .table-wrap table { border-radius: 12px; }
+.overlay .modal { border-radius: 16px; }
+.cnr-copy { cursor: pointer; color: #c30000; font-weight: 700; border-bottom: 1px dashed #c30000; padding: 0 2px; }
+.cnr-copy:active { background: #ffe6e6; }
+.mobile-nav { display: none; }
+@media(max-width: 900px) {
+  body { overflow: auto; height: auto; background: #f5f5f7; }
+  .desktop { background: #f5f5f7; padding: 0; overflow: visible; }
+  .win { height: auto; min-height: 100vh; border: 0; border-radius: 0; margin: 0; padding-bottom: 78px; overflow: visible; }
+  .win.maximized { margin: 0; }
+  .win-content { background: #f5f5f7; padding: 10px; gap: 10px; flex: none; overflow: visible; }
+  .title-bar { height: 54px; padding: 8px 12px; position: sticky; top: 0; z-index: 40; border-radius: 0; }
+  .title-bar .icon { font-size: 20px; }
+  .title-bar .title { font-size: 14px; }
+  .menu-bar { display: none; }
+  .toolbar { position: sticky; top: 54px; z-index: 30; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; padding: 8px; gap: 6px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .toolbar::-webkit-scrollbar { display: none; }
+  .toolbar input, .toolbar select { min-width: 145px; height: 38px; font-size: 13px; border-radius: 10px; }
+  .toolbar input[type="text"] { min-width: 170px; }
+  .btn { min-height: 40px; padding: 7px 14px; font-size: 13px; border-radius: 11px; }
+  .btn-sm { min-height: 36px; padding: 5px 10px; font-size: 12px; }
+  .btn-xs { min-height: 32px; font-size: 11px; }
+  .panel { padding: 12px; border-radius: 14px; }
+  .panel-title { font-size: 15px; }
+  .home-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .home-card { min-height: 118px; }
+  .home-card .ico { font-size: 34px; }
+  .home-card .title { font-size: 14px; }
+  .home-card .desc { font-size: 11px; }
+  .fgroup label { font-size: 12px; }
+  .fi { min-height: 40px; font-size: 14px; }
+  select.fi { min-height: 40px; }
+  th, td { font-size: 11px; }
+  .table-wrap { overflow-x: auto; }
+  .nakal-form { font-size: 13px !important; }
+  .nakal-form input, .nakal-form select, .nakal-form textarea { font-size: 13px; }
+  .mobile-nav { display: flex; }
+}
+@media(max-width: 480px) {
+  .home-grid { grid-template-columns: 1fr 1fr; }
+  .home-card { min-height: 104px; }
+  .home-card .title { font-size: 12px; }
+  .home-card .desc { font-size: 10px; }
+}
+.mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #fff; border-top: 1px solid #eee; box-shadow: 0 -2px 12px rgba(0,0,0,.08); padding: 7px 8px calc(7px + env(safe-area-inset-bottom)); gap: 6px; }
+.mobile-nav button { flex: 1; min-width: 56px; border: 0; background: #f4f4f4; border-radius: 13px; color: #c30000; font-weight: 700; font-size: 10px; padding: 7px 2px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; }
+.mobile-nav button.active { background: #c30000; color: #fff; }
+.mobile-nav .mn-ico { font-size: 20px; line-height: 1; }
+.mobile-nav .mn-txt { font-size: 9px; line-height: 1; }
+.mobile-nav .mn-sub { font-size: 7px; opacity: .75; line-height: 1; }
+@media print {
+  .mobile-nav { display: none !important; }
+}
+
     </style>
 </head>
 <body>
@@ -1510,7 +1593,7 @@
                 <span class="menu-item" onclick="goTab('billing')">🧾 Bills & Invoices</span>
                 <span class="menu-item" onclick="goTab('docrequest')">📨 Document Requester</span>
                 <span class="menu-item" onclick="goTab('activity')">📜 Activity</span>
-                <span class="menu-item" onclick="goTab('nakal')">📜 Nakal</span>
+                <span class="menu-item" onclick="goTab('nakal')">📜 Nakal / Pursis</span>
                 <span class="menu-item" onclick="goTab('compare')">🔎 Selected Cases</span>
                 <span class="menu-item" onclick="goTab('documents')">📁 Documents</span>
                 <span class="menu-item" onclick="goTab('propertymap')">🗺️ Property Map</span>
@@ -1530,6 +1613,9 @@
                 <button class="btn btn-gold btn-sm" onclick="printCurrent()">🖨️ Print</button>
                 <span style="font-size:9px;color:#444;margin-left:4px" id="saveStatus">Saved</span>
             </div>
+
+            <!-- Mobile bottom navigation (ordering-app style, shown on phones) -->
+            <div class="mobile-nav no-print" id="mobileNav"></div>
 
             <!-- Content -->
             <div class="win-content" id="mainContent">
@@ -1551,7 +1637,7 @@
                         <div class="home-card" onclick="goTab('s138')"><div class="ico">📄</div><div class="title">Sec. 138</div><div class="desc">Court fee + limitation</div></div>
                         <div class="home-card" onclick="goTab('appeal')"><div class="ico">⏱️</div><div class="title">Appeal</div><div class="desc">Delay calculator</div></div>
                         <div class="home-card" onclick="goTab('order22')"><div class="ico">☠️</div><div class="title">Order 22</div><div class="desc">LR deadlines</div></div>
-                        <div class="home-card" onclick="goTab('nakal')"><div class="ico">📜</div><div class="title">Nakal</div><div class="desc">Certified copy</div></div>
+                        <div class="home-card" onclick="goTab('nakal')"><div class="ico">📜</div><div class="title">Nakal / Pursis</div><div class="desc">Certified copy application</div></div>
                         <div class="home-card" onclick="goTab('billing')"><div class="ico">🧾</div><div class="title">Bills &amp; Invoices</div><div class="desc">Dues & payments</div></div>
                     </div>
                 </div>
@@ -1815,58 +1901,60 @@
                     </div>
                 </div>
 
-                <!-- ═══ NAKAL ═══ -->
+                <!-- ═══ NAKAL / PURSIS ═══ -->
                 <div class="view" id="view-nakal">
-                    <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">
-                        <span class="tb-label">📜 नकल अर्ज</span>
-                        <select id="nkFontSize" onchange="setNakalFontPreview()" title="Nakal font size" style="font-size:9px;height:20px"><option value="11">Normal</option><option value="12.5">Large</option><option value="14.5" selected>Extra Large</option><option value="16.5">Clerk Large (Very Bold)</option></select>
-                        <label style="font-size:9px;font-weight:700;white-space:nowrap"><input id="nkFontBold" type="checkbox" checked onchange="setNakalFontPreview()"> Bold Print</label>
-                        <div class="pos-relative" style="flex:1;min-width:120px">
-                            <input type="text" id="nakalSearchInp" placeholder="🔍 Type name, CNR, case no..." oninput="searchCasesForNakal(this.value)" style="width:100%;font-size:9px;padding:1px 4px;height:20px">
+                    <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#fff;padding:8px;border-radius:12px">
+                        <span class="tb-label" style="font-size:14px;font-weight:800;color:#c30000">📜 Nakal / Pursis</span>
+                        <select id="nkLang" onchange="saveNakalLang()" title="Application print language" style="font-size:12px;height:34px"><option value="en" selected>English (Recommended)</option><option value="mr">मराठी</option></select>
+                        <select id="nkFontSize" onchange="setNakalFontPreview()" title="Nakal font size" style="font-size:11px;height:34px"><option value="11">Normal</option><option value="12.5">Large</option><option value="14.5" selected>Extra Large</option><option value="16.5">Clerk Large (Very Bold)</option></select>
+                        <label style="font-size:11px;font-weight:700;white-space:nowrap"><input id="nkFontBold" type="checkbox" checked onchange="setNakalFontPreview()"> Bold</label>
+                        <div class="pos-relative" style="flex:1;min-width:150px">
+                            <input type="text" id="nakalSearchInp" placeholder="🔍 Type name, CNR, case no..." oninput="searchCasesForNakal(this.value)" style="width:100%;font-size:13px;padding:6px 8px;height:36px;border-radius:9px">
                             <div class="search-dropdown" id="nakalDropdown"></div>
                         </div>
                         <button class="btn btn-sm" onclick="manageNakalCourts()">🏛️ Courts</button>
-                        <button class="btn btn-gold btn-sm" onclick="printNakal()">🖨️ Print</button>
+                        <button class="btn btn-gold btn-sm" onclick="printNakal()">🖨️ Print / PDF</button>
                         <button class="btn btn-primary btn-sm" onclick="saveNakalRecord()">💾 Save</button>
                     </div>
                     <div class="nakal-form" id="nakalForm" style="flex:1;overflow:auto">
-                        <div class="nf-title">नकलेचा अर्ज</div>
-                        <div class="nf-court">मे. <select id="nkCourt" style="font-weight:700;width:240px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select> यांचे कोर्टात</div>
-                        <div class="nf-row"><div class="nf-left"><b>न्यायालय :</b><br><select id="nkLeftCourt" style="width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select></div>
-                            <div class="nf-right"><div>पुढील नेमली ता. <input type="date" id="nkNextDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkNextDateP"></span></div>
-                                <div style="margin-top:2px">निकाल ता. <input type="date" id="nkDecDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDecDateP"></span></div>
-                                <div style="margin-top:2px">नं. <input type="text" id="nkRegNo" style="width:65px;border:none;border-bottom:1px dotted #000;font-size:inherit"> / <input type="text" id="nkRegYear" style="width:50px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
+                        <div class="nf-title">Application for Certified Copies (Nakal / Pursis)</div>
+                        <div class="nf-court">In the Court of <select id="nkCourt" style="font-weight:700;width:auto;min-width:240px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>District Judge, Ichalkaranji</option><option>Civil Judge Senior Division, Ichalkaranji</option><option>Civil Judge Junior Division, Ichalkaranji</option><option>Judicial Magistrate First Class, Ichalkaranji</option></select></div>
+                        <div class="nf-row"><div class="nf-left"><b>Court / Designation :</b><br><select id="nkLeftCourt" style="width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>District Judge, Ichalkaranji</option><option>Civil Judge Senior Division, Ichalkaranji</option><option>Civil Judge Junior Division, Ichalkaranji</option><option>Judicial Magistrate First Class, Ichalkaranji</option></select></div>
+                            <div class="nf-right"><div>Next date fixed: <input type="date" id="nkNextDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkNextDateP"></span></div>
+                                <div style="margin-top:2px">Decision date: <input type="date" id="nkDecDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDecDateP"></span></div>
+                                <div style="margin-top:2px">No. <input type="text" id="nkRegNo" style="width:70px;border:none;border-bottom:1px dotted #000;font-size:inherit"> / <input type="text" id="nkRegYear" style="width:55px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
                             </div>
                         </div>
-                        <div class="nf-parties"><div><select id="nkPetLabel" style="width:90px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>अर्जदार</option><option>वादी</option><option>फिर्यादी</option><option>अपीलकर्ता</option></select> : <input type="text" id="nkPetName" style="width:55%;border:none;border-bottom:1px dotted #000;font-size:inherit"></div>
-                            <div style="margin-top:2px"><select id="nkResLabel" style="width:90px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>वि.प.</option><option>प्रतिवादी</option><option>आरोपी</option></select> : <input type="text" id="nkResName" style="width:55%;border:none;border-bottom:1px dotted #000;font-size:inherit"></div>
+                        <div class="nf-parties"><div><select id="nkPetLabel" style="width:110px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>Applicant</option><option>Plaintiff</option><option>Complainant</option><option>Appellant</option></select> : <input type="text" id="nkPetName" style="width:55%;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="Petitioner name"></div>
+                            <div style="margin-top:2px"><select id="nkResLabel" style="width:110px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>Respondent</option><option>Defendant</option><option>Accused</option></select> : <input type="text" id="nkResName" style="width:55%;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="Respondent name"></div>
                         </div>
-                        <table class="nf-table"><tr><td class="nf-applicant"><div style="font-weight:600">अर्जदाराचे नाव :</div><input type="text" id="nkApplicant" style="width:95%;border:none;border-bottom:1px dotted #000;font-size:inherit;margin-top:4px"><div style="margin-top:4px"><b>मो.नं.</b> <input type="text" id="nkMobile" style="width:120px;border:none;border-bottom:1px dotted #000;font-size:inherit"></div></td>
-                            <td class="nf-address"><div style="font-weight:600">अर्जदाराचा पूर्ण पत्ता :</div><textarea id="nkAddress" style="width:100%;height:40px;border:none;font-size:inherit;resize:none" placeholder="पत्ता"></textarea></td></tr></table>
-                        <div class="nf-case-type"><b>प्रकरण प्रकार :</b> <select id="nkCaseCategory" style="width:140px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>दिवाणी दावा</option><option>फौजदारी केस</option><option>मिसल अर्ज</option><option>अपील</option><option>दरखास्त</option><option>इतर</option></select> <b> क्र.</b> <input type="text" id="nkCaseNo" style="width:55px;border:none;border-bottom:1px dotted #000;font-size:inherit"> <b> सन</b> <input type="text" id="nkCaseYear" style="width:50px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
-                        <div style="text-align:center;margin-top:3px;font-size:11px">अर्जदार ज्या कागदाच्या नकला मागितल्या असतील त्याचा तपशील :</div>
-                        <div class="nf-details"><b>नि.</b><textarea id="nkDetails" style="width:100%;height:45px;border:none;font-size:inherit;resize:none" placeholder="तपशील"></textarea></div>
-                        <div class="nf-purpose">सदरचा प्रमाणित नकला <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>माहितीसाठी</option><option>कोर्ट कामासाठी</option><option>इतर</option></select> मिळाव्यात. सदरचा नकला अॅड. <input type="text" id="nkAdvocate" style="width:130px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="व्ही. बी. चव्हाण"> यांना दिलेस मला मिळतील.</div>
-                        <div class="nf-place">इचलकरंजी<br>ता. <input type="date" id="nkDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDateP"></span></div>
-                        <div class="nf-sig">अर्जदाराची सही</div>
+                        <table class="nf-table"><tr><td class="nf-applicant"><div style="font-weight:600;font-size:14px">Name of Applicant :</div><input type="text" id="nkApplicant" style="width:95%;border:none;border-bottom:1px dotted #000;font-size:inherit;margin-top:4px" placeholder="Applicant name"><div style="margin-top:4px"><b>Mobile No.</b> <input type="text" id="nkMobile" style="width:135px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="Mobile"></div></td>
+                            <td class="nf-address"><div style="font-weight:600;font-size:14px">Full Address of Applicant :</div><textarea id="nkAddress" style="width:100%;height:42px;border:none;font-size:inherit;resize:none" placeholder="Address"></textarea></td></tr></table>
+                        <div class="nf-case-type"><b>Case category :</b> <select id="nkCaseCategory" style="width:auto;min-width:145px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>Civil Suit</option><option>Criminal Case</option><option>Misc. Application</option><option>Appeal</option><option>Application</option><option>Other</option></select> <b> No.</b> <input type="text" id="nkCaseNo" style="width:70px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="No."> <b> Year</b> <input type="text" id="nkCaseYear" style="width:55px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
+                        <div style="margin-top:6px;padding:8px;background:#fff8e6;border:1px dashed #e0a800;border-radius:10px;text-align:center;font-size:14px;font-weight:700">CNR : <span class="cnr-copy" id="nkCNRDisplay" title="Tap to copy CNR" data-cnr="" style="color:#c30000;font-weight:800">—</span> <span style="font-size:10px;color:#666">(tap to copy)</span></div>
+                        <div style="text-align:center;margin-top:3px;font-size:13px;font-weight:600">Details of the documents of which certified copies are required :</div>
+                        <div class="nf-details"><b>Exhibit / Document details :</b><textarea id="nkDetails" style="width:100%;height:46px;border:none;font-size:inherit;resize:none" placeholder="e.g. Written statement, plaint, judgment, orders, documents, etc."></textarea></div>
+                        <div class="nf-purpose">Kindly grant certified copies for <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>information</option><option>court purpose</option><option>other</option></select>. The certified copies may be handed over to Adv. <input type="text" id="nkAdvocate" style="width:auto;min-width:150px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="Advocate name">.</div>
+                        <div class="nf-place">Ichalkaranji<br>Date: <input type="date" id="nkDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDateP"></span></div>
+                        <div class="nf-sig">Signature of Applicant</div>
                     </div>
                     <div class="panel no-print" style="margin-top:4px">
-                        <div class="panel-title">📝 CC Fee Record</div>
+                        <div class="panel-title">📝 CC / Nakal Fee Record</div>
                         <div class="panel-body">
                             <div class="flex-row">
-                                <div class="fgroup" style="flex:1;min-width:80px"><label>CC Paid ₹</label><input type="number" class="fi" id="nkCCPaid" value="0" style="font-size:9px;padding:2px 4px"></div>
-                                <div class="fgroup" style="flex:1;min-width:80px"><label>CC Due ₹</label><input type="number" class="fi" id="nkCCDue" value="0" style="font-size:9px;padding:2px 4px"></div>
-                                <div class="fgroup" style="flex:1;min-width:80px"><label>Nakal Register No.</label><input type="text" class="fi" id="nkRegisterNo" style="font-size:9px;padding:2px 4px"></div>
-                                <div class="fgroup" style="flex:1;min-width:80px"><label>Receipt</label><input type="text" class="fi" id="nkReceipt" style="font-size:9px;padding:2px 4px"></div>
-                                <div class="fgroup" style="flex:1;min-width:80px"><label>Date</label><input type="date" class="fi" id="nkCCDate" style="font-size:9px;padding:2px 4px"></div>
-                                <div class="fgroup" style="flex:1;min-width:100px"><label>Remark</label><input type="text" class="fi" id="nkCCRemark" style="font-size:9px;padding:2px 4px"></div>
+                                <div class="fgroup" style="flex:1;min-width:80px"><label>CC Paid ₹</label><input type="number" class="fi" id="nkCCPaid" value="0" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:80px"><label>CC Due ₹</label><input type="number" class="fi" id="nkCCDue" value="0" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:100px"><label>Nakal Register No.</label><input type="text" class="fi" id="nkRegisterNo" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:80px"><label>Receipt</label><input type="text" class="fi" id="nkReceipt" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:90px"><label>Date</label><input type="date" class="fi" id="nkCCDate" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:100px"><label>Remark</label><input type="text" class="fi" id="nkCCRemark" style="font-size:12px;padding:6px 8px"></div>
                             </div>
                         </div>
                     </div>
                     <div class="panel no-print">
                         <div class="panel-title">📜 Certified Copy / Nakal Application History</div>
-                        <div class="no-print" style="margin-bottom:4px"><input id="nakalHistorySearch" type="text" placeholder="Search case number, party, CNR, register no..." oninput="renderNakalHistory()" style="width:100%;font-size:9px;padding:2px 4px"></div>
-                        <div class="panel-body" id="nakalHistory" style="font-size:9px;color:#444">No records yet.</div>
+                        <div class="no-print" style="margin-bottom:4px"><input id="nakalHistorySearch" type="text" placeholder="Search case number, party, CNR, register no..." oninput="renderNakalHistory()" style="width:100%;font-size:12px;padding:6px 8px;height:36px"></div>
+                        <div class="panel-body" id="nakalHistory" style="font-size:10px;color:#444">No records yet.</div>
                     </div>
                 </div>
 
@@ -2268,6 +2356,7 @@
             if (name === 'maintenance') renderMaintenance();
             if (name === 'home') updateHomeStats();
             document.getElementById('statusMsg').textContent = 'View: ' + name.charAt(0).toUpperCase() + name.slice(1);
+            syncMobileNav(name);
         }
 
         // ── HOME STATS ──
@@ -2387,6 +2476,15 @@
         // ── NAKAL SEARCH ──
         function searchCasesForNakal(query) { const r = searchCases(query);
             renderSearchDropdown('nakalDropdown', r, 'selectNakalCase'); }
+        function nakalCaseCategory(c) {
+            const s = ((c.ltype_name || c.type_name || '') + ' ' + (c.type_name || '')).toLowerCase();
+            if (s.includes('r.c.s') || s.includes('suit') || s.includes('दिवाणी दावा')) return 'Civil Suit';
+            if (s.includes('misc') || s.includes('m.a.') || s.includes('मिसल')) return 'Misc. Application';
+            if (s.includes('r.c.c') || s.includes('cri') || s.includes('criminal') || s.includes('फौजदारी')) return 'Criminal Case';
+            if (s.includes('appeal') || s.includes('अपील')) return 'Appeal';
+            if (s.includes('dkst') || s.includes('application') || s.includes('दरखास्त')) return 'Application';
+            return 'Other';
+        }
 
         function selectNakalCase(cino) {
             document.getElementById('nakalDropdown').style.display = 'none';
@@ -2394,22 +2492,27 @@
             if (!c) return;
             document.getElementById('nakalSearchInp').value = c.type_name + ' ' + c.reg_no + '/' + c.reg_year + ' — ' + c
                 .petparty_name;
-            const ct=g('nkCaseType'); if(ct) ct.value = c.ltype_name || c.type_name || '';
+            const ct=g('nkCaseCategory'); if(ct) ct.value = nakalCaseCategory(c);
             document.getElementById('nkNextDate').value = c.date_next_list || '';
             document.getElementById('nkDecDate').value = c.date_of_decision || '';
             document.getElementById('nkRegNo').value = c.reg_no || '';
             document.getElementById('nkRegYear').value = c.reg_year || '';
-            document.getElementById('nkPetName').value = c.lpetparty_name || c.petparty_name || '';
-            document.getElementById('nkResName').value = c.lresparty_name || c.resparty_name || '';
+            document.getElementById('nkPetName').value = c.petparty_name || c.lpetparty_name || '';
+            document.getElementById('nkResName').value = c.resparty_name || c.lresparty_name || '';
             document.getElementById('nkCaseNo').value = c.reg_no || '';
             document.getElementById('nkCaseYear').value = c.reg_year || '';
             document.getElementById('nkDate').value = TD;
+            const cnrEl = g('nkCNRDisplay');
+            if (cnrEl) { cnrEl.textContent = c.cino || '—'; cnrEl.setAttribute('data-cnr', c.cino || ''); }
             updateNakalPrintDates();
             const cs = c.lestablishment_name || c.establishment_name || '';
             const sel = document.getElementById('nkCourt');
             for (let i = 0; i < sel.options.length; i++) {
-                if ((cs.indexOf('जिल्हा') !== -1 && sel.options[i].text.indexOf('जिल्हा') !== -1) ||
-                    (cs.indexOf('सिनिअर') !== -1 && sel.options[i].text.indexOf('सिनिअर') !== -1)) {
+                const opt = sel.options[i].text.toLowerCase();
+                if ((cs.toLowerCase().indexOf('district') !== -1 && opt.indexOf('district') !== -1) ||
+                    (cs.toLowerCase().indexOf('senior') !== -1 && opt.indexOf('senior') !== -1) ||
+                    (cs.toLowerCase().indexOf('junior') !== -1 && opt.indexOf('junior') !== -1) ||
+                    (cs.toLowerCase().indexOf('magistrate') !== -1 && opt.indexOf('magistrate') !== -1)) {
                     sel.selectedIndex = i;
                     break;
                 }
@@ -2931,21 +3034,13 @@
           </body></html>`;
         }
 
-        function openPrint(html) {
-            const win = window.open('', '_blank', 'width=800,height=900');
-            if (!win) { alert('Popup blocked! Allow popups for this page.'); return; }
-            win.document.write(html);
-            win.document.close();
-            setTimeout(() => { try { win.focus();
-                    win.print(); } catch (e) {} }, 600);
-        }
-
         function printCurrent() {
             if (currentTab === 'receipt') printReceipt();
             else if (currentTab === 's138') printS138();
             else if (currentTab === 'appeal') printAppeal();
             else if (currentTab === 'order22') printO22();
             else if (currentTab === 'causelist') printCauseList();
+            else if (currentTab === 'nakal') printNakal();
             else showToast('Select a tool first');
         }
 
@@ -3113,7 +3208,7 @@
                         const ci = cg.idxs[j];
                         const c = CASES[ci];
                         h += '<tr><td>' + (j + 1) + '</td>';
-                        h += `<td><span style="font-weight:700;color:#000080;font-size:8px">${esc(c.cino)}</span></td>`;
+                        h += `<td><span class="cnr-copy" data-cnr="${esc(c.cino)}" title="Tap/click to copy CNR" style="font-weight:700;color:#c30000;font-size:10px">${esc(c.cino)}</span></td>`;
                         h += '<td>' + esc(c.type_name) + '</td><td>' + esc(c.reg_no) + '/' + esc(c.reg_year) + '</td>';
                         h += `<td class="w" title="${esc(c.petparty_name)}">${esc(tr(c.petparty_name,28))}</td>`;
                         h += `<td class="w" title="${esc(c.resparty_name)}">${esc(tr(c.resparty_name,28))}</td>`;
@@ -3207,7 +3302,7 @@
                 h +=
                     `<tr data-idx="${c._i}" data-status="${st}" data-type="${esc(c.type_name)}" data-court="${esc(c.establishment_code)}" data-year="${c.reg_year}">
                 <td>${i+1}</td>
-                <td><span style="font-weight:700;color:#000080;font-size:8px">${esc(c.cino)}</span></td>
+                <td><span class="cnr-copy" data-cnr="${esc(c.cino)}" title="Tap/click to copy CNR" style="font-weight:700;color:#c30000;font-size:10px">${esc(c.cino)}</span></td>
                 <td title="${esc(c.ltype_name||'')}">${esc(c.type_name)}</td>
                 <td>${esc(c.reg_no)}</td><td>${esc(c.reg_year)}</td>
                 <td class="w" title="${esc(c.petparty_name)}">${esc(tr(c.petparty_name,30))}</td>
@@ -3510,7 +3605,7 @@
         function exportBillingCSV(){const c=CASES.find(x=>x.cino===currentBillingCase),t=billTotals(c.cino);let csv='Date,Time,Type,Category,Reason,Mode,Asked,Paid\n'+billEntries(c.cino).map(e=>[e.date,e.time,e.type,e.category,e.note,e.mode,e.type==='Paid'?'':e.amount,e.type==='Paid'?e.amount:''].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n')+'\n\nTotal Asked,,,,'+t.asked+'\nTotal Paid,,,,,'+t.paid+'\nDue Balance,,,,,'+t.pending;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='billing_ledger_'+c.cino+'.csv';a.click();}
 
         // ── STANDALONE DOCUMENT REQUESTER ──
-        function renderDocumentRequester(){const ui=g('docRequesterUI');ui.innerHTML=`<div class="panel"><div class="panel-title">📨 Document Requester — saved case or new client</div><div class="toolbar no-print"><input id="drSearch" placeholder="Search saved CNR / party (optional)" oninput="drSearchCases()" style="flex:1"><select id="drSaved" onchange="drLoadSavedCase()" style="min-width:200px"><option value="">Select saved case (optional)</option></select></div><div class="grid-2"><div class="fgroup"><label>Client / Party 1 Name</label><input id="drP1" class="fi"></div><div class="fgroup"><label>Other Party Name</label><input id="drP2" class="fi"></div><div class="fgroup"><label>WhatsApp Mobile *</label><input id="drMobile" class="fi" placeholder="91XXXXXXXXXX"></div><div class="fgroup"><label>Case / Proceeding</label><input id="drCase" class="fi"></div><div class="fgroup full"><label>Documents / Evidence Required (one per line)</label><textarea id="drDocs" class="fi" rows="8" placeholder="7/12 Extract\nProperty Card\nPhotos\nAny other document"></textarea></div><div class="fgroup"><label>Language</label><select id="drLang" class="fi"><option value="mr" selected>मराठी (Default)</option><option value="en">English</option></select></div></div><div class="flex-row mt-1"><button class="btn btn-success btn-sm" onclick="sendStandaloneDocRequest()">💬 Open WhatsApp</button><button class="btn btn-gold btn-sm" onclick="printStandaloneDocRequest()">🖨️ Print / PDF</button><button class="btn btn-primary btn-sm" onclick="saveStandaloneDocRequest()">💾 Save Request</button></div></div>`;}
+        function renderDocumentRequester(){const ui=g('docRequesterUI');ui.innerHTML=`<div class="panel"><div class="panel-title">📨 Document Requester — saved case or new client</div><div class="toolbar no-print"><input id="drSearch" placeholder="Search saved CNR / party (optional)" oninput="drSearchCases()" style="flex:1"><select id="drSaved" onchange="drLoadSavedCase()" style="min-width:200px"><option value="">Select saved case (optional)</option></select></div><div class="grid-2"><div class="fgroup"><label>Client / Party 1 Name</label><input id="drP1" class="fi"></div><div class="fgroup"><label>Other Party Name</label><input id="drP2" class="fi"></div><div class="fgroup"><label>WhatsApp Mobile *</label><input id="drMobile" class="fi" placeholder="91XXXXXXXXXX"></div><div class="fgroup"><label>Case / Proceeding</label><input id="drCase" class="fi"></div><div class="fgroup full"><label>Documents / Evidence Required (one per line)</label><textarea id="drDocs" class="fi" rows="8" placeholder="7/12 Extract\nProperty Card\nPhotos\nAny other document"></textarea></div><div class="fgroup"><label>Language</label><select id="drLang" class="fi"><option value="en" selected>English (Recommended)</option><option value="mr">मराठी</option></select></div></div><div class="flex-row mt-1"><button class="btn btn-success btn-sm" onclick="sendStandaloneDocRequest()">💬 Open WhatsApp</button><button class="btn btn-gold btn-sm" onclick="printStandaloneDocRequest()">🖨️ Print / PDF</button><button class="btn btn-primary btn-sm" onclick="saveStandaloneDocRequest()">💾 Save Request</button></div></div>`;}
         function drSearchCases(){const q=g('drSearch').value.trim(),sel=g('drSaved');const r=q.length>1?searchCases(q,25):[];sel.innerHTML='<option value="">Select saved case (optional)</option>'+r.map(c=>`<option value="${c.cino}">${esc(c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name)}</option>`).join('');}
         function drLoadSavedCase(){const c=CASES.find(x=>x.cino===g('drSaved').value);if(!c)return;g('drP1').value=c.petparty_name||'';g('drP2').value=c.resparty_name||'';g('drMobile').value=c.client_mobile||'';g('drCase').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' | CNR: '+c.cino;}
         function drMessage(){const p1=g('drP1').value,p2=g('drP2').value,cs=g('drCase').value,docs=g('drDocs').value.split(/\n/).filter(Boolean).map(x=>'• '+x).join('\n');return g('drLang').value==='mr'?`आदरणीय ${p1}${p2?' व '+p2:''},\n\n${cs?'प्रकरण: '+cs+'\n\n':''}कृपया खालील कागदपत्रे/पुरावे तातडीने कार्यालयात जमा करावेत:\n${docs}\n\nकागदपत्रे न दिल्यास किंवा विलंब झाल्यास प्रकरणाच्या तयारीवर व पुढील कार्यवाहीवर परिणाम होऊ शकतो. कृपया तातडीने कार्यालयाशी संपर्क साधावा.\n\n— अॅड. इंद्रजित वसंत चव्हाण`:`Dear ${p1}${p2?' and '+p2:''},\n\n${cs?'Case: '+cs+'\n\n':''}Please submit the following documents/evidence at the office urgently:\n${docs}\n\nDelay or non-submission may affect preparation and further proceedings. Please contact the office urgently.\n\n— Adv. Indrajit Vasant Chavan`;}
@@ -3669,19 +3764,69 @@
         function saveNakalCourts(){const courts=Array.from(g('courtManageList').querySelectorAll('input')).map(x=>x.value.trim()).filter(Boolean);if(!courts.length){showToast('Add at least one court');return;}localStorage.setItem('nakalCourtsV1',JSON.stringify(courts));applyNakalCourts();closeModal('m-preview');audit('Nakal court list updated',courts.length+' court(s)');saveAllData();showToast('✅ Court list saved');}
 
         function setNakalFontPreview(){const form=g('nakalForm');if(!form)return;const sz=+(g('nkFontSize')?.value||14.5),bold=g('nkFontBold')?.checked?'700':'400';form.style.fontSize=sz+'px';form.style.fontWeight=bold;try{localStorage.setItem('nakalPrintFontV1',JSON.stringify({sz,bold}));}catch(e){}}
-        function loadNakalFontPreference(){try{const p=JSON.parse(localStorage.getItem('nakalPrintFontV1'));if(p){g('nkFontSize').value=String(p.sz||14.5);g('nkFontBold').checked=p.bold==='700';}}catch(e){}setNakalFontPreview();}
+        function loadNakalFontPreference(){try{const p=JSON.parse(localStorage.getItem('nakalPrintFontV1'));if(p){g('nkFontSize').value=String(p.sz||14.5);g('nkFontBold').checked=p.bold==='700';}}catch(e){}setNakalFontPreview();loadNakalLang();}
+        function loadNakalLang(){try{const l=localStorage.getItem('nakalLangV1');if(l&&g('nkLang'))g('nkLang').value=(l==='mr'?'mr':'en');}catch(e){}}
+        function saveNakalLang(){if(!g('nkLang'))return;try{localStorage.setItem('nakalLangV1',g('nkLang').value);}catch(e){}showToast(g('nkLang').value==='mr'?'मराठी मध्ये छापले जाईल':'✅ Applications will print in English');}
 
         function printNakal() {
             updateNakalPrintDates();
+            const lang = (g('nkLang') && g('nkLang').value === 'mr') ? 'mr' : 'en';
             const printFontSize = +(g('nkFontSize')?.value || 14.5);
             const printFontWeight = g('nkFontBold')?.checked ? '700' : '400';
-            const w = window.open('', '_blank');
             const v = {};
             document.querySelectorAll('#nakalForm input, #nakalForm select, #nakalForm textarea').forEach(el => { if (el.id)
                     v[el.id] = el.tagName === 'SELECT' ? el.options[el.selectedIndex].text : el.value; });
-
-            function fp(d) { if (!d) return ''; const p = d.split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[
-                    0] : ''; }
+            if (lang === 'mr') { printNakalMarathi(v, printFontSize, printFontWeight); return; }
+            printNakalEnglish(v, printFontSize, printFontWeight);
+        }
+        function nakalEsc(v) { return String(v || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function nakalFp(v) { if (!v) return ''; const p = String(v).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : String(v); }
+        function printNakalEnglish(v, printFontSize, printFontWeight) {
+            const cnr = (g('nkCNRDisplay') && (g('nkCNRDisplay').getAttribute('data-cnr') || g('nkCNRDisplay').textContent)) || '';
+            const css = `
+              @page { size:A4 portrait; margin:30mm 8mm 8mm 30mm; }
+              * { box-sizing:border-box; }
+              body { margin:0; font-family:"Arial","Segoe UI",sans-serif; font-size:${printFontSize}px; line-height:1.35; color:#000; font-weight:${printFontWeight}; }
+              .pg { width:100%; margin:0 auto; padding:0; }
+              .ti { text-align:center; font-size:22px; font-weight:800; text-decoration:underline; margin:0 0 4px; }
+              .ct { text-align:center; font-size:16px; font-weight:700; line-height:1.3; }
+              .rw { display:flex; justify-content:space-between; margin-top:6px; }
+              .lb { width:40%; }.rb { width:56%; }.rb div { margin-bottom:4px; }
+              .cb { width:60%; margin-left:auto; margin-top:5px; }.cb div { margin-bottom:4px; }
+              .cnr { margin-top:6px; padding:7px; border:1px dashed #000; text-align:center; font-size:16px; font-weight:800; }
+              .mt { width:100%; border-collapse:collapse; margin-top:7px; }.mt td { border:1px solid #000; vertical-align:top; height:28mm; padding:6px; }
+              .dt { text-align:center; margin-top:6px; font-size:14px; font-weight:700; }
+              .db2 { margin-top:6px; min-height:28mm; }
+              .st { margin-top:6px; padding-left:5mm; font-size:14px; font-weight:700; line-height:1.4; }
+              .pl { margin-top:8px; font-size:14px; font-weight:600; }.sg { text-align:right; margin-top:12px; font-size:15px; font-weight:800; }
+              .cpt { text-align:center; margin-top:8px; font-size:12px; font-weight:600; }
+              .tc { width:100%; border-collapse:collapse; margin-top:4px; font-size:10px; font-weight:600; }.tc td { border:1px solid #000; vertical-align:top; padding:2px; height:16mm; }
+              .ft2 { width:100%; border-collapse:collapse; margin-top:3px; font-size:9px; font-weight:600; }.ft2 th,.ft2 td { border:1px solid #000; text-align:center; vertical-align:top; padding:2px; height:7mm; }
+              .bl td { height:26mm; }
+              .bs { text-align:right; margin-top:4px; font-size:14px; font-weight:800; }
+              .u { border-bottom:1px dotted #000; min-width:40px; display:inline-block; padding:0 3px; }
+            `;
+            let h = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Application for Certified Copies (Nakal / Pursis)</title><style>${css}</style></head><body>`;
+            h += `<div class="pg"><div class="ti">Application for Certified Copies (Nakal / Pursis)</div>`;
+            h += `<div class="ct">In the Court of ${nakalEsc(v.nkCourt || '')}</div>`;
+            h += `<div class="rw"><div class="lb"><b>Court / Designation :</b><br><span class="u" style="min-width:58mm">${nakalEsc(v.nkLeftCourt || '')}</span></div>`;
+            h += `<div class="rb"><div>Next date fixed: <span class="u">${nakalFp(v.nkNextDate)}</span></div><div>Decision date: <span class="u">${nakalFp(v.nkDecDate)}</span></div><div>Case No. <span class="u">${nakalEsc(v.nkRegNo || '')}</span> / <span class="u">${nakalEsc(v.nkRegYear || '2026')}</span></div></div></div>`;
+            h += `<div class="cb"><div>${nakalEsc(v.nkPetLabel || 'Applicant')} : <span class="u">${nakalEsc(v.nkPetName || '')}</span></div><div>${nakalEsc(v.nkResLabel || 'Respondent')} : <span class="u">${nakalEsc(v.nkResName || '')}</span></div></div>`;
+            h += `<table class="mt"><tr><td width="48%"><div style="font-weight:700">Name of Applicant :</div><br><span class="u" style="width:92%;display:inline-block">${nakalEsc(v.nkApplicant || '')}</span><br><br><b>Mobile No.</b> <span class="u">${nakalEsc(v.nkMobile || '')}</span></td><td width="52%"><div style="font-weight:700">Full Address of Applicant :</div><br>${nakalEsc(document.getElementById('nkAddress') ? document.getElementById('nkAddress').value : '').replace(/\n/g, '<br>')}</td></tr></table>`;
+            h += `<div class="cnr">CNR : ${nakalEsc(cnr || '—')}</div>`;
+            h += `<div class="dt">Details of the documents of which certified copies are required :</div>`;
+            h += `<div style="margin-top:4px;font-size:13px"><b>Case category :</b> <span class="u">${nakalEsc(v.nkCaseCategory || '')}</span> <b>No.</b> <span class="u">${nakalEsc(v.nkCaseNo || '')}</span> <b>Year</b> <span class="u">${nakalEsc(v.nkCaseYear || '2026')}</span></div>`;
+            h += `<div class="db2"><b>Exhibit / Document details :</b><br>${nakalEsc(document.getElementById('nkDetails') ? document.getElementById('nkDetails').value : '').replace(/\n/g, '<br>')}</div>`;
+            h += `<div class="st">Kindly grant certified copy for <span class="u">${nakalEsc(v.nkPurpose || 'information')}</span>. The certified copies may kindly be handed over to Adv. <span class="u">${nakalEsc(v.nkAdvocate || '')}</span>.</div>`;
+            h += `<div class="pl">Ichalkaranji<br>Date: <span class="u">${nakalFp(v.nkDate)}</span></div>`;
+            h += `<div class="sg">Signature of Applicant</div>`;
+            h += `<div style="margin-top:8px;font-size:14px;font-weight:700">Signature of Applicant</div><div class="cpt">(To be filled in by the person taking the copy)</div>`;
+            h += `<table class="tc"><tr><td width="36%" style="text-align:left">Cash receipt no.<br>Money order (as coupon)<br>Extra deposited by V.P. in copy case<br>As coupon<br><div style="text-align:right">Balance</div></td><td width="12%">Date</td><td width="10%">Rupees</td><td width="10%">Paise</td><td width="32%" style="text-align:left">Register no.<br>Date of filing the copy application<br>Date on which copy was supplied / otherwise taken</td></tr></table>`;
+            h += `<table class="ft2"><tr><th>Details of copy</th><th>Date</th><th>Sheet fee</th><th>Word count</th><th>N. Fee ₹/p</th><th>Copy Fee ₹/p</th><th>Other Fee ₹/p</th><th>Money order / V.P. Commission ₹/p</th><th>Returned to applicant ₹/p</th><th>Balance ₹/p</th><th>Cash Memo receipt</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table><div class="bs">Signature of Office</div>`;
+            h += '</div></body></html>';
+            openPrint(h);
+        }
+        function printNakalMarathi(v, printFontSize, printFontWeight) {
             const css = `
               @page { size:A4 portrait; margin:34mm 7mm 5mm 34mm; }
               * { box-sizing:border-box; }
@@ -3701,42 +3846,28 @@
               .pl { margin-top:7px; font-size:12.5px; font-weight:600; }.sg { text-align:right; margin-top:11px; font-size:13px; font-weight:700; }
               .cpt { text-align:center; margin-top:7px; font-size:11px; font-weight:600; }.tc { width:100%; border-collapse:collapse; margin-top:3px; font-size:9.5px; font-weight:600; }.tc td { border:1px solid #000; vertical-align:top; padding:2px; height:15mm; }
               .ft2 { width:100%; border-collapse:collapse; margin-top:2px; font-size:8.5px; font-weight:600; }.ft2 th,.ft2 td { border:1px solid #000; text-align:center; vertical-align:top; padding:1px; height:6mm; }.bl td { height:25mm; }
-              .bs { text-align:right; margin-top:3px; font-size:12.5px; font-weight:700; }.u { border-bottom:1px dotted #000; min-width:30px; display:inline-block; padding:0 2px; }.np { display:none; }
-              @media print { .np { display:none !important; } }
+              .bs { text-align:right; margin-top:3px; font-size:12.5px; font-weight:700; }.u { border-bottom:1px dotted #000; min-width:30px; display:inline-block; padding:0 2px; }
             `;
-            let h =
-                `<!DOCTYPE html><html lang="mr"><head><meta charset="UTF-8"><title>नकलेचा अर्ज</title><style>${css}</style></head><body>`;
-            h += `<div class="np" style="text-align:center;padding:6px;background:#e0e0e0"><button onclick="window.print()" style="padding:4px 16px;font-size:12px;cursor:pointer">🖨️ Print</button> <button onclick="window.close()" style="padding:4px 16px;font-size:12px;cursor:pointer">✕ Close</button></div>`;
-            h += `<div class="pg"><div class="ti">नकलेचा अर्ज</div>`;
-            h += `<div class="ct">मे. ${v.nkCourt||''} यांचे कोर्टात</div>`;
-            h +=
-                `<div class="rw"><div class="lb"><b>न्यायालय :</b><br><span class="u" style="min-width:58mm">${v.nkLeftCourt||''}</span></div><div class="rb"><div>पुढील नेमली ता. <span class="u">${fp(v.nkNextDate)}</span></div><div>निकाल ता. <span class="u">${fp(v.nkDecDate)}</span></div><div>नं. <span class="u">${v.nkRegNo||''}</span> / <span class="u">${v.nkRegYear||'2026'}</span></div></div></div>`;
-            h +=
-                `<div class="cb"><div>${v.nkPetLabel||'अर्जदार'} : <span class="u">${v.nkPetName||''}</span></div><div>${v.nkResLabel||'वि.प.'} : <span class="u">${v.nkResName||''}</span></div></div>`;
-            h +=
-                `<table class="mt"><tr><td width="48%"><div style="font-weight:600">अर्जदाराचे नाव :</div><br><span class="u" style="width:90%;display:inline-block">${v.nkApplicant||''}</span><br><br><b>मो.नं.</b> <span class="u">${v.nkMobile||''}</span></td><td width="52%"><div style="font-weight:600">अर्जदाराचा पूर्ण पत्ता :</div><br>${(document.getElementById('nkAddress')?document.getElementById('nkAddress').value.replace(/\n/g,'<br>'):'')}</td></tr></table>`;
-            h +=
-                `<div class="dt">अर्जदार ज्या कागदाच्या नकला मागितल्या असतील त्याचा तपशील :</div>`;
-            h +=
-                `<div style="margin-top:3px;font-size:11px"><b>प्रकरण प्रकार :</b> <span class="u">${v.nkCaseCategory||''}</span> <b>क्र.</b> <span class="u">${v.nkCaseNo||''}</span> <b>सन</b> <span class="u">${v.nkCaseYear||'2026'}</span></div>`;
-            h +=
-                `<div class="db2"><b>नि.</b><br>${(document.getElementById('nkDetails')?document.getElementById('nkDetails').value.replace(/\n/g,'<br>'):'')}</div>`;
-            h +=
-                `<div class="st">सदरचा प्रमाणित नकला ${v.nkPurpose||'माहितीसाठी'} मिळाव्यात. सदरचा नकला अॅड. <span class="u">${v.nkAdvocate||''}</span> यांना दिलेस मला मिळतील.</div>`;
-            h += `<div class="pl">इचलकरंजी<br>ता. <span class="u">${fp(v.nkDate)}</span></div>`;
+            let h = `<!DOCTYPE html><html lang="mr"><head><meta charset="UTF-8"><title>नकलेचा अर्ज</title><style>${css}</style></head><body><div class="pg">`;
+            h += `<div class="ti">नकलेचा अर्ज</div>`;
+            h += `<div class="ct">मे. ${nakalEsc(v.nkCourt || '')} यांचे कोर्टात</div>`;
+            h += `<div class="rw"><div class="lb"><b>न्यायालय :</b><br><span class="u" style="min-width:58mm">${nakalEsc(v.nkLeftCourt || '')}</span></div><div class="rb"><div>पुढील नेमली ता. <span class="u">${nakalFp(v.nkNextDate)}</span></div><div>निकाल ता. <span class="u">${nakalFp(v.nkDecDate)}</span></div><div>नं. <span class="u">${nakalEsc(v.nkRegNo || '')}</span> / <span class="u">${nakalEsc(v.nkRegYear || '2026')}</span></div></div></div>`;
+            h += `<div class="cb"><div>${nakalEsc(v.nkPetLabel || 'अर्जदार')} : <span class="u">${nakalEsc(v.nkPetName || '')}</span></div><div>${nakalEsc(v.nkResLabel || 'वि.प.')} : <span class="u">${nakalEsc(v.nkResName || '')}</span></div></div>`;
+            h += `<table class="mt"><tr><td width="48%"><div style="font-weight:600">अर्जदाराचे नाव :</div><br><span class="u" style="width:90%;display:inline-block">${nakalEsc(v.nkApplicant || '')}</span><br><br><b>मो.नं.</b> <span class="u">${nakalEsc(v.nkMobile || '')}</span></td><td width="52%"><div style="font-weight:600">अर्जदाराचा पूर्ण पत्ता :</div><br>${nakalEsc(document.getElementById('nkAddress') ? document.getElementById('nkAddress').value : '').replace(/\n/g, '<br>')}</td></tr></table>`;
+            h += `<div class="dt">अर्जदार ज्या कागदाच्या नकला मागितल्या असतील त्याचा तपशील :</div>`;
+            h += `<div style="margin-top:3px;font-size:11px"><b>प्रकरण प्रकार :</b> <span class="u">${nakalEsc(v.nkCaseCategory || '')}</span> <b>क्र.</b> <span class="u">${nakalEsc(v.nkCaseNo || '')}</span> <b>सन</b> <span class="u">${nakalEsc(v.nkCaseYear || '2026')}</span></div>`;
+            h += `<div class="db2"><b>नि.</b><br>${nakalEsc(document.getElementById('nkDetails') ? document.getElementById('nkDetails').value : '').replace(/\n/g, '<br>')}</div>`;
+            h += `<div class="st">सदरचा प्रमाणित नकला ${nakalEsc(v.nkPurpose || 'माहितीसाठी')} मिळाव्यात. सदरचा नकला अॅड. <span class="u">${nakalEsc(v.nkAdvocate || '')}</span> यांना दिलेस मला मिळतील.</div>`;
+            h += `<div class="pl">इचलकरंजी<br>ता. <span class="u">${nakalFp(v.nkDate)}</span></div>`;
             h += `<div class="sg">अर्जदाराची सही</div>`;
-            h +=
-                `<div style="margin-top:8px;font-size:12px;font-weight:600">अर्जदाराची सही</div><div class="cpt">(कॉपी काढणाऱ्याने खालील तपशील लिहिणेचा)</div>`;
-            h +=
-                `<table class="tc"><tr><td width="36%" style="text-align:left">रोख जमा पावती नं.<br>मनी ऑ. (कूपनप्रमाणे)<br>व्ही.पी. ने नक्कलप्रमाणे जास्त जमा<br>कूपनप्रमाणे<br><div style="text-align:right">बेरिज</div></td><td width="12%">तारीख</td><td width="10%">रुपये</td><td width="10%">पैसे</td><td width="32%" style="text-align:left">रजि. नंबर<br>नकलेचा अर्ज दाखल तारीख<br>नक्कल दिलेली किंवा इतर काढून केलेली तारीख</td></tr></table>`;
-            h +=
-                `<table class="ft2"><tr><th>नकलेचा तपशील</th><th>तारीख</th><th>शीट फी</th><th>शब्द संख्या</th><th>न.फी</th><th>का.फी</th><th>मु.फी</th><th>मनि.ऑर्डर व्ही.पी. कमिशन</th><th>अर्जदारास परत दिलेली</th><th>बेरिज</th><th>परत कॅशमेमो पोच</th></tr><tr><td></td><td></td><td></td><td></td><td>रु./पैसे</td><td>रु./पैसे</td><td>रु./पैसे</td><td>रु./पैसे</td><td>रु./पैसे</td><td>रु./पैसे</td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table><div class="bs">ऑफिसरची सही</div>`;
+            h += `<div style="margin-top:8px;font-size:12px;font-weight:600">अर्जदाराची सही</div><div class="cpt">(कॉपी काढणाऱ्याने खालील तपशील लिहिणेचा)</div>`;
+            h += `<table class="tc"><tr><td width="36%" style="text-align:left">रोख जमा पावती नं.<br>मनी ऑ. (कूपनप्रमाणे)<br>व्ही.पी. ने नक्कलप्रमाणे जास्त जमा<br>कूपनप्रमाणे<br><div style="text-align:right">बेरिज</div></td><td width="12%">तारीख</td><td width="10%">रुपये</td><td width="10%">पैसे</td><td width="32%" style="text-align:left">रजि. नंबर<br>नकलेचा अर्ज दाखल तारीख<br>नक्कल दिलेली किंवा इतर काढून केलेली तारीख</td></tr></table>`;
+            h += `<table class="ft2"><tr><th>नकलेचा तपशील</th><th>तारीख</th><th>शीट फी</th><th>शब्द संख्या</th><th>न.फी</th><th>का.फी</th><th>मु.फी</th><th>मनि.ऑर्डर व्ही.पी. कमिशन</th><th>अर्जदारास परत दिलेली</th><th>बेरिज</th><th>परत कॅशमेमो पोच</th></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr class="bl"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table><div class="bs">ऑफिसरची सही</div>`;
             h += '</div></body></html>';
-            w.document.write(h);
-            w.document.close();
+            openPrint(h);
         }
 
-        function saveNakalRecord() {
+                function saveNakalRecord() {
             let cino = '';
             const sinp = document.getElementById('nakalSearchInp').value;
             CASES.forEach(c => {
@@ -3787,7 +3918,7 @@
             document.getElementById('nakalHistory').innerHTML = h;
         }
 
-        function loadNakalRecord(i){const r=nakalRecords[i];if(!r)return;editingNakalIndex=i;currentTab='nakal';goTab('nakal');const c=CASES.find(x=>x.cino===r.cino);if(c)g('nakalSearchInp').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name;const fd=r.formData||{};Object.keys(fd).forEach(id=>{const el=g(id);if(el)el.value=fd[id]||'';});g('nkApplicant').value=r.applicant||g('nkApplicant').value;g('nkMobile').value=r.mobile||g('nkMobile').value;g('nkDetails').value=r.details||g('nkDetails').value;g('nkCCPaid').value=r.ccPaid||0;g('nkCCDue').value=r.ccDue||0;g('nkRegisterNo').value=r.registerNo||'';g('nkReceipt').value=r.receipt||'';g('nkCCRemark').value=r.remark||'';updateNakalPrintDates();showToast('✏️ Nakal record loaded — edit fields on page and click Save');}
+        function loadNakalRecord(i){const r=nakalRecords[i];if(!r)return;editingNakalIndex=i;currentTab='nakal';goTab('nakal');const c=CASES.find(x=>x.cino===r.cino);if(c)g('nakalSearchInp').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name;const fd=r.formData||{};Object.keys(fd).forEach(id=>{const el=g(id);if(el)el.value=fd[id]||'';});g('nkApplicant').value=r.applicant||g('nkApplicant').value;g('nkMobile').value=r.mobile||g('nkMobile').value;g('nkDetails').value=r.details||g('nkDetails').value;g('nkCCPaid').value=r.ccPaid||0;g('nkCCDue').value=r.ccDue||0;g('nkRegisterNo').value=r.registerNo||'';g('nkReceipt').value=r.receipt||'';g('nkCCRemark').value=r.remark||'';const cnrEl=g('nkCNRDisplay');if(cnrEl){cnrEl.textContent=r.cino||'—';cnrEl.setAttribute('data-cnr',r.cino||'');}updateNakalPrintDates();showToast('✏️ Nakal record loaded — edit fields on page and click Save');}
         function editNakalFee(i){loadNakalRecord(i);}
         function settleNakalFee(i){loadNakalRecord(i);}
         
@@ -4551,6 +4682,109 @@
 
         window.refreshAdvancedTabs = function(){ try { renderCompare();renderDocuments();renderMaintenance();renderPropertyMap(); } catch(e) { console.error('Advanced tab error',e); showToast('Feature error: '+e.message); } };
 
+
+        // ── MOBILE ORDERING-STYLE NAVIGATION + CNR COPY ──
+        const MOBILE_NAV_ITEMS = [
+            { name: 'home', ico: '🏠', txt: 'Home', sub: 'Today' },
+            { name: 'allcases', ico: '📋', txt: 'Cases', sub: 'All cases' },
+            { name: 'nakal', ico: '📜', txt: 'Nakal', sub: 'Pursis' },
+            { name: 'receipt', ico: '🧾', txt: 'Receipt', sub: 'Print' },
+            { name: '__tools', ico: '☰', txt: 'Tools', sub: 'All' }
+        ];
+        function populateMobileNav() {
+            const nav = document.getElementById('mobileNav');
+            if (!nav) return;
+            nav.innerHTML = MOBILE_NAV_ITEMS.map(function (it) {
+                const act = it.name === '__tools' ? 'goTabTools' : it.name;
+                return `<button data-tab="${act}" onclick="${it.name === '__tools' ? "openAllToolsMenu()" : "goTab('" + it.name + "')"}">
+                    <span class="mn-ico">${it.ico}</span>
+                    <span class="mn-txt">${it.txt}</span>
+                    <span class="mn-sub">${it.sub}</span>
+                </button>`;
+            }).join('');
+        }
+        function syncMobileNav(name) {
+            const nav = document.getElementById('mobileNav');
+            if (!nav) return;
+            nav.querySelectorAll('button').forEach(function (b) {
+                const tab = b.getAttribute('data-tab');
+                b.classList.toggle('active', tab === name);
+            });
+        }
+        function openAllToolsMenu() {
+            const tools = [
+                ['home', '🏠', 'Home'], ['causelist', '📅', 'Cause List'], ['allcases', '📋', 'All Cases'],
+                ['receipt', '🧾', 'Fee Receipt'], ['s138', '📄', 'Sec. 138'], ['appeal', '⏱️', 'Appeal'],
+                ['order22', '☠️', 'Order 22'], ['nakal', '📜', 'Nakal / Pursis'], ['billing', '🧾', 'Bills & Invoices'],
+                ['docrequest', '📨', 'Document Requester'], ['activity', '📋', 'Activity'], ['compare', '🔎', 'Selected Cases'],
+                ['documents', '📁', 'Documents'], ['propertymap', '🗺️', 'Property Map'], ['fees', '💰', 'Fee Register'],
+                ['ledger', '📒', 'Client Ledger'], ['maintenance', '💳', 'Maintenance']
+            ];
+            g('preview-modal-title').textContent = '☰ All Tools';
+            g('preview-body').innerHTML = `<div class="home-grid">${tools.map(t =>
+                `<div class="home-card" onclick="closeModal('m-preview');goTab('${t[0]}')"><div class="ico">${t[1]}</div><div class="title">${t[2]}</div></div>`
+            ).join('')}</div><div class="flex-row mt-1" style="justify-content:flex-end"><button class="btn btn-sm" onclick="closeModal('m-preview')">Close</button></div>`;
+            g('m-preview').classList.remove('hidden');
+        }
+
+        function copyText(val, msg) {
+            val = String(val || '').trim();
+            if (!val) return;
+            const done = function () { showToast(msg || ('📋 ' + val + ' copied')); };
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(val).then(done).catch(function () {
+                    fallbackCopy(val); done();
+                });
+            } else {
+                fallbackCopy(val); done();
+            }
+        }
+        function fallbackCopy(val) {
+            const ta = document.createElement('textarea');
+            ta.value = val;
+            ta.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try { document.execCommand('copy'); } catch (e) {}
+            document.body.removeChild(ta);
+        }
+        document.addEventListener('click', function (e) {
+            const el = e.target.closest ? e.target.closest('.cnr-copy') : null;
+            if (el) {
+                const val = el.getAttribute('data-cnr') || el.textContent || '';
+                copyText(val, '📋 CNR copied: ' + val);
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+
+        // ── PRINT WITHOUT OPENING NEW TAB/WINDOW ──
+        function clearPrintFrame() {
+            let f = document.getElementById('origoPrintFrame');
+            if (f) f.remove();
+        }
+        function openPrint(html) {
+            clearPrintFrame();
+            const f = document.createElement('iframe');
+            f.id = 'origoPrintFrame';
+            f.style.cssText = 'position:fixed;left:-10000px;top:0;width:850px;height:1200px;border:0;pointer-events:none;';
+            f.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(f);
+            const doc = f.contentDocument || f.contentWindow.document;
+            doc.open();
+            doc.write(html);
+            doc.close();
+            setTimeout(function () {
+                try {
+                    f.contentWindow.focus();
+                    f.contentWindow.print();
+                } catch (err) {
+                    showToast('⚠️ Could not open print dialog: ' + err.message);
+                }
+            }, 350);
+        }
+
+
         // ── INIT ──
         window.addEventListener('DOMContentLoaded', function() {
             loadAllData();
@@ -4563,6 +4797,8 @@
             applyNakalCourts();
             loadNakalFontPreference();
             updateReceipt();
+            populateMobileNav();
+            syncMobileNav(currentTab || 'home');
 
             setInterval(saveAllData, 5000);
 
