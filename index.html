@@ -1536,20 +1536,19 @@
             document.getElementById('nkPetName').value = c.lpetparty_name || c.petparty_name || '';
             document.getElementById('nkResName').value = c.lresparty_name || c.resparty_name || '';
             if (!document.getElementById('nkApplicant').value) document.getElementById('nkApplicant').value = c.petparty_name || '';
-            const catMap = t => {
+            const catIdx = t => {
                 const tt = String(t || '').toUpperCase();
-                if (/R\.C\.C|S\.C\.C|STC|CRIM/.test(tt)) return 'Criminal Case';
-                if (/DKST|EXEC/.test(tt)) return 'Execution';
-                if (/APPEAL/.test(tt)) return 'Appeal';
-                if (/M\.A|PETN|MISC/.test(tt)) return 'Misc. Application';
-                return 'Civil Suit';
+                if (/S\.C\.C/.test(tt)) return 3;
+                if (/SUM/.test(tt)) return 2;
+                if (/R\.C\.C|STC|CRIM/.test(tt)) return 1;
+                if (/DKST|EXEC/.test(tt)) return 6;
+                if (/APPEAL/.test(tt)) return 5;
+                if (/M\.A|PETN|MISC/.test(tt)) return 4;
+                if (/R\.C\.S|CIVIL/.test(tt)) return 0;
+                return 7;
             };
             const catEl = document.getElementById('nkCaseCategory');
-            if (catEl) {
-                const want = catMap(c.type_name);
-                const has = Array.from(catEl.options).some(o => o.text === want);
-                if (has) catEl.value = want;
-            }
+            if (catEl && catEl.options.length > 7) catEl.selectedIndex = catIdx(c.type_name);
             document.getElementById('nkCaseNo').value = c.reg_no || '';
             document.getElementById('nkCaseYear').value = c.reg_year || '';
             document.getElementById('nkDate').value = TD;
@@ -2907,7 +2906,7 @@
         const NAKAL_OPTIONS = {
             nkPetLabel: { en: ['Applicant', 'Plaintiff', 'Complainant', 'Appellant'], mr: ['अर्जदार', 'वादी', 'फिर्यादी', 'अपीलकर्ता'] },
             nkResLabel: { en: ['Respondent', 'Defendant', 'Accused'], mr: ['वि.प.', 'प्रतिवादी', 'आरोपी'] },
-            nkCaseCategory: { en: ['Civil Suit', 'Criminal Case', 'Misc. Application', 'Appeal', 'Execution', 'Other'], mr: ['दिवाणी दावा', 'फौजदारी केस', 'मिसल अर्ज', 'अपील', 'दरखास्त', 'इतर'] },
+            nkCaseCategory: { en: ['Civil Suit (R.C.S.)', 'Criminal Case (R.C.C.)', 'Summary Civil Suit', 'Summary Criminal Case (S.C.C.)', 'Misc. Application', 'Appeal', 'Execution', 'Other'], mr: ['दिवाणी दावा (R.C.S.)', 'फौजदारी केस (R.C.C.)', 'संक्षिप्त दिवाणी दावा', 'संक्षिप्त फौजदारी केस (S.C.C.)', 'मिसल अर्ज', 'अपील', 'दरखास्त', 'इतर'] },
             nkPurpose: { en: ['information', 'court work', 'other'], mr: ['माहितीसाठी', 'कोर्ट कामासाठी', 'इतर'] }
         };
         function fillNakalSelects(lang) {
