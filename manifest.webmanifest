@@ -1,0 +1,27 @@
+{
+  "name": "Legal Suite — Adv. Indrajit Vasant Chavan",
+  "short_name": "Legal Suite",
+  "description": "Case register, cause list, fee and bill tracking, Nakal applications and limitation calculators for the office of Adv. Indrajit Vasant Chavan, Ichalkaranji.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#eef7f8",
+  "theme_color": "#0f766e",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Cause List", "short_name": "Cause List", "url": "./index.html#causelist", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "All Cases", "short_name": "Cases", "url": "./index.html#allcases", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Nakal Application", "short_name": "Nakal", "url": "./index.html#nakal", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Legal Suite">
+  <rect width="512" height="512" rx="104" fill="#0f766e"/>
+  <g fill="none" stroke="#ffe08a" stroke-width="20" stroke-linecap="round">
+    <path d="M256 150v232"/>
+    <path d="M116 186h280"/>
+    <path d="M116 186 78 292M116 186l38 106"/>
+    <path d="M396 186l-38 106M396 186l38 106"/>
+  </g>
+  <g fill="#ffe08a">
+    <circle cx="256" cy="150" r="22"/>
+    <path d="M64 292h104c0 34-23 54-52 54s-52-20-52-54z"/>
+    <path d="M344 292h104c0 34-23 54-52 54s-52-20-52-54z"/>
+    <path d="M176 400h160l16 34H160z"/>
+  </g>
+</svg>

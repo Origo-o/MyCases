@@ -2,7 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- viewport-fit=cover lets the layout respect notches / home bars; the
+         responsive layer pads with env(safe-area-inset-*). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Legal Suite for Adv. Indrajit Vasant Chavan (Ichalkaranji): cause list, case register, fee and bill tracking, Nakal/Pursis applications and limitation calculators. Adapts to phone, tablet and desktop.">
+    <meta name="theme-color" content="#0f766e">
+    <meta name="color-scheme" content="light">
+    <meta name="format-detection" content="telephone=no">
+    <!-- installable: "Add to Home screen" on Android/iOS, Install app on desktop -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Legal Suite">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <title>Adv. Indrajit Vasant Chavan — Legal Suite</title>
     <style>
         /* ── Windows 2000 Classic Theme ── */
@@ -17,10 +31,12 @@
             /* classic teal desktop */
             color: #000;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             height: 100vh;
+            height: 100dvh;      /* tracks the shrinking phone URL bar */
         }
 
         /* ── Scrollbar ── */
@@ -103,6 +119,17 @@
             font-size: 10px;
             opacity: .7;
             margin-left: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* the label is wrapped in .tt so a long title ellipsizes
+           instead of being clipped by the window buttons */
+        .title-bar .title .tt {
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
         .title-btns {
             display: flex;
@@ -460,6 +487,17 @@
         }
         table tr:hover td {
             background: #e8e8ff;
+        }
+        /* header row stays visible while a long list scrolls in its own box */
+        .table-wrap thead th {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+        }
+        /* sketches / SVG art must never force sideways scrolling */
+        #mapWorkspace svg, .panel svg {
+            max-width: 100%;
+            height: auto;
         }
         table tr.hid {
             display: none;
@@ -897,7 +935,8 @@
         .search-dropdown {
             display: none;
             position: absolute;
-            top: 24px;
+            top: 100%;
+            margin-top: 2px;
             left: 0;
             right: 0;
             max-height: 200px;
@@ -1120,6 +1159,7 @@
             max-width: 640px;
             width: 100%;
             max-height: 85vh;
+            max-height: 85dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -1348,61 +1388,6 @@
         }
         #authOverlay .modal { position: relative; z-index: 1; }
 
-        /* ── Responsive ── */
-        @media(max-width:768px) {
-            .grid-2,
-            .grid-3,
-            .grid-4 {
-                grid-template-columns: 1fr;
-            }
-            .home-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .court-card {
-                min-width: 80px;
-            }
-            .toolbar input[type="text"] {
-                min-width: 80px;
-            }
-            .nakal-form .nf-row .nf-left,
-            .nakal-form .nf-row .nf-right {
-                width: 100%;
-            }
-            .nakal-form .nf-parties {
-                width: 100%;
-                margin-left: 0;
-            }
-            .title-bar .title .sub {
-                display: none;
-            }
-        }
-        @media(max-width:480px) {
-            .home-grid {
-                grid-template-columns: 1fr;
-            }
-            .menu-bar .menu-item {
-                font-size: 9px;
-                padding: 1px 4px;
-            }
-            .toolbar {
-                padding: 2px 4px;
-            }
-            .toolbar input,
-            .toolbar select {
-                font-size: 9px;
-                height: 18px;
-                padding: 1px 3px;
-            }
-            .btn {
-                font-size: 9px;
-                padding: 2px 8px;
-                height: 18px;
-            }
-            .win-content {
-                padding: 3px;
-            }
-        }
-
         /* ── Print ── */
         @media print {
             body {
@@ -1509,45 +1494,6 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 .cnr-copy { cursor: pointer; color: #0f766e; font-weight: 700; border-bottom: 1px dashed #0f766e; padding: 0 2px; }
 .cnr-copy:active { background: #e8f6fb; }
 .mobile-nav { display: none; }
-@media(max-width: 900px) {
-  body { overflow: auto; height: auto; background: #eef7f8; }
-  .desktop { background: #eef7f8; padding: 0; overflow: visible; }
-  .win { height: auto; min-height: 100vh; border: 0; border-radius: 0; margin: 0; padding-bottom: 78px; overflow: visible; }
-  .win.maximized { margin: 0; }
-  .win-content { background: #eef7f8; padding: 10px; gap: 10px; flex: none; overflow: visible; }
-  .title-bar { height: 54px; padding: 8px 12px; position: sticky; top: 0; z-index: 40; border-radius: 0; }
-  .title-bar .icon { font-size: 20px; }
-  .title-bar .title { font-size: 14px; }
-  .menu-bar { display: none; }
-  .toolbar { position: sticky; top: 54px; z-index: 30; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; padding: 8px; gap: 6px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-  .toolbar::-webkit-scrollbar { display: none; }
-  .toolbar input, .toolbar select { min-width: 145px; height: 38px; font-size: 13px; border-radius: 10px; }
-  .toolbar input[type="text"] { min-width: 170px; }
-  .btn { min-height: 40px; padding: 7px 14px; font-size: 13px; border-radius: 11px; }
-  .btn-sm { min-height: 36px; padding: 5px 10px; font-size: 12px; }
-  .btn-xs { min-height: 32px; font-size: 11px; }
-  .panel { padding: 12px; border-radius: 14px; }
-  .panel-title { font-size: 15px; }
-  .home-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .home-card { min-height: 118px; }
-  .home-card .ico { font-size: 34px; }
-  .home-card .title { font-size: 14px; }
-  .home-card .desc { font-size: 11px; }
-  .fgroup label { font-size: 12px; }
-  .fi { min-height: 40px; font-size: 14px; }
-  select.fi { min-height: 40px; }
-  th, td { font-size: 11px; }
-  .table-wrap { overflow-x: auto; }
-  .nakal-form { font-size: 13px !important; }
-  .nakal-form input, .nakal-form select, .nakal-form textarea { font-size: 13px; }
-  .mobile-nav { display: flex; }
-}
-@media(max-width: 480px) {
-  .home-grid { grid-template-columns: 1fr 1fr; }
-  .home-card { min-height: 104px; }
-  .home-card .title { font-size: 12px; }
-  .home-card .desc { font-size: 10px; }
-}
 .mobile-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 999; background: #fff; border-top: 1px solid #eee; box-shadow: 0 -2px 12px rgba(0,0,0,.08); padding: 7px 8px calc(7px + env(safe-area-inset-bottom)); gap: 6px; }
 .mobile-nav button { flex: 1; min-width: 56px; border: 0; background: #e8f2f5; border-radius: 13px; color: #0f766e; font-weight: 700; font-size: 10px; padding: 7px 2px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; }
 .mobile-nav button.active { background: #0f766e; color: #fff; }
@@ -1558,6 +1504,477 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
   .mobile-nav { display: none !important; }
 }
 
+
+        /* ══════════════════════════════════════════════════════════════════
+           RESPONSIVE LAYER  —  phones · tablets · landscape · large web
+           ------------------------------------------------------------------
+           · every width/height query is `screen`-only, so printing is never
+             affected (A4 at 96dpi is ~794px wide, which used to trigger the
+             phone stylesheet while printing)
+           · `!important` appears only where the markup carries inline sizes
+             (style="font-size:9px;height:20px") that a class rule cannot beat
+           ══════════════════════════════════════════════════════════════════ */
+        :root {
+            --tap: 44px;                              /* min comfortable touch target */
+            --mnav-h: 58px;                           /* bottom navigation height     */
+            --head-h: 50px;                           /* sticky title bar height      */
+            --safe-t: env(safe-area-inset-top, 0px);   /* notch / status bar          */
+            --safe-b: env(safe-area-inset-bottom, 0px);
+            --safe-l: env(safe-area-inset-left, 0px);
+            --safe-r: env(safe-area-inset-right, 0px);
+        }
+
+        /* layout helpers for the phone/desktop split */
+        .only-mobile { display: none !important; }
+        .hide-mobile { display: initial; }
+        .tb-actions { display: contents; }             /* transparent on desktop     */
+
+        /* touch feedback */
+        .btn, .rbtn, .title-btns button, .mobile-nav button, .court-card, .home-card {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        :focus-visible {
+            outline: 3px solid #0ea5e9;
+            outline-offset: 2px;
+        }
+        [role="button"]:focus-visible, .home-card:focus-visible, .court-card:focus-visible,
+        .menu-item:focus-visible, .day-box:focus-visible, .rec-item:focus-visible {
+            outline: 3px solid #0ea5e9;
+            outline-offset: -2px;
+        }
+
+        /* ─────────────── phones · small tablets · short landscape ─────────────── */
+        @media screen and (max-width: 900px), screen and (max-height: 560px) and (pointer: coarse) {
+            html { scroll-padding-top: 140px; }
+            body {
+                height: auto;
+                min-height: 100vh;
+                min-height: 100dvh;
+                overflow: visible;
+                /* `clip` (not `hidden`) so nothing can escape sideways WITHOUT
+                   turning body into a scroll container — that would break the
+                   position:sticky title bar and search row. */
+                overflow-x: clip;
+                overscroll-behavior-y: none;      /* no pull-to-refresh over the app */
+                font-size: 14px;
+            }
+            .desktop { padding: 0; overflow: visible; }
+            .win {
+                height: auto;
+                min-height: 100vh;
+                min-height: 100dvh;
+                border: 0;
+                border-radius: 0;
+                margin: 0;
+                overflow: visible;
+                box-shadow: none;
+                padding-bottom: calc(var(--mnav-h) + var(--safe-b) + 12px);
+            }
+            .win.maximized { margin: 0; }
+
+            /* ── sticky header stack: title bar + one slim search row ── */
+            .title-bar {
+                position: sticky;
+                top: 0;
+                z-index: 60;
+                height: calc(var(--head-h) + var(--safe-t));
+                padding: 6px calc(10px + var(--safe-r)) 6px calc(10px + var(--safe-l));
+                border-radius: 0;
+            }
+            .title-bar .icon { font-size: 19px; margin-right: 0; }
+            .title-bar .title { font-size: 13px; gap: 5px; min-width: 0; }
+            .title-bar .title .tt {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .title-bar .title .sub, .title-btns { display: none; }
+            #globalToolbar {
+                position: sticky;
+                top: calc(var(--head-h) + var(--safe-t));
+                z-index: 55;
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 8px;
+                padding: 8px calc(10px + var(--safe-r)) 8px calc(10px + var(--safe-l));
+                overflow: visible;
+                border-bottom: 1px solid #e2e8ea;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+            }
+            .tb-actions { display: none; }         /* replaced by the ☰ Tools sheet */
+            .only-mobile { display: inline-flex !important; }
+            .hide-mobile { display: none !important; }
+            #globalToolbar .btn { flex: 0 0 auto; white-space: nowrap; }
+            #globalSearch {
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                width: auto !important;
+                height: var(--tap) !important;
+                font-size: 16px !important;         /* stops iOS zoom-on-focus */
+                padding: 8px 12px !important;
+            }
+            #saveStatus { font-size: 11px !important; margin-left: 0 !important; flex: 0 0 auto; }
+            .menu-bar { display: none; }
+
+            /* ── content: one column that scrolls with the page ── */
+            .win-content {
+                flex: none;
+                overflow: visible;
+                gap: 10px;
+                padding: 10px calc(10px + var(--safe-r)) 14px calc(10px + var(--safe-l));
+                background: #eef7f8;
+            }
+            .view { gap: 10px; }
+
+            /* toolbars that live inside a screen: wrap, don't stick, grow controls */
+            .win-content .toolbar {
+                position: static;
+                flex-wrap: wrap;
+                overflow: visible;
+                gap: 8px;
+                padding: 8px !important;
+                border-radius: 12px;
+                background: #fff;
+            }
+            .win-content .toolbar .tb-label { font-size: 13px; white-space: normal; }
+            .win-content .toolbar input,
+            .win-content .toolbar select,
+            .win-content .toolbar textarea {
+                height: var(--tap) !important;
+                min-height: 40px;
+                font-size: 16px !important;
+                padding: 7px 9px !important;
+                min-width: 0 !important;
+                width: auto;
+                border-radius: 10px;
+            }
+            .win-content .toolbar input[type="text"],
+            .win-content .toolbar input[type="search"],
+            .win-content .toolbar input[type="date"],
+            .win-content .toolbar input[type="number"] { flex: 1 1 100%; width: 100%; }
+            .win-content .toolbar input[type="date"] { min-width: 150px; }
+            .win-content .toolbar .btn { margin: 0; }
+
+            /* readable type everywhere (base theme was built for 1024px desktops) */
+            /* The theme carries one-off inline sizes like style="font-size:9px" on
+               labels, sub-lines and empty-state notes — a class rule cannot beat an
+               inline declaration, so match those attributes directly. Controls
+               (input/select/button) are excluded; they get their own rules below. */
+            [style*="font-size:7px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size:8px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size:9px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size:10px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size:11px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size: 7px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size: 8px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size: 9px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size: 10px"]:not(input):not(select):not(textarea):not(button),
+            [style*="font-size: 11px"]:not(input):not(select):not(textarea):not(button) {
+                font-size: 13px !important;
+            }
+            .panel { padding: 12px; border-radius: 14px; }
+            .panel-title { font-size: 14px; gap: 6px; }
+            .panel-body { padding: 4px 0 0; }
+            .text-sm { font-size: 12px; }
+            .text-xs { font-size: 11px; }
+            .badge { font-size: 10px; padding: 3px 8px; border-radius: 8px; }
+            .fgroup { gap: 4px; }
+            .fgroup label { font-size: 12px; }
+            .fgroup input, .fgroup select, .fgroup textarea, .fi {
+                font-size: 16px !important;       /* no zoom-on-focus on iOS */
+                min-height: var(--tap);
+                padding: 8px 10px !important;
+                border-radius: 10px;
+            }
+            /* controls inside dialogs (records search, backup, import, PIN) */
+            .modal input, .modal select, .modal textarea {
+                font-size: 16px !important;
+                min-height: 42px;
+                padding: 8px 10px !important;
+                border-radius: 10px;
+            }
+            .modal input[type="checkbox"], .modal input[type="radio"] { min-height: 0; padding: 0 !important; }
+            .fgroup textarea { min-height: 76px; }
+            .btn { height: auto; min-height: var(--tap); padding: 9px 14px; font-size: 14px; border-radius: 12px; }
+            .btn-sm { min-height: 40px; padding: 7px 12px; font-size: 13px; }
+            .btn-xs { min-height: 34px; padding: 5px 10px; font-size: 12px; }
+            .drop-zone { padding: 16px; }
+            .drop-zone .dz-text { font-size: 12px; }
+
+            /* one column on a phone, two on a wide one */
+            .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+            .grid-2 > .full { grid-column: 1 / -1; }
+            .home-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .home-card { padding: 14px 8px; min-height: 112px; }
+            .home-card .ico { font-size: 32px; }
+            .home-card .title { font-size: 13px; }
+            .home-card .desc { font-size: 11px; }
+            .court-grid { gap: 8px; }
+            .court-card { min-width: calc(50% - 4px); flex: 1 1 calc(50% - 4px); padding: 10px; }
+            .court-card .name { font-size: 12px; white-space: normal; }
+            .court-card .stats { font-size: 11px; gap: 8px; }
+            .court-card .num { font-size: 16px; }
+
+            /* tables: scroll sideways inside their own box, wrap headers on */
+            .table-wrap { -webkit-overflow-scrolling: touch; }
+            table { font-size: 12px; }
+            table th { font-size: 11px; padding: 8px; }
+            table td { padding: 8px; max-width: 46vw; }
+            table td.w { max-width: 60vw; }
+            .dc .db { padding: 4px 6px 8px; }
+            .dc .dh { font-size: 12px; padding: 10px 8px; }
+            .dc .db table { font-size: 11px; }
+            .dc .db table th { font-size: 10px; padding: 6px; }
+            .dc .db table td { padding: 6px; max-width: 42vw; }
+
+            /* money / result tiles */
+            .fee-sum { min-width: 0; padding: 8px 10px; }
+            .fee-sum .fs-label { font-size: 10px; }
+            .fee-sum .fs-val { font-size: clamp(15px, 4.6vw, 20px); }
+            .days-row, .role-grid { grid-template-columns: repeat(3, 1fr); }
+            .day-box { padding: 8px 4px; }
+            .day-box .num { font-size: clamp(13px, 4vw, 19px); }
+            .day-box .lbl { font-size: 9px; }
+            .rbtn { font-size: 12px; min-height: var(--tap); padding: 6px 4px; }
+            .rbtn .sub { font-size: 9px; }
+            .result-box { font-size: 13px; padding: 10px 12px; }
+            .result-box .rb-title { font-size: 16px; }
+            .result-box .rb-desc { font-size: 12px; }
+            .law-box { font-size: 12px; padding: 10px; }
+
+            /* timelines, records, search helpers */
+            .tl { font-size: 12px; padding-left: 22px; }
+            .tl-label { font-size: 9px; }
+            .tl-date { font-size: 12px; }
+            .tl-desc { font-size: 11px; line-height: 1.5; }
+            .tl-badge { font-size: 9px; padding: 2px 6px; }
+            .rec-item { font-size: 12px; padding: 9px 10px; margin-bottom: 6px; border-radius: 10px; flex-wrap: wrap; }
+            .rec-item .rmeta { font-size: 11px; }
+            .rec-item .rtag { font-size: 9px; padding: 2px 6px; }
+            .rec-item .racts button { height: 34px; font-size: 12px; padding: 0 9px; border-radius: 8px; }
+            #nakalHistorySearch, #nakalSearchInp, #ledgerSearchInp {
+                height: var(--tap) !important;
+                font-size: 16px !important;
+                padding: 8px 10px !important;
+                width: 100%;
+            }
+            .search-dropdown { max-height: min(58vh, 320px); }
+            .search-dropdown .sd-item { padding: 11px 10px; font-size: 13px; border-bottom: 1px solid #e6e6e6; }
+            .search-dropdown .sd-item .sd-sub { font-size: 11px; }
+            #clHistory, #mapSearchResults, #cmpSearchResults, #docSearchResults, #mntSearchResults {
+                max-height: 40vh !important;
+            }
+
+            /* fee cells inside tables need to stay tappable but compact */
+            .fee-inp {
+                width: auto !important;
+                min-width: 58px;
+                max-width: 100%;
+                height: 38px;
+                font-size: 14px !important;
+                padding: 3px 6px !important;
+                border-radius: 8px;
+            }
+
+            /* Nakal / Marathi application form on a phone */
+            .nakal-form { padding: 12px 10px; line-height: 1.6; }
+            .nakal-form .nf-row .nf-left,
+            .nakal-form .nf-row .nf-right,
+            .nakal-form .nf-parties { width: 100%; margin-left: 0; }
+            .nakal-form select, .nakal-form input, .nakal-form textarea {
+                min-width: 0 !important;
+                max-width: 100% !important;
+                padding: 5px 4px;
+            }
+            .nakal-form .nf-court select { width: 100% !important; margin-top: 2px; }
+            .nakal-form .nf-table, .nakal-form .nf-table tbody,
+            .nakal-form .nf-table tr, .nakal-form .nf-table td {
+                display: block;
+                width: 100% !important;
+            }
+            .nakal-form .nf-table td { border-bottom: 0; }
+            .nakal-form .nf-table .nf-address { border-bottom: 1px solid #000; }
+            .nakal-form .nf-parties div { display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline; }
+            .nakal-form .nf-parties select { flex: 0 0 auto; }
+            .nakal-form .nf-parties input { flex: 1 1 140px; width: auto !important; min-width: 120px; }
+            .nakal-form .nf-purpose { padding-left: 0; }
+
+            /* receipt preview */
+            .receipt { font-size: 12px; padding: 10px; }
+            .receipt .rh .name { font-size: 19px; }
+            .receipt .rh .desg, .receipt .rh .addr { font-size: 10px; }
+            .receipt .rm, .receipt .rl { font-size: 11px; }
+            .receipt .ra .amt { font-size: 22px; }
+            .receipt .rs { font-size: 10px; }
+
+            /* modals become bottom sheets, sized with dvh so a keyboard never
+               hides the Save button */
+            .overlay { padding: 0; align-items: flex-end; }
+            .modal {
+                max-width: 100% !important;
+                width: 100%;
+                max-height: 92vh;
+                max-height: 92dvh;
+                border: 0;
+                border-radius: 18px 18px 0 0;
+                box-shadow: 0 -6px 30px rgba(0, 0, 0, .25);
+                padding-bottom: 0;
+            }
+            .modal .mh { font-size: 15px; padding: 13px 14px; position: sticky; top: 0; z-index: 2; }
+            .modal .mh .close { width: 34px; height: 34px; font-size: 15px !important; border-radius: 9px; }
+            .modal .mb { padding: 12px 14px 18px; -webkit-overflow-scrolling: touch; }
+            .modal .mf {
+                position: sticky;
+                bottom: 0;
+                gap: 8px;
+                padding: 10px 14px calc(10px + var(--safe-b));
+                box-shadow: 0 -3px 10px rgba(0, 0, 0, .06);
+            }
+            .modal .mf .btn { flex: 1 1 auto; justify-content: center; }
+
+            /* toast must clear the bottom navigation */
+            .toast {
+                bottom: calc(var(--mnav-h) + var(--safe-b) + 14px);
+                left: 50%;
+                right: auto;
+                max-width: min(92vw, 520px);
+                padding: 11px 16px;
+                font-size: 13px;
+                border-radius: 12px;
+                text-align: center;
+            }
+
+            /* status bar: keep the auto-save signal, drop the clock */
+            .status-bar {
+                height: auto;
+                min-height: 28px;
+                flex-wrap: wrap;
+                gap: 2px 12px;
+                padding: 5px calc(10px + var(--safe-r)) 5px calc(10px + var(--safe-l));
+                font-size: 11px;
+            }
+            #statusClock { display: none; }
+
+            /* bottom navigation */
+            .mobile-nav {
+                display: flex;
+                min-height: calc(var(--mnav-h) + var(--safe-b));
+                padding: 6px calc(8px + var(--safe-r)) calc(6px + var(--safe-b)) calc(8px + var(--safe-l));
+            }
+            .mobile-nav button { min-height: 46px; }
+            .mobile-nav .mn-txt { font-size: 10px; }
+        }
+
+        /* ─────────────── very small phones ─────────────── */
+        @media screen and (max-width: 620px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .grid-2 > *, .grid-3 > *, .grid-4 > * { grid-column: 1 / -1 !important; }
+            .court-card { min-width: 100%; flex: 1 1 100%; }
+            .title-bar .title { font-size: 12px; }
+            .win-content .toolbar input[type="date"] { min-width: 0; }
+        }
+        @media screen and (max-width: 420px) {
+            :root { --head-h: 46px; --mnav-h: 54px; }
+            .home-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .home-card { min-height: 96px; padding: 10px 6px; }
+            .home-card .ico { font-size: 26px; }
+            .home-card .title { font-size: 12px; }
+            .home-card .desc { display: none; }
+            .mobile-nav .mn-ico { font-size: 19px; }
+            .mobile-nav .mn-txt { font-size: 9px; }
+            table th, table td { padding: 7px 6px; }
+            .fee-inp { min-width: 52px; }
+        }
+
+        /* ─────────────── landscape phones: reclaim vertical space ─────────────── */
+        @media screen and (max-height: 560px) and (orientation: landscape) and (pointer: coarse) {
+            :root { --head-h: 42px; --mnav-h: 0px; }
+            .mobile-nav {
+                position: static;
+                min-height: 0;
+                margin-top: 8px;
+                border-top: 1px solid #eee;
+                border-radius: 12px;
+                box-shadow: none;
+            }
+            .mobile-nav button { min-height: 40px; }
+            .win { padding-bottom: 10px; }
+            .title-bar .icon { font-size: 17px; }
+            .overlay { align-items: center; padding: 10px; }
+            .modal { max-height: 88dvh; border-radius: 16px; }
+        }
+
+        /* ─────────────── touch devices that keep the desktop layout (tablets) ─────────────── */
+        @media screen and (pointer: coarse) and (min-width: 901px) {
+            .btn { min-height: 38px; padding: 6px 14px; font-size: 12px; }
+            .btn-sm { min-height: 34px; font-size: 11px; }
+            .btn-xs { min-height: 30px; font-size: 11px; }
+            .title-btns button { width: 34px; height: 34px; font-size: 13px; }
+            .toolbar input, .toolbar select { height: 34px; font-size: 13px; padding: 4px 8px; }
+            .menu-bar .menu-item { padding: 7px 12px; font-size: 13px; }
+            .fgroup input, .fgroup select, .fgroup textarea, .fi { min-height: 38px; font-size: 15px; padding: 6px 8px; }
+            .court-card { padding: 10px 12px; }
+            .home-card { padding: 14px 10px; }
+            .dc .dh { padding: 8px; }
+            .fee-inp { height: 32px; font-size: 12px !important; }
+            table th { padding: 7px; }
+            table td { padding: 7px; }
+        }
+
+        /* ─────────────── wide desktops / projectors: bigger, calmer type ─────────────── */
+        @media screen and (min-width: 1400px) {
+            .desktop { padding: 6px; }
+            .win-content { padding: 10px; gap: 10px; }
+            .panel { padding: 12px 14px; }
+            .panel-title { font-size: 14px; padding-bottom: 7px; margin-bottom: 8px; }
+            table { font-size: 12px; }
+            table th { font-size: 11px; padding: 7px 9px; }
+            table td { font-size: 12px; padding: 7px 9px; max-width: 320px; }
+            table td.w { max-width: 420px; }
+            .fgroup label { font-size: 11px; }
+            .fgroup input, .fgroup select, .fgroup textarea, .fi { font-size: 13px; padding: 6px 8px; }
+            .toolbar input, .toolbar select { height: 28px; font-size: 12px; }
+            .btn { height: 30px; font-size: 12px; padding: 4px 15px; }
+            .btn-sm { height: 26px; font-size: 11px; }
+            .btn-xs { height: 23px; font-size: 10px; }
+            .menu-bar .menu-item { font-size: 12px; padding: 6px 11px; }
+            .home-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+            .home-card { padding: 18px 10px; }
+            .home-card .ico { font-size: 34px; }
+            .home-card .title { font-size: 15px; }
+            .home-card .desc { font-size: 12px; }
+            .court-card .name { font-size: 12px; }
+            .law-box { font-size: 12px; }
+            .text-sm { font-size: 12px; }
+            .text-xs { font-size: 11px; }
+            .dc .db table { font-size: 11px; }
+            .dc .db table td { max-width: 300px; }
+        }
+        @media screen and (min-width: 1900px) {
+            /* keep lines readable on ultrawide instead of stretching to 2400px */
+            .desktop { padding: 10px; }
+            .win { max-width: 1840px; margin: 0 auto; }
+        }
+
+        /* ─────────────── motion & contrast preferences ─────────────── */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .home-card:hover { transform: none; }
+        }
+        @media (prefers-contrast: more) {
+            .fgroup input, .fgroup select, .fgroup textarea, .fi, .toolbar input, .toolbar select, .btn {
+                border: 2px solid #000 !important;
+            }
+            .title-bar .title, .panel-title, .text-muted { opacity: 1; color: #000; }
+        }
     </style>
 </head>
 <body>
@@ -1571,7 +1988,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             <div class="title-bar">
                 <div class="title">
                     <span class="icon">⚖️</span>
-                    <span>Legal Suite — Adv. Indrajit Vasant Chavan</span>
+                    <span class="tt">Legal Suite — Adv. Indrajit Vasant Chavan</span>
                     <span class="sub">Ichalkaranji · 8055284444</span>
                 </div>
                 <div class="title-btns">
@@ -1603,15 +2020,20 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
             <!-- Toolbar -->
             <div class="toolbar no-print" id="globalToolbar">
-                <span class="tb-label">🔍</span>
-                <input type="text" id="globalSearch" placeholder="Search name, CNR, case..." style="flex:1;min-width:120px" oninput="globalSearch()">
-                <button class="btn btn-primary btn-sm" onclick="openRecords()">📂 Records</button>
-                <button class="btn btn-sm" onclick="openBackup()">💾 Backup</button>
-                <button class="btn btn-sm" onclick="showShortcuts()">⌨ Shortcuts</button>
-                <button class="btn btn-primary btn-sm" onclick="openMessageCenter()">💬 Messages</button>
-                <button class="btn btn-gold btn-sm" onclick="openBulkImport()">📥 Bulk Import</button>
-                <button class="btn btn-gold btn-sm" onclick="printCurrent()">🖨️ Print</button>
+                <span class="tb-label hide-mobile">🔍</span>
+                <input type="text" id="globalSearch" placeholder="🔍 Search name, CNR, case..." style="flex:1;min-width:120px" oninput="globalSearch()" aria-label="Search cases" autocomplete="off" enterkeyhint="search">
+                <button class="btn btn-primary btn-sm only-mobile" onclick="openAllToolsMenu()" aria-label="All tools and actions">☰ Tools</button>
                 <span style="font-size:9px;color:#444;margin-left:4px" id="saveStatus">Saved</span>
+                <!-- grouped so phones can fold them into the ☰ Tools sheet;
+                     display:contents keeps the desktop layout untouched -->
+                <div class="tb-actions">
+                    <button class="btn btn-primary btn-sm" onclick="openRecords()">📂 Records</button>
+                    <button class="btn btn-sm" onclick="openBackup()">💾 Backup</button>
+                    <button class="btn btn-sm" onclick="showShortcuts()">⌨ Shortcuts</button>
+                    <button class="btn btn-primary btn-sm" onclick="openMessageCenter()">💬 Messages</button>
+                    <button class="btn btn-gold btn-sm" onclick="openBulkImport()">📥 Bulk Import</button>
+                    <button class="btn btn-gold btn-sm" onclick="printCurrent()">🖨️ Print</button>
+                </div>
             </div>
 
             <!-- Mobile bottom navigation (ordering-app style, shown on phones) -->
@@ -1639,6 +2061,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <div class="home-card" onclick="goTab('order22')"><div class="ico">☠️</div><div class="title">Order 22</div><div class="desc">LR deadlines</div></div>
                         <div class="home-card" onclick="goTab('nakal')"><div class="ico">📜</div><div class="title">Nakal</div><div class="desc">Certified copy application</div></div>
                         <div class="home-card" onclick="goTab('billing')"><div class="ico">🧾</div><div class="title">Bills &amp; Invoices</div><div class="desc">Dues & payments</div></div>
+                        <div class="home-card" onclick="goTab('maintenance')"><div class="ico">💳</div><div class="title">Maintenance</div><div class="desc">Interim alimony account</div></div>
                     </div>
                 </div>
 
@@ -1917,7 +2340,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     </div>
                     <div class="nakal-form" id="nakalForm" style="flex:1;overflow:auto">
                         <div class="nf-title">नकलेचा अर्ज</div>
-                        <div class="nf-court">मे. <select id="nkCourt" style="font-weight:700;width:auto;min-width:240px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select> यांचे कोर्टात</div>
+                        <div class="nf-court">मे. <select id="nkCourt" style="font-weight:700;width:auto;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select> यांचे कोर्टात</div>
                         <div class="nf-row"><div class="nf-left"><b>न्यायालय :</b><br><select id="nkLeftCourt" style="width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select></div>
                             <div class="nf-right"><div>पुढील नेमली ता. <input type="date" id="nkNextDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkNextDateP"></span></div>
                                 <div style="margin-top:2px">निकाल ता. <input type="date" id="nkDecDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDecDateP"></span></div>
@@ -1929,11 +2352,11 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         </div>
                         <table class="nf-table"><tr><td class="nf-applicant"><div style="font-weight:600;font-size:14px">अर्जदाराचे नाव :</div><input type="text" id="nkApplicant" style="width:95%;border:none;border-bottom:1px dotted #000;font-size:inherit;margin-top:4px" placeholder="अर्जदाराचे नाव"><div style="margin-top:4px"><b>मो.नं.</b> <input type="text" id="nkMobile" style="width:135px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="मोबाईल नंबर"></div></td>
                             <td class="nf-address"><div style="font-weight:600;font-size:14px">अर्जदाराचा पूर्ण पत्ता :</div><textarea id="nkAddress" style="width:100%;height:42px;border:none;font-size:inherit;resize:none" placeholder="पत्ता"></textarea></td></tr></table>
-                        <div class="nf-case-type"><b>प्रकरण प्रकार :</b> <select id="nkCaseCategory" style="width:auto;min-width:180px;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>दिवाणी दावा (R.C.S.)</option><option>फौजदारी केस (R.C.C.)</option><option>संक्षिप्त दिवाणी दावा</option><option>संक्षिप्त फौजदारी केस (S.C.C.)</option><option>मिसल अर्ज</option><option>अपील</option><option>दरखास्त</option><option>इतर</option></select> <b> क्र.</b> <input type="text" id="nkCaseNo" style="width:75px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="क्र."> <b> सन</b> <input type="text" id="nkCaseYear" style="width:55px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
+                        <div class="nf-case-type"><b>प्रकरण प्रकार :</b> <select id="nkCaseCategory" style="width:auto;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>दिवाणी दावा (R.C.S.)</option><option>फौजदारी केस (R.C.C.)</option><option>संक्षिप्त दिवाणी दावा</option><option>संक्षिप्त फौजदारी केस (S.C.C.)</option><option>मिसल अर्ज</option><option>अपील</option><option>दरखास्त</option><option>इतर</option></select> <b> क्र.</b> <input type="text" id="nkCaseNo" style="width:75px;border:none;border-bottom:1px dotted #000;font-size:inherit" placeholder="क्र."> <b> सन</b> <input type="text" id="nkCaseYear" style="width:55px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="2026"></div>
                         <div style="margin-top:6px;padding:8px;background:#e8f6fb;border:1px dashed #0e7490;border-radius:10px;text-align:center;font-size:14px;font-weight:700">CNR : <span class="cnr-copy" id="nkCNRDisplay" title="Tap / शीटवर क्लिक करून CNR कॉपी करा" data-cnr="" style="color:#0f766e;font-weight:800">—</span> <span style="font-size:10px;color:#666">(टॅप करून कॉपी करा)</span></div>
                         <div style="text-align:center;margin-top:3px;font-size:13px;font-weight:600">अर्जदार ज्या कागदाच्या नकला मागितल्या असतील त्याचा तपशील :</div>
                         <div class="nf-details"><b>नि.</b><textarea id="nkDetails" style="width:100%;height:46px;border:none;font-size:inherit;resize:none" placeholder="तपशील"></textarea></div>
-                        <div class="nf-purpose">सदरचा प्रमाणित नकला <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>माहितीसाठी</option><option>कोर्ट कामासाठी</option><option>इतर</option></select> मिळाव्यात. सदरचा नकला अॅड. <input type="text" id="nkAdvocate" style="width:auto;min-width:150px;border:none;border-bottom:1px dotted #000;font-size:inherit" value="व्ही. बी. चव्हाण"> यांना दिल्यास मला मिळतील.</div>
+                        <div class="nf-purpose">सदरचा प्रमाणित नकला <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>माहितीसाठी</option><option>कोर्ट कामासाठी</option><option>इतर</option></select> मिळाव्यात. सदरचा नकला अॅड. <input type="text" id="nkAdvocate" style="width:auto;min-width:110px;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit" value="व्ही. बी. चव्हाण"> यांना दिल्यास मला मिळतील.</div>
                         <div class="nf-place">इचलकरंजी<br>ता. <input type="date" id="nkDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDateP"></span></div>
                         <div class="nf-sig">अर्जदाराची सही</div>
                     </div>
@@ -2025,6 +2448,18 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                   <div id="mapEmpty" style="text-align:center;padding:28px;font-size:10px;color:#444">Search and select a case to create an editable property sketch.</div>
                 </div>
 
+
+                <!-- ═══ MAINTENANCE RECOVERY ACCOUNT ═══ -->
+                <div class="view" id="view-maintenance">
+                  <div class="toolbar no-print">
+                    <input id="mntCaseSearch" type="text" placeholder="🔍 Search case / party for maintenance…" oninput="renderMaintenanceSearch()" autocomplete="off">
+                    <button class="btn btn-gold btn-sm" onclick="printMaintenance()">🖨️ Print</button>
+                    <button class="btn btn-sm" onclick="exportMaintenanceCSV()">📥 CSV</button>
+                  </div>
+                  <div id="mntSearchResults" class="panel no-print" style="display:none"></div>
+                  <div id="mntWorkspace" class="panel" style="display:none"></div>
+                  <div id="mntEmpty" style="text-align:center;padding:28px;font-size:12px;color:#444">Search and select a case to track maintenance / interim-alimony recovery.</div>
+                </div>
 
                 <!-- ═══ COMBINED BILLING & RECEIPTS ═══ -->
                 <div class="view" id="view-billing">
@@ -2354,9 +2789,43 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (name === 'propertymap') renderPropertyMap();
             if (name === 'maintenance') renderMaintenance();
             if (name === 'home') updateHomeStats();
+            if (name === 'maintenance') renderMaintenance();
             document.getElementById('statusMsg').textContent = 'View: ' + name.charAt(0).toUpperCase() + name.slice(1);
             syncMobileNav(name);
+            enhanceClickable();
+            // keep #screen in the address bar: shareable links, launcher
+            // shortcuts and "back to the app" all reopen the right screen
+            try { if (location.hash.replace(/^#\/?/, '') !== name) history.replaceState(null, '', '#' + name); } catch (e) {}
+            // phones scroll the page itself, so start every screen at the top
+            if (window.innerWidth <= 900) window.scrollTo(0, 0);
         }
+
+        // ── DEEP LINKS (#nakal, #causelist …) ──
+        function openHashTab() {
+            const name = decodeURIComponent((location.hash || '').replace(/^#\/?/, '')).trim();
+            if (name && document.getElementById('view-' + name) && name !== currentTab) goTab(name);
+        }
+        window.addEventListener('hashchange', openHashTab);
+
+        // ── KEYBOARD / ACCESSIBILITY ──
+        // the tiles are <div>s, so give them button semantics and let
+        // Enter / Space activate them like a real control
+        function enhanceClickable(root) {
+            (root || document).querySelectorAll('.home-card, .court-card, .menu-item, .day-box, .rec-item, .dc > .dh')
+                .forEach(function (el) {
+                    if (el.dataset.kbd) return;
+                    el.dataset.kbd = '1';
+                    if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+                    if (el.tabIndex < 0) el.tabIndex = 0;
+                });
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+            const t = e.target;
+            if (!t || !t.dataset || !t.dataset.kbd) return;
+            e.preventDefault();
+            t.click();
+        });
 
         // ── HOME STATS ──
         function updateHomeStats() {
@@ -4662,6 +5131,14 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 b.classList.toggle('active', tab === name);
             });
         }
+        const OFFICE_ACTIONS = [
+            ['📂', 'Records', 'openRecords()'],
+            ['💾', 'Backup', 'openBackup()'],
+            ['💬', 'Messages', 'openMessageCenter()'],
+            ['📥', 'Bulk Import', 'openBulkImport()'],
+            ['⌨️', 'Shortcuts', 'showShortcuts()'],
+            ['🖨️', 'Print Screen', 'printCurrent()']
+        ];
         function openAllToolsMenu() {
             const tools = [
                 ['home', '🏠', 'Home'], ['causelist', '📅', 'Cause List'], ['allcases', '📋', 'All Cases'],
@@ -4672,9 +5149,13 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 ['ledger', '📒', 'Client Ledger'], ['maintenance', '💳', 'Maintenance']
             ];
             g('preview-modal-title').textContent = '☰ All Tools';
-            g('preview-body').innerHTML = `<div class="home-grid">${tools.map(t =>
-                `<div class="home-card" onclick="closeModal('m-preview');goTab('${t[0]}')"><div class="ico">${t[1]}</div><div class="title">${t[2]}</div></div>`
-            ).join('')}</div><div class="flex-row mt-1" style="justify-content:flex-end"><button class="btn btn-sm" onclick="closeModal('m-preview')">Close</button></div>`;
+            const card = (ico, txt, fn, act) => `<div class="home-card${act ? ' active' : ''}" role="button" tabindex="0" onclick="closeModal('m-preview');${fn}"><div class="ico">${ico}</div><div class="title">${txt}</div></div>`;
+            g('preview-body').innerHTML =
+                `<div class="panel-title">🛠️ Office actions</div>` +
+                `<div class="home-grid mb-1">${OFFICE_ACTIONS.map(a => card(a[0], a[1], a[2])).join('')}</div>` +
+                `<div class="panel-title">📚 Screens</div>` +
+                `<div class="home-grid">${tools.map(t => card(t[1], t[2], "goTab('" + t[0] + "')", t[0] === currentTab)).join('')}</div>` +
+                `<div class="flex-row mt-1" style="justify-content:flex-end"><button class="btn btn-sm" onclick="closeModal('m-preview')">Close</button></div>`;
             g('m-preview').classList.remove('hidden');
         }
 
@@ -4761,6 +5242,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
             const total = (DB.receipts || []).length + (DB.s138 || []).length + (DB.appeals || []).length + (DB
                 .order22 || []).length;
+            enhanceClickable();
+            openHashTab();
+
             if (total > 0) setTimeout(() => showToast('📂 ' + total + ' records loaded'), 800);
             if (CASES.length > 0) setTimeout(() => showToast('📋 ' + CASES.length + ' cases loaded'), 1000);
             document.getElementById('statusMsg').textContent = 'Ready — ' + CASES.length + ' cases loaded';
