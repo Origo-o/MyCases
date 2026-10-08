@@ -47,9 +47,64 @@ Phone-specific details:
 
 ### Deep links
 
-`index.html#causelist`, `#allcases`, `#nakal`, `#billing` … open that screen directly, and
-the current screen is kept in the address bar. This is what the launcher shortcuts in
-`manifest.webmanifest` point at.
+`index.html#causelist`, `#allcases`, `#nip`, `#disposed`, `#nakal`, `#billing` … open that
+screen directly, and the current screen is kept in the address bar. This is what the launcher
+shortcuts in `manifest.webmanifest` point at.
+
+## Disposed (शब्दांकन रद्द / shredded) cases
+
+A case can be flagged **Disposed** when its physical file has been destroyed. The flag is
+deliberate, not a status dropdown: marking a case writes a permanent entry into a disposal
+register and hides the file from the working screens.
+
+* Marking: **All Cases** row → 🗑️, the case window, the edit form, the Disposed screen
+  (single or **🧺 Bulk** — paste CNR numbers, or take every case decided on/before a date),
+  or from a No Instruction Pursis (🗑️).
+* Each entry records disposal date, mode (Shredded / Returned to Client / Burnt / Court Record
+  Room / e-Filing deleted / Other), file + page count, reason, authorisation and remarks.
+  Tick *clear the next hearing date* to drop a stale listing at the same time.
+* Effect: `getStatus()` returns `disposed`, the row gets a red badge and strikethrough, and the
+  case leaves the cause list, court-card counts, home stats and the pending-fee filter. It stays
+  in All Cases, search and the case record.
+* Printing: **🖨️ Print List** is an A4 register (landscape or portrait, From/To date filter,
+  one row per case, totals, certification block and signature line); **🖨️ One-page Summary**
+  groups the same entries by year and mode as a certificate of records destroyed; 🖨️ on a single
+  row prints a disposal memo for the file.
+* **♻️ Restore** reverses a disposal on a live case (the register entry is removed, and the
+  removal is written to the audit trail). Deleting a case never deletes its register entry, so
+  the proof of destruction survives.
+
+Keys: `cases_v2` (flag + `disposal` object) and `disposedRecV1` (the register).
+
+## No Instruction Pursis (NIP)
+
+For clients who stop attending and stop giving instructions: a numbered notice, sent from the
+app, with a record of every one issued.
+
+* Pick a matter by CNR / party / case number (or paste the reference on any other screen and
+  press `Enter` or use **📪 Pursis**) — the client (मराठी नावासह), court, case line, parties,
+  last and next date, pendency days, notes, fee position and pending documents are pulled from
+  MyCases and shown side by side.
+* Built-in templates: मराठी अंतिम सूचना, English final notice and a Court Pursis (a पेशीस
+  slip to file); the Marathi one warns that the file is due for shredding after the reply date.
+  Reference numbers auto-increment as `NIP/ICH/YYYY/NNN` (prefix editable in ⚙️).
+* **🖨️ Print/PDF** (A4, own window), **💬 WhatsApp** to the client's number with the notice text,
+  📋 copy, ⬇️ .html, and a history list with 🖨️ per notice. **🗑️** hands the matter to the
+  disposal dialog with the reason pre-filled.
+* **Your own HTML**: *Import my HTML* takes a pasted file, upload or local path and stores it as a
+  template — styles kept. `{{token}}` placeholders are filled from the selected case, and 🔍
+  reports which fields your page uses before you save.
+  Tokens include every raw case column plus `{{caseTitle}} {{client}} {{clientMr}} {{respondentMr}}
+  {{courtMr}} {{advocate}} {{days}} {{fromDate}} {{replyBy}} {{noticeNo}} {{docsBlock}}
+  {{remarkBlock}} {{note1}} {{note2}}` … with filters `|raw |date |longdate |upper |bold |dotted`.
+  To drive the screen from a page kept outside the app, use `window.NIP` (`cases()`, `search()`,
+  `find()`, `tokens()`, `select()`, `preview()`, `print()`, `whatsapp()`, `save()`, `disposed()`,
+  `dispose()`, `merge()`) or post `{nip:'cases'|'select'|'print'|'save'|'whatsapp'|'preview'}`
+  messages; ⚙️ → *Use my own NIP page* embeds that page in the tab and feeds it the case data.
+* Records, templates and settings sync like everything else: `nipRecV1`, `nipTplV1`, `nipSetV1`,
+  included in the cloud snapshot, in 🔧 Backup / Restore and re-rendered on a remote change.
+* Printing the register: **🗂️ Print Register** on the NIP screen lists notices sent with dates,
+  channel used and the reply deadline.
 
 ## Files
 

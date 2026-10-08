@@ -1,7 +1,7 @@
 {
   "name": "Legal Suite — Adv. Indrajit Vasant Chavan",
   "short_name": "Legal Suite",
-  "description": "Case register, cause list, fee and bill tracking, Nakal applications and limitation calculators for the office of Adv. Indrajit Vasant Chavan, Ichalkaranji.",
+  "description": "Case register, cause list, fee and bill tracking, No Instruction Pursis notices, disposed (shredded) file register, Nakal applications and limitation calculators for the office of Adv. Indrajit Vasant Chavan, Ichalkaranji.",
   "id": "./",
   "start_url": "./index.html",
   "scope": "./",
@@ -22,6 +22,7 @@
   "shortcuts": [
     { "name": "Cause List", "short_name": "Cause List", "url": "./index.html#causelist", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
     { "name": "All Cases", "short_name": "Cases", "url": "./index.html#allcases", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
-    { "name": "Nakal Application", "short_name": "Nakal", "url": "./index.html#nakal", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+    { "name": "Nakal Application", "short_name": "Nakal", "url": "./index.html#nakal", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "No Instruction Pursis", "short_name": "Pursis", "url": "./index.html#nip", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
   ]
 }
