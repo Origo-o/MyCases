@@ -2547,6 +2547,211 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             }
         }
 
+        /* ═════ DISPOSED (SHREDDED) CASES  ·  NO-INSTRUCTION PURSIS ═════ */
+        .badge-disposed {
+            background: #7f1d1d;
+            color: #fff;
+        }
+        tr.disposed > td {
+            background: #fef2f2;
+        }
+        tr.disposed > td:first-child {
+            box-shadow: inset 3px 0 0 #b91c1c;
+        }
+        tr.disposed .cl-title {
+            text-decoration: line-through;
+            text-decoration-color: #b91c1c;
+            color: #7f1d1d;
+            font-weight: 700;
+        }
+        .disp-stats {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 4px 0;
+        }
+        .disp-stat {
+            background: #fff;
+            border: 1px solid #e2e8e8;
+            border-radius: 12px;
+            padding: 5px 10px;
+            min-width: 92px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        }
+        .disp-stat .v {
+            font-size: 16px;
+            font-weight: 800;
+            color: #7f1d1d;
+            line-height: 1.15;
+        }
+        .disp-stat .l {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            color: #64748b;
+            font-weight: 700;
+        }
+        .disp-mode {
+            font-size: 8px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 6px;
+            background: #fee2e2;
+            color: #7f1d1d;
+            white-space: nowrap;
+        }
+        .nip-shell {
+            display: grid;
+            grid-template-columns: minmax(300px, .95fr) minmax(360px, 1.2fr);
+            gap: 8px;
+            align-items: start;
+        }
+        .nip-col {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+        .nip-paper {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .nip-paper .npb-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 10px;
+            font-weight: 700;
+            color: #0f766e;
+            flex-wrap: wrap;
+        }
+        .nip-frame {
+            width: 100%;
+            height: min(72vh, 880px);
+            min-height: 420px;
+            border: 0;
+            background: #fff;
+            display: block;
+        }
+        .nip-kv {
+            display: grid;
+            grid-template-columns: 104px 1fr;
+            gap: 2px 6px;
+            font-size: 9px;
+        }
+        .nip-kv .k {
+            color: #64748b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 7.5px;
+            letter-spacing: .3px;
+        }
+        .nip-kv .v {
+            color: #0f172a;
+            font-weight: 600;
+            word-break: break-word;
+        }
+        .nip-toks {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+        }
+        .nip-tok {
+            font: 700 8px/1.7 'Consolas', monospace;
+            background: #eef7f8;
+            border: 1px solid #99e2df;
+            color: #0f766e;
+            border-radius: 6px;
+            padding: 0 5px;
+            cursor: pointer;
+        }
+        .nip-tok:hover {
+            background: #0f766e;
+            color: #fff;
+        }
+        .nip-tok.on {
+            background: #ccfbf1;
+            border-color: #0f766e;
+            font-weight: 700;
+        }
+        .disp-chip {
+            display: inline-block;
+            vertical-align: middle;
+            background: #fee2e2;
+            border: 1px solid #b91c1c;
+            color: #7f1d1d;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 0 5px;
+            border-radius: 2px;
+        }
+        .nip-tok.bad {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: #b91c1c;
+        }
+        .nip-code {
+            width: 100%;
+            min-height: 160px;
+            font: 11px/1.45 'Consolas', 'Courier New', monospace;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            padding: 7px;
+            background: #0b1220;
+            color: #dbeafe;
+            resize: vertical;
+            white-space: pre;
+            tab-size: 2;
+        }
+        .nip-warn {
+            background: #fff7ed;
+            border: 1px solid #fdba74;
+            color: #9a3412;
+            border-radius: 9px;
+            padding: 5px 8px;
+            font-size: 9px;
+        }
+        .nip-ok {
+            background: #ecfdf5;
+            border: 1px solid #6ee7b7;
+            color: #065f46;
+            border-radius: 9px;
+            padding: 5px 8px;
+            font-size: 9px;
+        }
+        @media screen and (max-width: 1180px) {
+            .nip-shell {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media screen and (max-width: 900px) {
+            .nip-frame {
+                height: 76vh;
+                min-height: 360px;
+            }
+            .nip-kv {
+                grid-template-columns: 96px 1fr;
+                font-size: 12px;
+            }
+            .nip-kv .k {
+                font-size: 10px;
+            }
+            .disp-mode {
+                font-size: 10px;
+            }
+            .nip-code {
+                font-size: 12px;
+                white-space: pre-wrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2583,6 +2788,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <span class="menu-item" onclick="goTab('docrequest')">📨 Document Requester</span>
                 <span class="menu-item" onclick="goTab('activity')">📜 Activity</span>
                 <span class="menu-item" onclick="goTab('nakal')">📜 Nakal</span>
+                <span class="menu-item" onclick="goTab('nip')" title="No Instruction Pursis — notice to clients who give no instructions">📪 NIP</span>
+                <span class="menu-item" onclick="goTab('disposed')" title="Files shredded / destroyed — register & printing">🗑️ Disposed</span>
                 <span class="menu-item" onclick="goTab('compare')">🔎 Selected Cases</span>
                 <span class="menu-item" onclick="goTab('documents')">📁 Documents</span>
                 <span class="menu-item" onclick="goTab('propertymap')">🗺️ Property Map</span>
@@ -2634,6 +2841,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <div class="home-card" onclick="goTab('nakal')"><div class="ico">📜</div><div class="title">Nakal</div><div class="desc">Certified copy application</div></div>
                         <div class="home-card" onclick="goTab('billing')"><div class="ico">🧾</div><div class="title">Bills &amp; Invoices</div><div class="desc">Dues & payments</div></div>
                         <div class="home-card" onclick="goTab('maintenance')"><div class="ico">💳</div><div class="title">Maintenance</div><div class="desc">Interim alimony account</div></div>
+                        <div class="home-card" onclick="goTab('nip')"><div class="ico">📪</div><div class="title">No Instruction Pursis</div><div class="desc">Notice to silent clients</div></div>
+                        <div class="home-card" onclick="goTab('disposed')"><div class="ico">🗑️</div><div class="title">Disposed Cases</div><div class="desc">Shredded files · print list</div></div>
                     </div>
                 </div>
 
@@ -2666,7 +2875,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="view" id="view-allcases">
                     <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">
                         <input type="text" id="aS" placeholder="🔍 Search..." oninput="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px;flex:1;min-width:80px">
-                        <select id="aSt" onchange="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Status</option><option value="pending">Pending</option><option value="decided">Decided</option><option value="upcoming">Upcoming</option></select>
+                        <select id="aSt" onchange="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Status</option><option value="pending">Pending</option><option value="decided">Decided</option><option value="upcoming">Upcoming</option><option value="disposed">🗑️ Disposed</option><option value="active">Active (no disposal)</option></select>
                         <select id="aTy" onchange="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Type</option></select>
                         <select id="aCo" onchange="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Court</option></select>
                         <select id="aYr" onchange="filterAllCases()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Year</option></select>
@@ -2914,7 +3123,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">
                         <span class="tb-label">💰 Fee Tracker</span>
                         <input type="text" id="feeSearch" placeholder="🔍 Search..." oninput="renderFees()" style="font-size:9px;padding:1px 4px;height:20px;flex:1;min-width:80px">
-                        <select id="feeFilter" onchange="renderFees()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">All</option><option value="pending">Pending Only</option><option value="balance">With Balance Due</option></select>
+                        <select id="feeFilter" onchange="renderFees()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">All</option><option value="pending">Pending Only</option><option value="balance">With Balance Due</option><option value="disposed">🗑️ Disposed (settle dues)</option></select>
                         <button class="btn btn-gold btn-sm" onclick="exportFeeCSV()">📥</button>
                         <button class="btn btn-primary btn-sm" onclick="saveFeeData()">💾</button>
                     </div>
@@ -3080,6 +3289,57 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="view" id="view-docrequest"><div id="docRequesterUI" style="flex:1;overflow:auto"></div></div>
                 <!-- ═══ ACTIVITY / BACKUP HISTORY ═══ -->
                 <div class="view" id="view-activity"><div id="activityUI" style="flex:1;overflow:auto"></div></div>
+
+                <!-- ═══ DISPOSED / SHREDDED CASES ═══ -->
+                <div class="view" id="view-disposed">
+                    <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px;flex-wrap:wrap">
+                        <span class="tb-label">🗑️ Disposed</span><span class="disp-chip" id="dispCountChip" title="Disposed cases on record"></span>
+                        <input type="text" id="dpQ" placeholder="🔍 CNR / party / case / reason..." oninput="renderDisposed()" style="font-size:9px;padding:1px 4px;height:20px;flex:1;min-width:90px">
+                        <span class="text-muted text-xs">Disposal</span>
+                        <input type="date" id="dpFrom" onchange="renderDisposed()" title="From date" style="font-size:9px;padding:1px 4px;height:20px;width:98px">
+                        <span class="text-muted text-xs">→</span>
+                        <input type="date" id="dpTo" onchange="renderDisposed()" title="To date" style="font-size:9px;padding:1px 4px;height:20px;width:98px">
+                        <select id="dpMode" onchange="renderDisposed()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">Mode</option></select>
+                        <select id="dpCourt" onchange="renderDisposed()" style="font-size:9px;padding:1px 4px;height:20px"><option value="">All Courts</option></select>
+                        <button class="btn btn-sm" onclick="resetDisposed()" title="Reset filters">↺</button>
+                        <button class="btn btn-danger btn-sm" onclick="openDisposeDialog('')">🗑️ Mark Case Disposed</button>
+                        <button class="btn btn-sm" onclick="openBulkDispose()" title="Record a whole shelf of shredded files at once">🧺 Bulk</button>
+                        <select id="dpOrient" title="Print orientation" style="font-size:9px;padding:1px 4px;height:20px"><option value="landscape">A4 Landscape</option><option value="portrait">A4 Portrait</option></select>
+                        <button class="btn btn-gold btn-sm" onclick="printDisposedRegister()">🖨️ Print List</button>
+                        <button class="btn btn-sm" onclick="printDisposedSummary()">🖨️ One-page Summary</button>
+                        <button class="btn btn-sm" onclick="exportDisposedCSV()">📥 CSV</button>
+                        <span class="text-muted text-xs" id="dpI"></span>
+                    </div>
+                    <div class="disp-stats no-print" id="dpStats"></div>
+                    <div class="panel no-print" style="padding:6px 8px;font-size:9px;color:#444">
+                        <b style="color:#7f1d1d">⚠ Disposed = file destroyed.</b> Marking a case disposed keeps it here as a permanent register entry (parties, court, dates, mode, page count, authorisation) —
+                        so the printed list proves what was shredded and when — while the case is dropped from the cause list, court cards and pending counts.
+                        <b>♻️ Restore</b> puts a case back into the active list. Use <b>🖨️ Print List</b> for the signed A4 register (choose the date range above first).
+                    </div>
+                    <div class="table-wrap" style="flex:1;overflow:auto">
+                        <table><thead><tr>
+                            <th>#</th>
+                            <th>Disposal Date</th>
+                            <th>Case</th>
+                            <th>CNR</th>
+                            <th>Parties</th>
+                            <th>Court</th>
+                            <th>Mode</th>
+                            <th>Files</th>
+                            <th>Pages</th>
+                            <th>Reason</th>
+                            <th>Authorised By</th>
+                            <th>Remarks</th>
+                            <th class="no-print">Actions</th>
+                        </tr></thead><tbody id="dpB"></tbody></table>
+                    </div>
+                </div>
+
+                <!-- ═══ NO INSTRUCTION PURSIS (NIP) ═══ -->
+                <div class="view" id="view-nip">
+                    <div id="nipUI" style="flex:1;overflow:auto"></div>
+                </div>
+
             </div><!-- /win-content -->
 
             <!-- Status Bar -->
@@ -3343,6 +3603,17 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         let currentDocCase = '';
         let currentMapCase = '';
         let autoTimer = null;
+        // disposed-case register + No Instruction Pursis state
+        let disposedRecords = [];
+        let nipRecords = [];
+        let nipTemplates = [];
+        let nipSettings = {
+            officeName: 'Adv. Indrajit Vasant Chavan',
+            officeAddr: 'Advocate & Legal Consultant · Ichalkaranji · Dist. Kolhapur · Mobile 8055284444',
+            advocate: 'Adv. Indrajit Vasant Chavan', place: 'Ichalkaranji / इचलकरंजी', mobile: '8055284444',
+            prefix: 'NIP/ICH/', dueDays: 7, warnDays: 30, fontSize: 13, embedUrl: '', autoDisposeWarn: true
+        };
+        let disposeCtx = null, currentNIPCino = "", currentNIPTpl = "nip-mr", nipShellBuilt = false;
         let isMaximized = false;
 
         // ── TODAY ──
@@ -3489,6 +3760,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             try { const al = localStorage.getItem('auditLogV1'); if (al) auditLog = JSON.parse(al); } catch(e) {}
             try { const cp = localStorage.getItem('caseProfilesV1'); if (cp) caseProfiles = JSON.parse(cp); } catch (e) {}
             try { const cc = localStorage.getItem('compareCasesV1'); if (cc) compareCases = JSON.parse(cc); } catch (e) {}
+            try { const dr = localStorage.getItem('disposedRecV1'); if (dr) disposedRecords = JSON.parse(dr); } catch (e) {}
+            try { const nr = localStorage.getItem('nipRecV1'); if (nr) nipRecords = JSON.parse(nr); } catch (e) {}
+            try { const nt = localStorage.getItem('nipTplV1'); if (nt) nipTemplates = JSON.parse(nt); } catch (e) {}
+            try { const ns = localStorage.getItem('nipSetV1'); if (ns) nipSettings = Object.assign(nipSettings, JSON.parse(ns)); } catch (e) {}
             loadPOSCatalog();
         }
 
@@ -3507,6 +3782,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             localStorage.setItem('caseProfilesV1', JSON.stringify(caseProfiles));
             localStorage.setItem('compareCasesV1', JSON.stringify(compareCases));
             localStorage.setItem('posCatalogV2', JSON.stringify(posCatalog));
+            try { localStorage.setItem('disposedRecV1', JSON.stringify(disposedRecords)); } catch (e) {}
+            try { localStorage.setItem('nipRecV1', JSON.stringify(nipRecords)); } catch (e) {}
+            try { localStorage.setItem('nipTplV1', JSON.stringify(nipTemplates)); } catch (e) {}
+            try { localStorage.setItem('nipSetV1', JSON.stringify(nipSettings)); } catch (e) {}
             const lbl = document.getElementById('saveStatus');
             if (lbl) lbl.textContent = 'Saved ' + new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
             if (window.scheduleCloudSync) window.scheduleCloudSync();
@@ -3567,6 +3846,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (name === 'ledger') renderLedger();
             if (name === 'compare') renderCompare();
             if (name === 'documents') renderDocuments();
+            if (name === 'disposed') renderDisposed();
+            if (name === 'nip') renderNIP();
             if (name === 'propertymap') renderPropertyMap();
             if (name === 'maintenance') renderMaintenance();
             if (name === 'home') updateHomeStats();
@@ -3610,13 +3891,17 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
         // ── HOME STATS ──
         function updateHomeStats() {
-            const total = CASES.length;
-            const pending = CASES.filter(c => !c.date_of_decision).length;
+            const live = activeCases();
+            const total = live.length;
+            const pending = live.filter(c => !c.date_of_decision).length;
             const decided = total - pending;
-            const todayCases = CASES.filter(c => c.date_next_list === TD && !c.date_of_decision).length;
-            document.getElementById('homeStats').textContent =
-                `📊 ${total} cases · ${pending} pending · ${decided} decided · ${todayCases} today`;
-            document.getElementById('caseCount').textContent = 'Cases: ' + total;
+            const todayCases = live.filter(c => c.date_next_list === TD && !c.date_of_decision).length;
+            const disposed = disposedRecords.length;
+            const pages = disposedRecords.reduce((a, r) => a + (+r.pages || 0), 0);
+            document.getElementById('homeStats').innerHTML =
+                `📊 ${total} cases · ${pending} pending · ${decided} decided · ${todayCases} today` +
+                (disposed ? ` · <span style="color:#7f1d1d;font-weight:700" title="${pages} pages shredded">🗑️ ${disposed} disposed</span>` : '');
+            document.getElementById('caseCount').textContent = 'Cases: ' + total + (disposed ? ' + ' + disposed + ' disposed' : '');
             const recTotal = DB.receipts.length + DB.s138.length + DB.appeals.length + DB.order22.length;
             document.getElementById('recCount').textContent = 'Records: ' + recTotal;
         }
@@ -3656,7 +3941,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (!results.length) { dd.style.display = 'none'; return; }
             dd.innerHTML = results.map(c =>
                 `<div class="sd-item" onclick="${onSelect}('${c.cino}')">
-                    <div class="sd-title">${esc(c.type_name)} ${esc(c.reg_no)}/${esc(c.reg_year)}</div>
+                    <div class="sd-title">${esc(c.type_name)} ${esc(c.reg_no)}/${esc(c.reg_year)}${isDisposedCase(c) ? ' <span class="badge badge-disposed">Disposed</span>' : ''}</div>
                     <div class="sd-sub">${esc(tr(c.petparty_name,35))} vs ${esc(tr(c.resparty_name,35))} · ${esc(c.cino)}</div>
                 </div>`
             ).join('');
@@ -4609,6 +4894,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             else if (currentTab === 'order22') printO22();
             else if (currentTab === 'causelist') printCauseList();
             else if (currentTab === 'nakal') printNakal();
+            else if (currentTab === 'disposed') printDisposedRegister();
+            else if (currentTab === 'nip') nipPrint();
             else showToast('Select a tool first');
         }
 
@@ -4619,6 +4906,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
         // ── CAUSE LIST ──
         function getStatus(c) {
+            if (c.disposed) return 'disposed';
             if (c.date_of_decision) return 'decided';
             if (!c.date_next_list) return 'pending';
             if (c.date_next_list === TD) return 'today';
@@ -4630,6 +4918,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         }
 
         function statusBadge(s) {
+            if (s === 'disposed') return '<span class="badge badge-disposed" title="file destroyed / papers shredded">Disposed</span>';
             if (s === 'decided') return '<span class="badge badge-decided">Decided</span>';
             if (s === 'today') return '<span class="badge badge-today">Today</span>';
             if (s === 'upcoming') return '<span class="badge badge-upcoming">Upcoming</span>';
@@ -4640,8 +4929,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const courts = {},
                 cnames = {},
                 cpend = {};
-            for (let i = 0; i < CASES.length; i++) {
-                const c = CASES[i];
+            const gridPool = activeCases();
+            for (const c of gridPool) {
                 const cd = c.establishment_code || '?';
                 courts[cd] = (courts[cd] || 0) + 1;
                 if (!cnames[cd]) cnames[cd] = c.establishment_name || cd;
@@ -4649,7 +4938,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             }
             const keys = Object.keys(courts).sort((a, b) => (cpend[b] || 0) - (cpend[a] || 0));
             let h =
-                `<div class="court-card${activeCourt===''?' active':''}" onclick="filterCourt('')"><div class="name">🏛️ ALL COURTS</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${CASES.length}</span><span class="pend">${Object.values(cpend).reduce((a,b)=>a+b,0)} pending</span></div></div>`;
+                `<div class="court-card${activeCourt===''?' active':''}" onclick="filterCourt('')"><div class="name">🏛️ ALL COURTS</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${gridPool.length}</span><span class="pend">${Object.values(cpend).reduce((a,b)=>a+b,0)} pending</span></div></div>` +
+                (disposedRecords.length ? `<div class="court-card" onclick="goTab('disposed')" title="Files destroyed — open the register"><div class="name">🗑️ DISPOSED</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num" style="color:#7f1d1d">${disposedRecords.length}</span><span class="pend">shredded</span></div></div>` : '')
             for (const k of keys) {
                 const pn = cpend[k] || 0;
                 if (pn === 0 && activeCourt !== k) continue;
@@ -4713,6 +5003,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const grp = {};
             for (let i = 0; i < CASES.length; i++) {
                 const c = CASES[i];
+                if (c.disposed) continue;   // file destroyed — never listed again
                 const nd = c.date_next_list;
                 if (!nd) continue;
                 if (nd < mn || nd > mx) continue;
@@ -4814,7 +5105,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const rng=g('clR').value, q=g('clS').value.toLowerCase(), jd=g('clJ').value, court=g('clCourt').value||activeCourt;
             const base=new Date(TD+'T00:00:00'); let mn='0000-01-01',mx='9999-12-31';
             if(rng==='today'){mn=mx=TD;} else if(rng==='week'){mn=TD;mx=new Date(base.getTime()+7*864e5).toISOString().slice(0,10);} else if(rng==='month'){mn=TD;mx=new Date(base.getTime()+30*864e5).toISOString().slice(0,10);} else if(rng==='allup'){mn=TD;} else if(rng==='p7'){mn=new Date(base.getTime()-7*864e5).toISOString().slice(0,10);mx=new Date(base.getTime()-864e5).toISOString().slice(0,10);} else if(rng==='p30'){mn=new Date(base.getTime()-30*864e5).toISOString().slice(0,10);mx=new Date(base.getTime()-864e5).toISOString().slice(0,10);} if(jd){mn=mx=jd;}
-            const visible=[...CASES].filter(c=>{if(!c.date_next_list)return false;if(c.date_next_list<mn||c.date_next_list>mx)return false;if((rng==='today'||rng==='week'||rng==='month'||rng==='allup')&&c.date_of_decision)return false;if(court&&c.establishment_code!==court)return false;if(q&&!([c.cino,c.type_name,c.petparty_name,c.resparty_name,c.reg_no,c.reg_year].join(' ').toLowerCase().includes(q)))return false;return true;}).sort((a,b)=>(a.date_next_list||'').localeCompare(b.date_next_list||''));
+            const visible=[...CASES].filter(c=>{if(c.disposed)return false;if(!c.date_next_list)return false;if(c.date_next_list<mn||c.date_next_list>mx)return false;if((rng==='today'||rng==='week'||rng==='month'||rng==='allup')&&c.date_of_decision)return false;if(court&&c.establishment_code!==court)return false;if(q&&!([c.cino,c.type_name,c.petparty_name,c.resparty_name,c.reg_no,c.reg_year].join(' ').toLowerCase().includes(q)))return false;return true;}).sort((a,b)=>(a.date_next_list||'').localeCompare(b.date_next_list||''));
             const grouped={};visible.forEach(c=>{const d=c.date_next_list;if(!grouped[d])grouped[d]=[];grouped[d].push(c);});
             const updated=CASES.flatMap(c=>(c.hearing_history||[]).filter(h=>h.from>=mn&&h.from<=mx).map(h=>({c,h})));
             const updateRows=updated.length?`<h3>Updated Dates / Orders Given</h3><table><thead><tr><th>Original Cause List Date</th><th>Case</th><th>Parties</th><th>New Date Given</th><th>Court</th></tr></thead><tbody>${updated.map(x=>`<tr><td>${fmtDS(x.h.from)}</td><td>${esc(x.c.type_name+' '+x.c.reg_no+'/'+x.c.reg_year)}</td><td>${esc(x.c.petparty_name)} vs ${esc(x.c.resparty_name)}</td><td><b>${fmtDS(x.h.to)}</b></td><td>${esc(courtDisplay(x.c))}</td></tr>`).join('')}</tbody></table>`:'';
@@ -4868,7 +5159,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 const c = sorted[i];
                 const st = getStatus(c);
                 h +=
-                    `<tr data-idx="${c._i}" data-status="${st}" data-type="${esc(c.type_name)}" data-court="${esc(c.establishment_code)}" data-year="${c.reg_year}">
+                    `<tr class="${st === 'disposed' ? 'disposed' : ''}" data-idx="${c._i}" data-status="${st}" data-type="${esc(c.type_name)}" data-court="${esc(c.establishment_code)}" data-year="${c.reg_year}">
                 <td>${i+1}</td>
                 <td><span class="cnr-copy" data-cnr="${esc(c.cino)}" title="Tap/click to copy CNR" style="font-weight:700;color:#0f766e;font-size:10px">${esc(c.cino)}</span></td>
                 <td title="${esc(c.ltype_name||'')}">${esc(c.type_name)}</td>
@@ -4878,7 +5169,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <td title="${esc(c.establishment_name)}">${esc(tr(c.establishment_name,20))}</td>
                 <td><input type="date" class="nd-inp" value="${c.date_next_list||''}" onchange="inlineDateChange(${c._i},this)" style="width:85px;font-size:8px;padding:1px 3px;border:1px solid;border-color:#808080 #ffffff #ffffff #808080"></td>
                 <td>${statusBadge(st)}</td>
-                <td class="no-print"><button class="btn btn-xs" onclick="viewCase(${c._i})">👁</button> <button class="btn btn-xs" onclick="editCase(${c._i})">✏️</button> <button class="btn btn-xs btn-success" onclick="openCaseWhatsApp(${c._i})">💬</button></td>
+                <td class="no-print"><button class="btn btn-xs" onclick="viewCase(${c._i})">👁</button> <button class="btn btn-xs" onclick="editCase(${c._i})">✏️</button> <button class="btn btn-xs btn-success" onclick="openCaseWhatsApp(${c._i})">💬</button> <button class="btn btn-xs ${st === 'disposed' ? 'btn-success' : 'btn-danger'}" title="${st === 'disposed' ? 'Disposal entry — edit or undo' : 'Mark disposed (file shredded)'}" onclick="${st === 'disposed' ? 'openDisposeDialog(\'' + esc(c.cino) + '\',\'' + esc((c.disposal || {}).id || '') + '\')' : 'openDisposeDialog(' + c._i + ')'}">${st === 'disposed' ? '♻️' : '🗑️'}</button></td>
               </tr>`;
             }
             document.getElementById('aB').innerHTML = h;
@@ -4906,7 +5197,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 const c = CASES[idx];
                 if (st) {
                     const rs = r.getAttribute('data-status');
-                    if (st === 'pending' && rs === 'decided') ok = false;
+                    if (st === 'disposed') { if (rs !== 'disposed') ok = false; }
+                    else if (st === 'active') { if (rs === 'disposed') ok = false; }
+                    else if (st === 'pending' && (rs === 'decided' || rs === 'disposed')) ok = false;
                     else if (st === 'decided' && rs !== 'decided') ok = false;
                     else if (st === 'upcoming' && rs !== 'upcoming' && rs !== 'today') ok = false;
                 }
@@ -4955,7 +5248,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
         // ── SELECTED CASES / PROFILE / DOCUMENTS / PROPERTY MAP ──
         const profile = c => { let p=caseProfiles[c.cino]; if(!p) p=caseProfiles[c.cino]={}; p.provision=p.provision||'';p.relief=p.relief||'';p.stage=p.stage||'';p.operativeOrder=p.operativeOrder||'';p.chronology=p.chronology||'';p.property=p.property||{};p.documents=Array.isArray(p.documents)?p.documents:[];p.maintenance=p.maintenance||{monthly:0,startDate:'',entries:[]};p.maintenance.entries=Array.isArray(p.maintenance.entries)?p.maintenance.entries:[];return p; };
-        function miniResults(q, clickFn) { const r=searchCases(q,12); return r.map(c=>`<div class="rec-item" onclick="${clickFn}('${c.cino}')"><div><b>${esc(c.type_name)} ${esc(c.reg_no)}/${esc(c.reg_year)}</b> · ${esc(c.cino)}<br><span class="text-xs">${esc(tr(c.petparty_name,45))} vs ${esc(tr(c.resparty_name,45))}</span></div></div>`).join('')||'<span class="text-muted text-sm">No matching cases.</span>'; }
+        function miniResults(q, clickFn) { const r=searchCases(q,12); return r.map(c=>`<div class="rec-item" onclick="${clickFn}('${c.cino}')"><div><b>${esc(c.type_name)} ${esc(c.reg_no)}/${esc(c.reg_year)}</b>${isDisposedCase(c)?' <span class="badge badge-disposed">Disposed</span>':''} · ${esc(c.cino)}<br><span class="text-xs">${esc(tr(c.petparty_name,45))} vs ${esc(tr(c.resparty_name,45))}</span></div></div>`).join('')||'<span class="text-muted text-sm">No matching cases.</span>'; }
         function renderCompareSearch(){const q=g('cmpSearch').value.trim(),x=g('cmpSearchResults');x.style.display=q.length>1?'block':'none';x.innerHTML=q.length>1?miniResults(q,'addCompareCase'):'';}
         function addCompareCase(cino){const c=CASES.find(x=>x.cino===cino);if(!c)return;if(!compareCases.includes(c.cino))compareCases.push(c.cino);g('cmpSearch').value='';g('cmpSearchResults').style.display='none';saveAllData();renderCompare();setTimeout(renderCompare,150);}
         function removeCompareCase(cino){compareCases=compareCases.filter(x=>x!==cino);saveAllData();renderCompare();}
@@ -5044,7 +5337,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         function deleteCase(idx) {
             const c = CASES[idx];
             if (!c) return;
-            if (!confirm('Remove ' + c.type_name + ' ' + c.reg_no + '/' + c.reg_year + '? This cannot be undone.')) return;
+            const _wasDisp = !!c.disposed;
+            if (!confirm('Remove ' + c.type_name + ' ' + c.reg_no + '/' + c.reg_year + '?' + (_wasDisp ? '\n\nThis case is marked DISPOSED (file shredded). Its entry stays in the Disposed Register so the printed list still proves the destruction.' : ' This cannot be undone.'))) return;
             CASES.splice(idx, 1);
             normalizeCaseIndexes(); saveCases(); saveAllData();
             closeModal('m-preview'); buildCourtGrid(); renderAllCases(); renderCauseList(); updateHomeStats();
@@ -5102,7 +5396,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     `<div style="padding:3px 6px;background:#f0f0f0;border:1px solid;border-color:#ffffff #808080 #808080 #ffffff"><div style="font-size:7px;text-transform:uppercase;color:#444;font-weight:700">${label}</div><div style="font-size:9px;font-weight:500">${esc(val||'-')}</div></div>`;
             }
             h +=
-                `</div><div class="flex-row" style="margin-top:6px;justify-content:center"><button class="btn btn-primary btn-sm" onclick="editCase(${idx});closeModal('m-preview')">✏️ Edit</button><button class="btn btn-gold btn-sm" onclick="currentBillingCase='${c.cino}';closeModal('m-preview');goTab('billing')">⚡ POS Bill</button><button class="btn btn-sm" onclick="closeModal('m-preview')">Close</button></div>`;
+                `</div>${c.disposed ? `<div class="nip-warn" style="display:block;margin-top:6px">🗑️ Disposed on ${fmtDS((c.disposal||{}).disposeDate)} — ${esc((c.disposal||{}).mode||'file destroyed')} · ${(+c.disposal?.pages||0)} page(s)</div>` : ''}<div class="flex-row" style="margin-top:6px;justify-content:center"><button class="btn btn-primary btn-sm" onclick="editCase(${idx});closeModal('m-preview')">✏️ Edit</button><button class="btn btn-danger btn-sm" onclick="closeModal('m-preview');openDisposeDialog(${idx})">🗑️ Mark Disposed</button><button class="btn btn-gold btn-sm" onclick="currentBillingCase='${c.cino}';closeModal('m-preview');goTab('billing')">⚡ POS Bill</button><button class="btn btn-sm" onclick="closeModal('m-preview')">Close</button></div>`;
             document.getElementById('preview-modal-title').textContent = '📋 ' + title;
             document.getElementById('preview-body').innerHTML = h;
             document.getElementById('m-preview').classList.remove('hidden');
@@ -5136,7 +5430,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 h += '</div>';
             }
             h +=
-                `<div class="flex-row" style="margin-top:4px;justify-content:flex-end"><button type="button" class="btn btn-danger btn-sm" onclick="deleteCase(${idx})">🗑️ Remove</button><button type="button" class="btn btn-sm" onclick="closeModal('m-preview')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">💾 Save</button></div></form>`;
+                `<div class="flex-row" style="margin-top:4px;justify-content:flex-end"><button type="button" class="btn btn-gold btn-sm" onclick="closeModal('m-preview');openDisposeDialog(${idx})">${c.disposed ? '♻️ Disposal entry' : '🗑️ Dispose file'}</button><button type="button" class="btn btn-danger btn-sm" onclick="deleteCase(${idx})">🗑️ Remove</button><button type="button" class="btn btn-sm" onclick="closeModal('m-preview')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">💾 Save</button></div></form>`;
             document.getElementById('preview-modal-title').textContent = '✏️ Edit — ' + c.type_name + ' ' + c.reg_no + '/' +
                 c.reg_year;
             document.getElementById('preview-body').innerHTML = h;
@@ -6612,7 +6906,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const srch = document.getElementById('feeSearch').value.toLowerCase();
             const filter = document.getElementById('feeFilter').value;
             const list = CASES.filter(c => {
-                if (filter === 'pending' && c.date_of_decision) return false;
+                if (filter === 'pending' && (c.date_of_decision || c.disposed)) return false;
+                if (filter === 'disposed' && !c.disposed) return false;
                 if (filter === 'balance') {
                     const f = feeData[c.cino] || {};
                     if (((f.courtFeeDue || 0) + (f.profFeeDue || 0) + (f.ccFeeDue || 0)) <= 0) return false;
@@ -7211,6 +7506,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 feeData: feeData,
                 nakalRecords: nakalRecords,
                 ledgerData: ledgerData, auditLog: auditLog, billingLedger: billingLedger, courtAssignments: courtAssignments, auditLog: auditLog,
+                disposedRecords: disposedRecords, nipRecords: nipRecords, nipTemplates: nipTemplates, nipSettings: nipSettings,
                 exported: new Date().toISOString()
             };
             const a = document.createElement('a');
@@ -7284,6 +7580,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (data.feeData) feeData = { ...feeData, ...data.feeData };
             if (data.nakalRecords) nakalRecords = [...nakalRecords, ...data.nakalRecords];
             if (data.ledgerData) ledgerData = { ...ledgerData, ...data.ledgerData };
+            if (Array.isArray(data.disposedRecords)) { data.disposedRecords.forEach(r => { if (r && !disposedRecords.some(x => x.id === r.id)) disposedRecords.unshift(r); }); }
+            if (Array.isArray(data.nipRecords)) { data.nipRecords.forEach(r => { if (r && !nipRecords.some(x => x.no === r.no && x.cino === r.cino)) nipRecords.unshift(r); }); }
+            if (Array.isArray(data.nipTemplates)) { data.nipTemplates.forEach(t => { if (t && !nipTemplates.some(x => x.name === t.name)) nipTemplates.push(t); }); }
             saveAllData();
             renderFees();
             renderNakalHistory();
@@ -7444,12 +7743,16 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (e.target === ov) ov.classList.add('hidden');
         }));
 
-        function showShortcuts(){g('preview-modal-title').textContent='⌨ Keyboard Shortcuts';g('preview-body').innerHTML=`<table style="width:100%;font-size:10px"><tr><td><b>F1</b></td><td>Add new case</td></tr><tr><td><b>F2</b></td><td>Save Nakal application when Nakal tab is open</td></tr><tr><td><b>Ctrl + S</b></td><td>Save all current data</td></tr><tr><td><b>Esc</b></td><td>Close open dialog</td></tr></table>`;g('m-preview').classList.remove('hidden');}
+        function showShortcuts(){g('preview-modal-title').textContent='⌨ Keyboard Shortcuts';g('preview-body').innerHTML=`<table style="width:100%;font-size:10px"><tr><td><b>F1</b></td><td>Add new case</td></tr><tr><td><b>F2</b></td><td>Save Nakal application when Nakal tab is open</td></tr>
+                <tr><td><b>F3</b></td><td>Save (record) the No Instruction Pursis notice</td></tr>
+                <tr><td><b>F4</b></td><td>Open the Disposed register</td></tr><tr><td><b>Ctrl + S</b></td><td>Save all current data</td></tr><tr><td><b>Esc</b></td><td>Close open dialog</td></tr></table>`;g('m-preview').classList.remove('hidden');}
 
         // ── KEYBOARD SHORTCUTS ──
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F1') { e.preventDefault(); addNewCase(); }
             if (e.key === 'F2') { e.preventDefault(); if(currentTab === 'nakal') saveNakalRecord(); else showToast('F2: Open Nakal tab to save Nakal application'); }
+            if (e.key === 'F3') { e.preventDefault(); if(currentTab === 'nip') nipSave(); else showToast('F3: Open the NIP tab to record a pursis'); }
+            if (e.key === 'F4') { e.preventDefault(); goTab('disposed'); }
             if (e.ctrlKey && e.key.toLowerCase() === 's') { e.preventDefault(); saveAllData(); showToast('💾 All data saved'); }
             if (e.key === 'Escape') {
                 document.querySelectorAll('.overlay:not(.hidden)').forEach(m => { if (m.id !== 'authOverlay') m.classList.add('hidden'); });
@@ -7484,6 +7787,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (cloud.auditLog) auditLog = cloud.auditLog;
             if (cloud.caseProfiles) caseProfiles = cloud.caseProfiles;
             if (cloud.compareCases) compareCases = cloud.compareCases;
+            if (Array.isArray(cloud.disposedRecords)) disposedRecords = cloud.disposedRecords;
+            if (Array.isArray(cloud.nipRecords)) nipRecords = cloud.nipRecords;
+            if (Array.isArray(cloud.nipTemplates)) nipTemplates = cloud.nipTemplates;
+            if (cloud.nipSettings) nipSettings = Object.assign(nipSettings, cloud.nipSettings);
             if (Array.isArray(cloud.nakalCourts) && cloud.nakalCourts.length) localStorage.setItem('nakalCourtsV1', JSON.stringify(cloud.nakalCourts));
             normalizeCaseIndexes();
             localStorage.setItem('cases_v2', JSON.stringify(CASES));
@@ -7497,12 +7804,18 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             localStorage.setItem('caseProfilesV1', JSON.stringify(caseProfiles));
             localStorage.setItem('compareCasesV1', JSON.stringify(compareCases));
             localStorage.setItem('posCatalogV2', JSON.stringify(posCatalog));
+            localStorage.setItem('disposedRecV1', JSON.stringify(disposedRecords));
+            localStorage.setItem('nipRecV1', JSON.stringify(nipRecords));
+            localStorage.setItem('nipTplV1', JSON.stringify(nipTemplates));
+            localStorage.setItem('nipSetV1', JSON.stringify(nipSettings));
             buildCourtGrid(); populateAllCaseFilters(); renderAllCases(); renderCauseList(); updateHomeStats();
+            if (typeof renderDisposed === 'function') renderDisposed();
+            if (typeof renderNIP === 'function') { nipShellBuilt = false; if (currentTab === 'nip') renderNIP(); }
             applyNakalCourts();
             // Refresh open advanced tabs immediately when a Realtime Database update arrives.
             // Each refresh is individually guarded: a tab whose DOM is not present yet
             // (e.g. Maintenance workspace) must not abort the rest of the sync handler.
-            ['renderCompare','renderDocuments','renderMaintenance','renderPropertyMap'].forEach(function(fn){
+            ['renderCompare','renderDocuments','renderMaintenance','renderPropertyMap','renderDisposed'].forEach(function(fn){
                 try { if (typeof window[fn] === 'function') window[fn](); } catch (e) { /* tab not open yet — skip */ }
             });
             if (showNotice) showToast('☁️ Live changes received');
@@ -7524,7 +7837,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         // The Firebase module below initializes Firestore cloud sync.
         let cloudSyncTimer = null, lastCloudSnapshot = '';
         function cloudSnapshot() {
-            return JSON.stringify({ cases: CASES, DB: DB, feeData: feeData, nakalRecords: nakalRecords, ledgerData: ledgerData, billingLedger: billingLedger, courtAssignments: courtAssignments, auditLog: auditLog, caseProfiles: caseProfiles, compareCases: compareCases, nakalCourts: getNakalCourts() });
+            return JSON.stringify({ cases: CASES, DB: DB, feeData: feeData, nakalRecords: nakalRecords, ledgerData: ledgerData, billingLedger: billingLedger, courtAssignments: courtAssignments, auditLog: auditLog, caseProfiles: caseProfiles, compareCases: compareCases, nakalCourts: getNakalCourts(), disposedRecords: disposedRecords, nipRecords: nipRecords, nipTemplates: nipTemplates, nipSettings: nipSettings });
         }
         function scheduleCloudSync() {
             if (!window._pinUnlocked || !window._fbReady) return;
@@ -7573,6 +7886,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (cloud.auditLog) auditLog = cloud.auditLog;
             if (cloud.caseProfiles) caseProfiles = cloud.caseProfiles;
             if (cloud.compareCases) compareCases = cloud.compareCases;
+                    if (Array.isArray(cloud.disposedRecords)) disposedRecords = cloud.disposedRecords;
+                    if (Array.isArray(cloud.nipRecords)) nipRecords = cloud.nipRecords;
+                    if (Array.isArray(cloud.nipTemplates)) nipTemplates = cloud.nipTemplates;
+                    if (cloud.nipSettings) nipSettings = Object.assign(nipSettings, cloud.nipSettings);
             if (Array.isArray(cloud.nakalCourts) && cloud.nakalCourts.length) localStorage.setItem('nakalCourtsV1', JSON.stringify(cloud.nakalCourts));
                     normalizeCaseIndexes();
                     lastCloudSnapshot = cloudSnapshot();
@@ -7672,7 +7989,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 ['order22', '☠️', 'Order 22'], ['nakal', '📜', 'Nakal'], ['billing', '🧾', 'Bills & Invoices'],
                 ['docrequest', '📨', 'Document Requester'], ['activity', '📋', 'Activity'], ['compare', '🔎', 'Selected Cases'],
                 ['documents', '📁', 'Documents'], ['propertymap', '🗺️', 'Property Map'], ['fees', '💰', 'Fee Register'],
-                ['ledger', '📒', 'Client Ledger'], ['maintenance', '💳', 'Maintenance']
+                ['ledger', '📒', 'Client Ledger'], ['maintenance', '💳', 'Maintenance'],
+                ['nip', '📪', 'No Instruction Pursis'], ['disposed', '🗑️', 'Disposed Cases']
             ];
             g('preview-modal-title').textContent = '☰ All Tools';
             const card = (ico, txt, fn, act) => `<div class="home-card${act ? ' active' : ''}" role="button" tabindex="0" onclick="closeModal('m-preview');${fn}"><div class="ico">${ico}</div><div class="title">${txt}</div></div>`;
@@ -7715,6 +8033,1529 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 e.stopPropagation();
             }
         });
+
+
+        // ══════════════════════════════════════════════════════════════════
+        //  DISPOSED CASES  —  a case marked "disposed" means the physical file
+        //  (pages/papers) has been destroyed.  The live case is flagged so it
+        //  drops out of the cause list / court cards / pending counts, and a
+        //  self-contained register entry is written that keeps printing even
+        //  after the case row itself is removed from MyCases.
+        // ══════════════════════════════════════════════════════════════════
+        const DISP_MODES = [
+            'Shredded — file destroyed',
+            'Returned to client',
+            'Burnt / destroyed',
+            'Surrendered to court record room',
+            'Deleted (digital record only)',
+            'Other'
+        ];
+        const DISP_REASONS = [
+            'No instructions despite No Instruction Pursis',
+            'Client not traceable',
+            'Matter settled / compromise',
+            'Decree / order fully complied',
+            'Client instructed to close the file',
+            'Fees & records not paid up',
+            'Duplicate / wrong filing',
+            'Death of party — no legal heir',
+            'Abated / withdrawn'
+        ];
+        const escA = s => esc(s).replace(/"/g, '&quot;');
+        const isDisposedCase = c => !!(c && c.disposed);
+        const activeCases = () => CASES.filter(c => !isDisposedCase(c));
+
+        function refreshCaseViews() {
+            try {
+                buildCourtGrid(); populateAllCaseFilters(); renderAllCases(); renderCauseList(); updateHomeStats();
+                if (currentTab === 'disposed') renderDisposed();
+            } catch (e) { console.error('refreshCaseViews', e); }
+        }
+
+        function dispLabel(r, c) {
+            c = c || CASES.find(x => x.cino === r.cino);
+            if (c) return (c.type_name || '') + ' ' + (c.reg_no || '') + '/' + (c.reg_year || '');
+            return ((r.type || '') + ' ' + (r.regNo || '') + '/' + (r.regYear || '')).trim() || 'Disposed case';
+        }
+        function dispParties(r, c) {
+            c = c || CASES.find(x => x.cino === r.cino);
+            if (c) return (c.petparty_name || '—') + ' vs ' + (c.resparty_name || '—');
+            return (r.petitioner || '—') + ' vs ' + (r.respondent || '—');
+        }
+        function dispCourt(r, c) {
+            c = c || CASES.find(x => x.cino === r.cino);
+            const n = c ? (c.establishment_name || '') : (r.court || '');
+            return n.replace(/^IN THE COURT OF /i, '').replace(/ICHALKARANJI$/i, 'Ichalkaranji');
+        }
+        const dispShortMode = m => String(m || '—').split(' — ')[0];
+
+        // current filter → ordered rows (shared by screen, print and CSV)
+        function dispFiltered() {
+            const q = ((g('dpQ') && g('dpQ').value) || '').toLowerCase().trim();
+            const from = (g('dpFrom') && g('dpFrom').value) || '';
+            const to = (g('dpTo') && g('dpTo').value) || '';
+            const mode = (g('dpMode') && g('dpMode').value) || '';
+            const court = (g('dpCourt') && g('dpCourt').value) || '';
+            const rows = disposedRecords.map((r, i) => ({ r: r, i: i, c: CASES.find(x => x.cino === r.cino) || null }))
+                .filter(x => {
+                    const r = x.r;
+                    if (from && String(r.disposeDate || '') < from) return false;
+                    if (to && String(r.disposeDate || '') > to) return false;
+                    if (mode && r.mode !== mode) return false;
+                    if (court && String((x.c && x.c.establishment_code) || r.estCode || '') !== court) return false;
+                    if (q) {
+                        const hay = [r.cino, dispLabel(r, x.c), dispParties(r, x.c), dispCourt(r, x.c), r.reason, r.remarks, r.mode, r.authorisedBy].join(' ').toLowerCase();
+                        if (hay.indexOf(q) === -1) return false;
+                    }
+                    return true;
+                });
+            rows.sort((a, b) => String(b.r.disposeDate || '').localeCompare(String(a.r.disposeDate || '')) || String(b.r.at || '').localeCompare(String(a.r.at || '')));
+            return rows;
+        }
+
+        function renderDisposed() {
+            const body = g('dpB');
+            if (!body) return;
+            // one-off filter options
+            const ms = g('dpMode');
+            if (ms && !ms.dataset.built) { ms.dataset.built = '1'; DISP_MODES.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = dispShortMode(m); ms.appendChild(o); }); }
+            const cs = g('dpCourt');
+            if (cs && !cs.dataset.built) {
+                cs.dataset.built = '1';
+                const seen = {};
+                disposedRecords.forEach(r => { const c = CASES.find(x => x.cino === r.cino); const code = (c && c.establishment_code) || r.estCode; if (code && !seen[code]) seen[code] = (c && c.establishment_name) || r.court || code; });
+                Object.keys(seen).sort().forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = tr(String(seen[k]).replace(/^IN THE COURT OF /i, ''), 34); cs.appendChild(o); });
+            }
+            const rows = dispFiltered();
+            let files = 0, pages = 0;
+            rows.forEach(x => { files += (+x.r.files || 0); pages += (+x.r.pages || 0); });
+            const month = TD.slice(0, 7);
+            const thisMonth = disposedRecords.filter(r => String(r.disposeDate || '').slice(0, 7) === month).length;
+            const stillListed = rows.filter(x => x.c).length;
+            g('dpStats').innerHTML = [
+                ['🗑️ ' + disposedRecords.length, 'disposed in register'],
+                ['📄 ' + pages.toLocaleString('en-IN'), 'pages shredded'],
+                ['📁 ' + files.toLocaleString('en-IN'), 'files destroyed'],
+                ['📅 ' + thisMonth, 'this month'],
+                ['✅ ' + stillListed + '/' + rows.length, 'still in MyCases']
+            ].map(x => '<div class="disp-stat"><div class="v">' + x[0] + '</div><div class="l">' + x[1] + '</div></div>').join('');
+            if (!disposedRecords.length) {
+                body.innerHTML = '<tr><td colspan="13" style="padding:22px;text-align:center;color:#64748b">No case has been marked disposed yet. Open <b>📋 All Cases</b> (or use <b>🗑️ Mark Case Disposed</b> above) and record the destruction of a file — it will appear here and can be printed with dates.</td></tr>';
+                g('dpI').textContent = '0 of 0';
+                return;
+            }
+            body.innerHTML = rows.map((x, n) => {
+                const r = x.r, c = x.c;
+                return '<tr class="' + (c ? 'disposed' : '') + '">' +
+                    '<td>' + (n + 1) + '</td>' +
+                    '<td><b>' + fmtDS(r.disposeDate) + '</b></td>' +
+                    '<td class="w"><span class="cl-title">' + esc(dispLabel(r, c)) + '</span>' + (c ? '' : ' <span class="badge badge-pending" title="case row removed from MyCases — register keeps the snapshot">archived</span>') + '</td>' +
+                    '<td><span class="cnr-copy" data-cnr="' + escA(r.cino || '') + '" title="Tap/click to copy CNR">' + esc(r.cino || '—') + '</span></td>' +
+                    '<td class="w" title="' + escA(dispParties(r, c)) + '">' + esc(tr(dispParties(r, c), 46)) + '</td>' +
+                    '<td class="w" title="' + escA(dispCourt(r, c)) + '">' + esc(tr(dispCourt(r, c), 22)) + '</td>' +
+                    '<td><span class="disp-mode" title="' + escA(r.mode || '') + '">' + esc(dispShortMode(r.mode)) + '</span></td>' +
+                    '<td>' + (r.files || 0) + '</td>' +
+                    '<td>' + (r.pages || 0) + '</td>' +
+                    '<td class="w" title="' + escA(r.reason || '') + '">' + esc(tr(r.reason, 26) || '—') + '</td>' +
+                    '<td class="w">' + esc(tr(r.authorisedBy, 18) || '—') + '</td>' +
+                    '<td class="w" title="' + escA(r.remarks || '') + '">' + esc(tr(r.remarks, 24) || '—') + '</td>' +
+                    '<td class="no-print" style="white-space:nowrap">' +
+                        '<button class="btn btn-xs" onclick="openDisposeDialog(\'' + escA(r.cino || '') + '\',\'' + escA(r.id) + '\')" title="Edit this disposal entry">✏️</button> ' +
+                        '<button class="btn btn-xs btn-gold" onclick="printDisposalMemo(\'' + escA(r.id) + '\')" title="Print disposal memo / slip">🖨️</button> ' +
+                        (c ? '<button class="btn btn-xs btn-success" onclick="restoreDispose(\'' + escA(r.id) + '\')" title="Undo — put the case back in the active list">♻️</button>'
+                          : '<button class="btn btn-xs btn-danger" onclick="deleteDispose(\'' + escA(r.id) + '\')" title="Remove this archived entry from the register">🗑</button>') +
+                    '</td></tr>';
+            }).join('');
+            g('dpI').textContent = 'Showing ' + rows.length + ' of ' + disposedRecords.length + ' disposed';
+        }
+
+        // ── disposal dialog (also used for editing an existing entry) ──
+        function openDisposeDialog(ref, existingId) {
+            let c = typeof ref === 'number' ? CASES[ref] : (ref ? CASES.find(x => x.cino === ref) : null);
+            let r = existingId ? disposedRecords.find(x => x.id === existingId) : null;
+            if (!c && r) c = CASES.find(x => x.cino === r.cino) || null;
+            if (!c && !r) { showToast('🔍 Search and pick the case first'); dispPickCase(); return; }
+            disposeCtx = { c: c, r: r };
+            const d = r || (c && c.disposal) || {};
+            const label = dispLabel(d, c);
+            let pendingDocs = 0;
+            try { pendingDocs = c ? profile(c).documents.filter(x => x.status === 'Pending').length : 0; } catch (e) {}
+            const nips = c ? nipRecords.filter(x => x.cino === c.cino) : [];
+            const modes = DISP_MODES.map(m => '<option value="' + escA(m) + '"' + (d.mode === m ? ' selected' : '') + '>' + esc(m) + '</option>').join('');
+            const reasons = DISP_REASONS.map(x => '<option value="' + escA(x) + '"></option>').join('');
+            g('preview-modal-title').textContent = (existingId ? '✏️ Edit Disposal Entry — ' : '🗑️ Mark Disposed (file destroyed) — ') + label;
+            g('preview-body').innerHTML =
+                '<div class="nip-warn">⚠️ This records that the <b>pages &amp; papers of ' + esc(label) + ' have been physically destroyed</b>. ' +
+                'The case leaves the cause list, court cards and pending counts, and is kept below in the printable <b>Disposed Register</b>' +
+                (c ? ' — the case row itself stays in MyCases with a red <b>Disposed</b> badge.' : ' (the case row is no longer in MyCases; only this register entry remains).') + '</div>' +
+                '<div class="text-xs" style="margin:4px 0 5px;color:#444">CNR <b>' + esc((c && c.cino) || d.cino || '—') + '</b> · ' +
+                '📅 last hearing ' + fmtDS((c && c.date_last_list) || d.lastDate) + ' · 🔜 next ' + fmtDS((c && c.date_next_list) || d.nextDate) +
+                ' · 📁 pending docs ' + pendingDocs + ' · 📪 NIP notices sent ' + nips.length +
+                (nips.length ? ' (last ' + fmtDS(nips[nips.length - 1].date) + ')' : '') + '</div>' +
+                '<div class="grid-2" style="gap:5px">' +
+                '<div class="fgroup"><label>Disposal date *</label><input type="date" id="dp-date" class="fi" value="' + escA(d.disposeDate || today()) + '"></div>' +
+                '<div class="fgroup"><label>Mode of disposal *</label><select id="dp-mode" class="fi">' + modes + '</select></div>' +
+                '<div class="fgroup"><label>No. of files destroyed</label><input type="number" id="dp-files" class="fi" min="0" step="1" value="' + (d.files == null ? 1 : +d.files || 0) + '"></div>' +
+                '<div class="fgroup"><label>Total pages / sheets shredded</label><input type="number" id="dp-pages" class="fi" min="0" step="1" value="' + (d.pages == null ? 0 : +d.pages || 0) + '"></div>' +
+                '<div class="fgroup full"><label>Reason for disposal</label><input id="dp-reason" class="fi" list="dispReasonList" value="' + escA(d.reason || (nips.length ? 'No instructions despite No Instruction Pursis' : '')) + '" placeholder="e.g. client not traceable / settled / no instructions after pursis"><datalist id="dispReasonList">' + reasons + '</datalist></div>' +
+                '<div class="fgroup full"><label>Authorised / approved by (advocate · client · clerk)</label><input id="dp-by" class="fi" value="' + escA(d.authorisedBy || nipSettings.advocate) + '"></div>' +
+                '<div class="fgroup full"><label>Remarks (returned-ref, shredding date/witness, balance fee, etc.)</label><textarea id="dp-remarks" rows="2" class="fi">' + esc(d.remarks || '') + '</textarea></div>' +
+                '</div>' +
+                '<label class="flex-row" style="gap:5px;font-size:9px;margin-top:5px;align-items:center"><input type="checkbox" id="dp-clear"' + (d.clearedNext ? ' checked' : '') + '> Clear the next hearing date of this case (keeps cause lists &amp; reminders clean)</label>' +
+                '<div class="flex-row" style="margin-top:7px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="closeModal(\'m-preview\')">Cancel</button>' +
+                '<button class="btn btn-primary btn-sm" onclick="saveDispose()">💾 ' + (existingId ? 'Update Disposal Entry' : 'Save — Mark Disposed') + '</button></div>';
+            g('m-preview').classList.remove('hidden');
+            const rd = g('dp-reason');
+            if (rd) rd.focus();
+        }
+
+        function saveDispose() {
+            if (!disposeCtx) return;
+            const c = disposeCtx.c, old = disposeCtx.r || (c && c.disposal) || {};
+            const val = id => { const e = g(id); return e ? e.value : ''; };
+            const rec = Object.assign({}, old, {
+                id: old.id || ('DSP' + Date.now()),
+                at: new Date().toISOString(),
+                cino: (c && c.cino) || old.cino || '',
+                type: (c && c.type_name) || old.type || '',
+                regNo: (c && c.reg_no) || old.regNo || '',
+                regYear: (c && c.reg_year) || old.regYear || '',
+                caseNo: (c && c.case_no) || old.caseNo || '',
+                petitioner: (c && c.petparty_name) || old.petitioner || '',
+                respondent: (c && c.resparty_name) || old.respondent || '',
+                court: (c && c.establishment_name) || old.court || '',
+                estCode: (c && c.establishment_code) || old.estCode || '',
+                decisionDate: (c && c.date_of_decision) || old.decisionDate || '',
+                lastDate: (c && c.date_last_list) || old.lastDate || '',
+                nextDate: old.clearedNext ? (old.nextDate || '') : ((c && c.date_next_list) || old.nextDate || ''),
+                disposeDate: val('dp-date') || today(),
+                mode: val('dp-mode'),
+                reason: String(val('dp-reason') || '').trim(),
+                files: +val('dp-files') || 0,
+                pages: +val('dp-pages') || 0,
+                authorisedBy: String(val('dp-by') || '').trim(),
+                remarks: String(val('dp-remarks') || '').trim(),
+                clearedNext: !!(g('dp-clear') && g('dp-clear').checked)
+            });
+            if (!rec.disposeDate) { showToast('⚠️ Disposal date is required'); return; }
+            const isNew = !disposedRecords.some(x => x.id === rec.id);
+            const j = disposedRecords.findIndex(x => x.id === rec.id);
+            if (j >= 0) disposedRecords[j] = rec;
+            else disposedRecords.unshift(rec);
+            if (c) {
+                c.disposed = true;
+                c.disposal = JSON.parse(JSON.stringify(rec));
+                if (rec.clearedNext) {
+                    if (c.date_next_list) c.date_last_list = c.date_next_list;
+                    c.date_next_list = null;
+                }
+            }
+            audit(isNew ? 'Case disposed (file destroyed)' : 'Disposal entry updated', dispLabel(rec, c) + ' | ' + rec.mode + ' | ' + fmtDS(rec.disposeDate) + ' | ' + rec.pages + ' pages, ' + rec.files + ' file(s)');
+            saveAllData();
+            closeModal('m-preview');
+            disposeCtx = null;
+            refreshCaseViews();
+            showToast(isNew ? '🗑️ ' + dispLabel(rec, c) + ' recorded as disposed' : '✅ Disposal entry updated');
+        }
+
+        function restoreDispose(id) {
+            const r = disposedRecords.find(x => x.id === id);
+            if (!r) return;
+            const c = CASES.find(x => x.cino === r.cino);
+            if (!confirm('Undo disposal of ' + dispLabel(r, c) + '?\n\nThe case returns to the cause list / pending counts and the entry is removed from the disposed register.')) return;
+            disposedRecords = disposedRecords.filter(x => x.id !== id);
+            if (c) {
+                c.disposed = false;
+                delete c.disposal;
+                if (r.clearedNext && r.nextDate) c.date_next_list = r.nextDate;
+            }
+            audit('Disposal reversed', dispLabel(r, c) + ' | register entry removed');
+            saveAllData();
+            refreshCaseViews();
+            renderDisposed();
+            showToast('♻️ ' + dispLabel(r, c) + ' restored to the active list');
+        }
+
+        function deleteDispose(id) {
+            const r = disposedRecords.find(x => x.id === id);
+            if (!r) return;
+            if (!confirm('Delete this archived disposal entry permanently?\n\n' + dispLabel(r) + ' — the register will no longer prove that this file was shredded.')) return;
+            disposedRecords = disposedRecords.filter(x => x.id !== id);
+            audit('Disposal register entry deleted', dispLabel(r) + ' | ' + fmtDS(r.disposeDate));
+            saveAllData();
+            renderDisposed();
+            showToast('🗑️ Register entry deleted');
+        }
+
+        // ── bulk disposal: a shelf of files shredded in one session ──
+        function openBulkDispose() {
+            g('preview-modal-title').textContent = '🧺 Bulk record disposals';
+            g('preview-body').innerHTML =
+                '<div class="nip-warn" style="display:block">One entry is written per case, each case is flagged <b>Disposed</b> (dropped from cause list, court cards and pending counts) and stays in the printable register. Undo any single one later with ♻️.</div>' +
+                '<div class="grid-2" style="margin-top:5px;gap:5px">' +
+                '<div class="fgroup"><label>Disposal date *</label><input type="date" id="bd-date" class="fi" value="' + today() + '"></div>' +
+                '<div class="fgroup"><label>Mode of disposal</label><select id="bd-mode" class="fi">' + DISP_MODES.map(m => '<option value="' + escA(m) + '">' + esc(m) + '</option>').join('') + '</select></div>' +
+                '<div class="fgroup"><label>Pages per file (0 = leave blank)</label><input type="number" id="bd-pages" class="fi" min="0" value="0"></div>' +
+                '<div class="fgroup"><label>Files per case</label><input type="number" id="bd-files" class="fi" min="1" value="1"></div>' +
+                '<div class="fgroup full"><label>Reason</label><input id="bd-reason" class="fi" value="Old record cleared — no further instructions, file destroyed"></div>' +
+                '<div class="fgroup full"><label>Authorised by</label><input id="bd-by" class="fi" value="' + escA(nipSettings.advocate) + '"></div>' +
+                '<div class="fgroup full"><label>Remarks</label><input id="bd-remarks" class="fi" placeholder="e.g. shredding done in the presence of clerk D. Pawar"></div>' +
+                '</div>' +
+                '<div class="panel-title" style="margin:8px 0 4px;font-size:11px">1 · Which cases?</div>' +
+                '<div class="grid-2" style="gap:5px">' +
+                '<div class="fgroup full"><label>Paste CNR numbers / case titles (one per line)</label><textarea id="bd-list" rows="5" class="fi" oninput="bulkPreview()" placeholder="MHKO050005642007&#10;R.C.S. 245/2019"></textarea></div>' +
+                '<div class="fgroup"><label>…or every case decided on / before</label><input type="date" id="bd-before" class="fi" oninput="bulkPreview()"></div>' +
+                '<div class="fgroup"><label>only decided cases (safety)</label><select id="bd-onlydec" class="fi"><option value="1">Yes — decided cases only</option><option value="0">No — include pending too</option></select></div>' +
+                '</div>' +
+                '<div id="bd-preview" class="text-xs" style="margin-top:5px;color:#444"></div>' +
+                '<div class="flex-row" style="margin-top:7px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="closeModal(\'m-preview\')">Cancel</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="applyBulkDispose()">🗑️ Record these as disposed</button></div>';
+            g('m-preview').classList.remove('hidden');
+            bulkPreview();
+        }
+        function bulkTargets() {
+            const raw = (g('bd-list').value || '').split(/[\n,;]+/).map(x => x.trim()).filter(Boolean);
+            const before = g('bd-before').value;
+            const onlyDec = g('bd-onlydec').value === '1';
+            const found = [], seen = {};
+            raw.forEach(term => {
+                const t = term.toLowerCase();
+                const hit = CASES.find(c => String(c.cino).toLowerCase() === t) ||
+                    CASES.find(c => (c.type_name + ' ' + c.reg_no + '/' + c.reg_year).toLowerCase() === t) ||
+                    CASES.find(c => String(c.cino).toLowerCase().indexOf(t) >= 0 && t.length > 6) ||
+                    (t.length > 5 ? searchCases(term, 1)[0] : null);
+                if (hit && !seen[hit.cino]) { seen[hit.cino] = 1; found.push(hit); }
+            });
+            if (before) {
+                CASES.forEach(c => {
+                    if (seen[c.cino]) return;
+                    if (c.disposed) return;
+                    if (onlyDec && !c.date_of_decision) return;
+                    if (String(c.date_of_decision || '9999') <= before) { seen[c.cino] = 1; found.push(c); }
+                });
+            }
+            return found;
+        }
+        function bulkPreview() {
+            const box = g('bd-preview');
+            if (!box) return;
+            const list = bulkTargets();
+            const asked = (g('bd-list').value || '').split(/[\n,;]+/).map(x => x.trim()).filter(Boolean);
+            const skipped = asked.filter(x => !list.some(c => String(c.cino).toLowerCase() === x.toLowerCase() || (c.type_name + ' ' + c.reg_no + '/' + c.reg_year).toLowerCase() === x.toLowerCase()));
+            box.innerHTML = list.length
+                ? '🗑️ <b>' + list.length + '</b> case(s) will be marked disposed' + (skipped.length ? ' · <b style="color:#b91c1c">' + skipped.length + ' not found / already disposed</b>' : '') +
+                ' — ' + esc(list.slice(0, 8).map(c => dispLabelSafe(c)).join(', ')) + (list.length > 8 ? ' …' : '')
+                : 'Nothing selected yet — paste CNR numbers or pick a cut-off date.';
+        }
+        function applyBulkDispose() {
+            const list = bulkTargets();
+            if (!list.length) { showToast('⚠️ Nothing matched'); return; }
+            if (!confirm('Mark ' + list.length + ' case(s) as disposed (files destroyed) on ' + fmtDS(g('bd-date').value) + '?')) return;
+            const date = g('bd-date').value || today();
+            const mode = g('bd-mode').value, reason = g('bd-reason').value.trim();
+            const files = +g('bd-files').value || 1, pages = +g('bd-pages').value || 0;
+            const by = g('bd-by').value.trim(), rem = g('bd-remarks').value.trim();
+            let n = 0;
+            list.forEach(c => {
+                const rec = {
+                    id: 'DSP' + Date.now() + '-' + (n + 1), at: new Date().toISOString(),
+                    cino: c.cino, type: c.type_name, regNo: c.reg_no, regYear: c.reg_year, caseNo: c.case_no || '',
+                    petitioner: c.petparty_name || '', respondent: c.resparty_name || '',
+                    court: c.establishment_name || '', estCode: c.establishment_code || '',
+                    decisionDate: c.date_of_decision || '', lastDate: c.date_last_list || '', nextDate: c.date_next_list || '',
+                    disposeDate: date, mode: mode, reason: reason, files: files, pages: pages,
+                    authorisedBy: by, remarks: rem, clearedNext: !!c.date_next_list
+                };
+                if (rec.clearedNext) { c.date_last_list = c.date_next_list || c.date_last_list; c.date_next_list = null; }
+                c.disposed = true;
+                c.disposal = JSON.parse(JSON.stringify(rec));
+                disposedRecords.unshift(rec);
+                n++;
+            });
+            audit('Bulk disposal recorded', n + ' case(s) | ' + dispShortMode(mode) + ' | ' + fmtDS(date) + (reason ? ' | ' + reason : ''));
+            saveAllData();
+            closeModal('m-preview');
+            refreshCaseViews();
+            renderDisposed();
+            showToast('🗑️ ' + n + ' case(s) recorded as disposed');
+        }
+
+        // ── case picker when the dialog is opened without a case ──
+        function dispPickCase() {
+            g('preview-modal-title').textContent = '🗑️ Mark Disposed — choose the case';
+            g('preview-body').innerHTML =
+                '<div class="fgroup"><label>Search MyCases (name / CNR / case no.)</label><input id="dispPickInp" class="fi" placeholder="🔍 start typing…" oninput="dispPickResults(this.value)" autocomplete="off"></div>' +
+                '<div id="dispPickList" class="panel" style="max-height:260px;overflow:auto;margin-top:5px"><span class="text-muted text-sm">Type at least 2 characters.</span></div>' +
+                '<div class="flex-row" style="margin-top:6px;justify-content:flex-end"><button class="btn btn-sm" onclick="closeModal(\'m-preview\')">Cancel</button></div>';
+            g('m-preview').classList.remove('hidden');
+            const i = g('dispPickInp');
+            if (i) i.focus();
+        }
+        function dispPickResults(q) {
+            const box = g('dispPickList');
+            box.innerHTML = searchCases(q, 20).map(c =>
+                '<div class="rec-item" onclick="openDisposeDialog(\'' + escA(c.cino) + '\')"><div><b>' + esc(c.type_name + ' ' + c.reg_no + '/' + c.reg_year) + '</b>' +
+                (isDisposedCase(c) ? ' <span class="badge badge-disposed">Disposed</span>' : '') +
+                ' <span class="text-xs">' + esc(c.cino) + '</span><br><span class="text-xs">' + esc(tr(c.petparty_name, 34)) + ' vs ' + esc(tr(c.resparty_name, 34)) + '</span></div></div>'
+            ).join('') || '<span class="text-muted text-sm">No matching cases.</span>';
+        }
+
+        // ── printing ──
+        function disposedPrintCSS(orient) {
+            return '@page{size:A4 ' + (orient === 'portrait' ? 'portrait' : 'landscape') + ';margin:12mm}' +
+                '*{box-sizing:border-box}body{font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:#000;font-size:9px;margin:0}' +
+                '.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid #0f766e;padding-bottom:5px;margin-bottom:7px}' +
+                '.nm{font-size:17px;font-weight:800;color:#0f766e}.sb{font-size:8.5px;color:#334155}' +
+                'h1{font-size:12.5px;margin:6px 0 2px;text-align:center;text-transform:uppercase;letter-spacing:.4px}' +
+                '.sub2{text-align:center;font-size:9px;color:#334155;margin-bottom:6px}' +
+                'table{width:100%;border-collapse:collapse;margin-top:5px}' +
+                'thead{display:table-header-group}tr{page-break-inside:avoid}' +
+                'th{background:#0f766e;color:#fff;padding:3px 4px;font-size:8px;text-align:left;border:1px solid #0b5f5c}' +
+                'td{border:1px solid #94a3b8;padding:3px 4px;vertical-align:top;font-size:8.5px;word-break:break-word}' +
+                'tbody tr:nth-child(even) td{background:#f8fafc}' +
+                '.tot td{background:#e2e8f0!important;font-weight:800;font-size:9px}' +
+                '.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:8.5px;color:#334155;margin:3px 0 6px}' +
+                '.cert{margin-top:9px;border:1px solid #94a3b8;padding:6px 8px;font-size:8.5px;background:#f8fafc;line-height:1.45}' +
+                '.ft{margin-top:22px;display:flex;justify-content:space-between;font-size:8px;color:#334155}' +
+                '.sg{border-top:1px solid #000;width:52mm;text-align:center;padding-top:3px}' +
+                '.stamp{text-align:right;font-size:8px;color:#475569}';
+        }
+        function disposedHeadBlock(title, sub) {
+            return '<div class="hd"><div><div class="nm">' + esc(nipSettings.officeName) + '</div>' +
+                '<div class="sb">' + esc(nipSettings.officeAddr) + '</div></div>' +
+                '<div class="stamp">Printed<br>' + esc(new Date().toLocaleString('en-IN')) + '</div></div>' +
+                '<h1>' + esc(title) + '</h1><div class="sub2">' + esc(sub) + '</div>';
+        }
+        function printDisposedRegister() {
+            const rows = dispFiltered();
+            if (!rows.length) { showToast('⚠️ Nothing to print — adjust the filters'); return; }
+            const from = (g('dpFrom') && g('dpFrom').value) || '';
+            const to = (g('dpTo') && g('dpTo').value) || '';
+            const orient = (g('dpOrient') && g('dpOrient').value) || 'landscape';
+            let files = 0, pages = 0;
+            rows.forEach(x => { files += (+x.r.files || 0); pages += (+x.r.pages || 0); });
+            const period = from || to ? 'Disposal period: ' + (from ? fmtDS(from) : 'record start') + ' to ' + (to ? fmtDS(to) : fmtDS(today())) : 'All disposed cases on record';
+            const body = rows.map((x, i) => {
+                const r = x.r, c = x.c;
+                return '<tr><td>' + (i + 1) + '</td><td><b>' + fmtDS(r.disposeDate) + '</b></td><td>' + esc(dispLabel(r, c)) + '<br><span style="color:#475569">' + esc(r.cino || '') + '</span></td>' +
+                    '<td>' + esc(dispParties(r, c)) + '</td><td>' + esc(dispCourt(r, c)) + '</td>' +
+                    '<td' + (r.mode && r.mode.indexOf(' — ') > 0 ? ' title="' + escA(r.mode) + '"' : '') + '>' + esc(dispShortMode(r.mode)) + '</td><td style="text-align:right">' + (r.files || 0) + '</td><td style="text-align:right">' + (r.pages || 0) + '</td>' +
+                    '<td>' + esc(r.reason || '—') + '</td><td>' + esc(r.authorisedBy || '—') + '</td><td>' + esc(r.remarks || '—') + '</td></tr>';
+            }).join('');
+            const h = '<!doctype html><html><head><meta charset="UTF-8"><title>Disposed Case Register</title><style>' + disposedPrintCSS(orient) + '</style></head><body>' +
+                disposedHeadBlock('Disposed / Shredded Case Register — नष्ट केलेली प्रकरणे', 'Certificate of records physically destroyed from the office file room') +
+                '<div class="meta"><span><b>Total:</b> ' + rows.length + ' case(s)</span><span><b>Files destroyed:</b> ' + files + '</span>' +
+                '<span><b>Pages shredded:</b> ' + pages.toLocaleString('en-IN') + '</span><span>' + esc(period) + '</span></div>' +
+                '<table><thead><tr><th>#</th><th>Disposal date</th><th>Case / CNR</th><th>Parties</th><th>Court</th><th>Mode of disposal</th><th>Files</th><th>Pages</th><th>Reason</th><th>Authorised by</th><th>Remarks</th></tr></thead>' +
+                '<tbody>' + body +
+                '<tr class="tot"><td colspan="6">TOTAL — ' + rows.length + ' case(s) disposed</td><td style="text-align:right">' + files + '</td><td style="text-align:right">' + pages.toLocaleString('en-IN') + '</td><td colspan="3"></td></tr>' +
+                '</tbody></table>' +
+                '<div class="cert"><b>CERTIFICATION.</b> It is certified that the ' + rows.length + ' case file(s) shown above, comprising ' + pages.toLocaleString('en-IN') +
+                ' page(s)/sheet(s), have been disposed of — i.e. the papers have been ' +
+                esc(dispShortMode(rows[0].r.mode).toLowerCase()) + (rows.length > 1 ? ' (or as noted against each case)' : '') +
+                ' and no original record of these matters is retained in the office file room as on ' + fmtDS(today()) +
+                '. Where originals were called for, they stand returned to the client. This register is maintained as the record of destruction and is open for inspection.</div>' +
+                '<div class="ft"><span>Place: ' + esc(nipSettings.place) + ' · Register page ' + (from || to ? fmtDS(from) + ' — ' + fmtDS(to) : fmtDS(today())) + '</span>' +
+                '<div class="sg">Signature — ' + esc(nipSettings.advocate) + '</div></div>' +
+                '</body></html>';
+            openPrint(h);
+            audit('Disposed register printed', rows.length + ' entries | ' + period);
+            saveAllData();
+        }
+        function printDisposedSummary() {
+            const rows = dispFiltered();
+            if (!rows.length) { showToast('⚠️ No disposed cases to summarise'); return; }
+            const byYear = {}, byMode = {}, byCourt = {};
+            let files = 0, pages = 0, lo = '', hi = '';
+            rows.forEach(x => {
+                const r = x.r;
+                files += (+r.files || 0);
+                pages += (+r.pages || 0);
+                const y = String(r.disposeDate || '').slice(0, 4) || '—';
+                byYear[y] = byYear[y] || { n: 0, f: 0, p: 0 };
+                byYear[y].n++; byYear[y].f += (+r.files || 0); byYear[y].p += (+r.pages || 0);
+                const m = dispShortMode(r.mode);
+                byMode[m] = (byMode[m] || 0) + 1;
+                const cn = dispCourt(r, x.c) || 'Unclassified';
+                byCourt[cn] = (byCourt[cn] || 0) + 1;
+                if (!lo || String(r.disposeDate) < lo) lo = r.disposeDate;
+                if (!hi || String(r.disposeDate) > hi) hi = r.disposeDate;
+            });
+            const grid = (title, obj, cols) => '<tr><td colspan="' + cols + '" style="background:#e2e8f0;font-weight:800;text-align:left">' + esc(title) + '</td></tr>' +
+                Object.keys(obj).sort().map(k => '<tr><td>' + esc(k) + '</td><td style="text-align:right">' + (Array.isArray(obj[k]) ? obj[k].join(' / ') : obj[k]) + '</td></tr>').join('');
+            const yr = Object.keys(byYear).sort().map(y => '<tr><td>' + esc(y) + '</td><td style="text-align:right">' + byYear[y].n + '</td><td style="text-align:right">' + byYear[y].f + '</td><td style="text-align:right">' + byYear[y].p + '</td></tr>').join('');
+            const latest = rows.slice(0, 8).map(x => '<tr><td>' + fmtDS(x.r.disposeDate) + '</td><td>' + esc(dispLabel(x.r, x.c)) + '</td><td>' + esc(tr(dispParties(x.r, x.c), 60)) + '</td><td>' + esc(dispShortMode(x.r.mode)) + '</td><td style="text-align:right">' + (x.r.pages || 0) + '</td></tr>').join('');
+            const h = '<!doctype html><html><head><meta charset="UTF-8"><title>Disposal Summary</title><style>' + disposedPrintCSS('portrait') +
+                'table{font-size:9px}th{padding:4px}td{padding:4px;font-size:9px}</style></head><body>' +
+                disposedHeadBlock('Summary — Disposed (Shredded) Cases', 'One-page certificate-style statement of records destroyed') +
+                '<table><thead><tr><th>Year of disposal</th><th style="text-align:right">Cases</th><th style="text-align:right">Files</th><th style="text-align:right">Pages</th></tr></thead><tbody>' +
+                yr + '<tr class="tot"><td>TOTAL</td><td style="text-align:right">' + rows.length + '</td><td style="text-align:right">' + files + '</td><td style="text-align:right">' + pages.toLocaleString('en-IN') + '</td></tr></tbody></table>' +
+                '<table><thead><tr><th colspan="2">Mode of disposal</th></tr></thead><tbody>' +
+                Object.keys(byMode).sort().map(k => '<tr><td>' + esc(k) + '</td><td style="text-align:right">' + byMode[k] + '</td></tr>').join('') +
+                '</tbody></table>' +
+                '<table><thead><tr><th colspan="2">Court / establishment</th></tr></thead><tbody>' +
+                Object.keys(byCourt).sort().map(k => '<tr><td>' + esc(k) + '</td><td style="text-align:right">' + byCourt[k] + '</td></tr>').join('') +
+                '</tbody></table>' +
+                '<table><thead><tr><th colspan="5">Most recent disposals (latest 8 of ' + rows.length + ')</th></tr><tr><th>Date</th><th>Case</th><th>Parties</th><th>Mode</th><th>Pages</th></tr></thead><tbody>' + latest + '</tbody></table>' +
+                '<div class="cert"><b>CERTIFICATE OF DISPOSAL OF RECORDS.</b> It is certified that during the period <b>' + fmtDS(lo) + ' to ' + fmtDS(hi) + '</b>, ' +
+                rows.length + ' case file(s) comprising ' + files + ' file(s) and ' + pages.toLocaleString('en-IN') + ' page(s)/sheet(s) relating to the matters listed in the Disposed Case Register ' +
+                'have been destroyed (shredded) from the office records of ' + esc(nipSettings.officeName) + ', ' + esc(nipSettings.place) + ', and are no longer available for inspection. ' +
+                'Entries were made in the register against each matter with the reason, mode and authorisation. No original document of these matters is retained by this office except where a client has not collected documents called for, in which case the remark column records the position.</div>' +
+                '<div class="ft"><span>Place: ' + esc(nipSettings.place) + '<br>Date: ' + fmtDS(today()) + '</span><div class="sg">' + esc(nipSettings.advocate) + '</div></div>' +
+                '</body></html>';
+            openPrint(h);
+            audit('Disposal summary printed', rows.length + ' cases | ' + pages + ' pages');
+            saveAllData();
+        }
+        function printDisposalMemo(id) {
+            const r = disposedRecords.find(x => x.id === id);
+            if (!r) return;
+            const c = CASES.find(x => x.cino === r.cino);
+            const row = (k, v) => '<tr><td style="width:38%;background:#f1f5f9;font-weight:700">' + k + '</td><td>' + esc(v || '—') + '</td></tr>';
+            const h = '<!doctype html><html><head><meta charset="UTF-8"><title>Disposal Memo</title><style>' + disposedPrintCSS('portrait') +
+                'table{font-size:10px}td,th{padding:4px 5px;font-size:10px}</style></head><body>' +
+                disposedHeadBlock('Case Disposal Memo — नष्ट केल्याबाबत नोंद', 'To be retained in the office index / sent to the client on request') +
+                '<table><tbody>' +
+                row('Case', dispLabel(r, c) + (r.caseNo ? ' (Case No. ' + r.caseNo + ')' : '')) +
+                row('CNR Number', r.cino) +
+                row('Parties', dispParties(r, c)) +
+                row('Court', dispCourt(r, c)) +
+                row('Date of judgment / order', fmtDS((c && c.date_of_decision) || r.decisionDate)) +
+                row('Last hearing date', fmtDS((c && c.date_last_list) || r.lastDate)) +
+                row('Date disposed of (file destroyed)', fmtDS(r.disposeDate)) +
+                row('Mode of disposal', r.mode) +
+                row('Files destroyed', (r.files || 0)) +
+                row('Pages / sheets shredded', (r.pages || 0)) +
+                row('Reason', r.reason) +
+                row('Authorised / approved by', r.authorisedBy) +
+                row('Remarks', r.remarks) +
+                row('Register entry', r.id + ' · recorded ' + new Date(r.at || Date.now()).toLocaleString('en-IN')) +
+                '</tbody></table>' +
+                '<div class="cert">The records of the above matter stand destroyed on the date shown and no original is retained by this office. Certified copy / record, if needed, may be applied for from the Court Record Room. ' +
+                'Any outstanding professional fee or advance continues to be recoverable from the client.</div>' +
+                '<div class="ft"><span>Place: ' + esc(nipSettings.place) + '<br>Date: ' + fmtDS(r.disposeDate) + '</span>' +
+                '<div style="display:flex;gap:10mm"><div class="sg">Clerk / Record Room</div><div class="sg">' + esc(nipSettings.advocate) + '</div></div></div>' +
+                '</body></html>';
+            openPrint(h);
+        }
+        function exportDisposedCSV() {
+            const rows = dispFiltered();
+            if (!rows.length) { showToast('⚠️ No disposed entries in the current filter'); return; }
+            let csv = 'Disposal Date,Case,CNR,Petitioner,Respondent,Court,Mode,Files,Pages,Reason,Authorised By,Remarks,In MyCases\n';
+            rows.forEach(x => {
+                const r = x.r, c = x.c;
+                csv += [r.disposeDate, dispLabel(r, c), r.cino, (c && c.petparty_name) || r.petitioner, (c && c.resparty_name) || r.respondent,
+                    dispCourt(r, c), r.mode, r.files || 0, r.pages || 0, r.reason, r.authorisedBy, r.remarks, c ? 'yes' : 'archived'
+                ].map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',') + '\n';
+            });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'disposed_cases_' + today() + '.csv';
+            a.click();
+            showToast('📥 Exported ' + rows.length + ' disposed cases');
+        }
+
+        // ══════════════════════════════════════════════════════════════════
+        //  NO-INSTRUCTION PURSIS  (NIP)
+        //  Notice generator for clients who neither attend nor give
+        //  instructions.  Every field is pre-filled from MyCases (parties in
+        //  English + मराठी, court, CNR, dates, stage, pending documents, fee
+        //  dues, earlier pursis).  The notice body can be replaced by your own
+        //  HTML: anything in {{double braces}} is merged with the selected
+        //  case, so an existing notice file keeps working as a tab here.
+        // ══════════════════════════════════════════════════════════════════
+        function nipDocCSS(fs) {
+            return '@page{size:A4;margin:16mm 16mm 14mm 18mm}' +
+                '*{box-sizing:border-box}' +
+                'body{margin:0;font-family:"Segoe UI","Noto Sans Devanagari",Tahoma,Arial,sans-serif;font-size:' + fs + 'px;line-height:1.5;color:#000;background:#fff}' +
+                '.hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #0f766e;padding-bottom:4px;margin-bottom:7px;gap:8px}' +
+                '.nm{font-size:1.55em;font-weight:800;color:#0f766e}' +
+                '.sb{font-size:.72em;color:#334155;line-height:1.35;text-align:right}' +
+                '.ti{text-align:center;font-size:1.18em;font-weight:800;text-decoration:underline;margin:8px 0 2px}' +
+                '.ctr{text-align:center}' +
+                '.mt{width:100%;border-collapse:collapse;margin:6px 0}' +
+                '.mt td{border:1px solid #000;padding:4px 5px;vertical-align:top}' +
+                '.k{width:26%;background:#f1f5f9;font-weight:700}' +
+                'p{margin:6px 0;text-align:justify}' +
+                '.b{font-weight:700}' +
+                '.u{border-bottom:1px dotted #000;display:inline-block;min-width:24px;padding:0 3px}' +
+                '.bx{border:1px solid #000;padding:5px 6px;white-space:pre-wrap}' +
+                '.pl{margin-top:14px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}' +
+                '.sg{min-width:52mm;border-top:1px solid #000;text-align:center;padding-top:3px;font-size:.9em;font-weight:700}' +
+                '.ft{margin-top:14px;font-size:.72em;color:#475569;border-top:1px dashed #94a3b8;padding-top:3px;display:flex;justify-content:space-between;gap:8px}';
+        }
+
+        const NIP_BUILTIN = [
+            {
+                id: 'nip-mr', name: 'नो इन्स्ट्रक्शन पर्सिस — मराठी (क्लायंटला नोटीस)', lang: 'मराठी', builtin: true,
+                html:
+`<div class="hd"><div class="nm">{{officeName}}</div><div class="sb">{{officeAddr}}</div></div>
+<div style="display:flex;justify-content:space-between;font-size:.94em"><span>क्र. : <b>{{noticeNo}}</b></span><span>दिनांक : <b>{{dateLong}}</b></span></div>
+<div class="ti">सूचना न देण्याबाबतचे पर्सिस / अंतिम सूचना पत्र</div>
+<div class="ctr" style="font-size:.86em;color:#334155">(No Instruction Pursis — Final Notice to Client)</div>
+{{titleBlock}}
+<div class="ctr" style="margin-top:4px">प्र. मा. <b>{{courtMr}}</b> यांचे न्यायालयात</div>
+<table class="mt">
+<tr><td class="k">प्रकरण</td><td><b>{{caseTitle}}</b>{{caseNoExtra|raw}}</td></tr>
+<tr><td class="k">CNR क्र. / नोंदणी</td><td>{{cino}} · क्र. {{regNo}} / सन {{regYear}}</td></tr>
+<tr><td class="k">अर्जदार / ग्राहक</td><td><b>{{clientMr}}</b><br>(इंग्रजी : {{client}})<br>{{contactMr|raw}}</td></tr>
+<tr><td class="k">विरुद्ध</td><td>{{respondentMr}}</td></tr>
+<tr><td class="k">पुढील तारीख</td><td>{{nextDateLong}}</td></tr>
+<tr><td class="k">शेवटची सुनावणी / ठेवण</td><td>{{lastDateLong}} · {{statusNow}}</td></tr>
+<tr><td class="k">कार्यालयीन थकबाकी</td><td>{{feeDue}} (जमा {{feePaid}})</td></tr>
+</table>
+<p>महोदय / महोदया,</p>
+<p>उपरोक्त प्रकरणात आपल्यातर्फे माझे कार्यालय वकिली करीत आहे. प्रकरणाची पुढील कार्यावही, जबाब, कागदपत्रे व पुरावे याबाबत अनेक वेळा दूरध्वनीने, संदेशाने व स्मरणपत्राने संपर्क साधिला असतां, <b>ता. {{fromDate}} पासून आजपर्यंत म्हणजे {{days}} दिवस</b> आपल्याकडून कोणतीही लिखित किंवा मौखिक <span class="b">सूचना मिळालेली नाही</span>{{finalLine}}.</p>
+<p>प्रकरणाची पुढील सुनावणी <b>{{nextDateLong}}</b> रोजी लागू आहे. सूचना व कागदपत्रे वेळेवर न मिळाल्यामुळे प्रकरणात होणारा तोटा, खर्च, आदेश किंवा निर्णय याची <span class="b">संपूर्ण जबाबदारी आपलीच</span> राहील; त्याबद्दल कार्यालयाला जबाबदार धरता येणार नाही.</p>
+<p>तरी आपणास अंतिम संधी देऊन नोंद करीत आहे की, <b>ता. {{replyBy}} पर्यंत</b> आवश्यक सूचना, कागदपत्रे व खर्च कार्यालयात जमा केला नाही, तर सदर प्रकरण <span class="b">"Disposed (प्रकरण नष्ट)"</span> म्हणून नोंदवण्यात येईल व फाईलमधील कागदपत्रे <b>श्रेड करून नष्ट</b> करण्यात येतील. नष्ट केल्याबाबतची नोंद कार्यालयीन <b>Disposed Register</b> मध्ये कायम ठेवण्यात येईल व प्रकरणावरील बाकी थकान व खर्च आपल्याकडून वसूल करण्यात येतील.</p>
+{{docsBlock|raw}}
+{{remarkBlock|raw}}
+<p style="margin-top:8px">आपला विश्वासू,</p>
+<div class="pl"><div>ठिकाण : {{place}}<br>ता. {{date}}</div><div class="sg">{{advocate}}</div></div>
+<div class="ft"><span>क्र. {{noticeNo}} · पद्धत : {{mode}} · प्रति : कार्यालयीन फाईल / न्यायालयीन नोंद</span><span>Computer generated — {{today}}</span></div>`,
+                text:
+`{{officeName}}
+{{officeAddr}}
+
+क्र. : {{noticeNo}}   |   दिनांक : {{date}}
+
+विषय : प्रकरण {{caseTitle}} (CNR {{cino}}) — सूचना न देण्याबाबत अंतिम सूचना.
+
+महोदय / महोदया,
+{{clientMr}} यांनतर्फे वरील प्रकरणात माझे कार्यालय वकिली करीत आहे. प्रकरणाच्या पुढील कार्यावहीसाठी व कागदपत्रांसाठी अनेक वेळा संपर्क साधूनही ता. {{fromDate}} पासून {{days}} दिवसांपासून कोणतीही सूचना मिळालेली नाही.
+प्रकरणाची पुढील तारीख {{nextDate}} रोजी {{court}} येथे आहे.
+ता. {{replyBy}} पर्यंत सूचना, कागदपत्रे व खर्च जमा केला नाही, तर प्रकरण "Disposed" म्हणून नोंदवून फाईल नष्ट (shred) करण्यात येईल व त्याचा परिणाम आपलाच राहील.
+{{docsText}}कृपया तातडीने कार्यालयाशी संपर्क साधावा — {{officeMobile}}.
+
+— {{advocate}}, {{place}}`
+            },
+            {
+                id: 'nip-en', name: 'No Instruction Pursis — English (client notice)', lang: 'English', builtin: true,
+                html:
+`<div class="hd"><div class="nm">{{officeName}}</div><div class="sb">{{officeAddr}}</div></div>
+<div style="display:flex;justify-content:space-between;font-size:.94em"><span>Ref. : <b>{{noticeNo}}</b></span><span>Date : <b>{{dateLong}}</b></span></div>
+<div class="ti">NO INSTRUCTION PURSIS — FINAL NOTICE TO CLIENT</div>
+{{titleBlock}}
+<div class="ctr" style="margin-top:4px">In the Hon'ble Court of <b>{{court}}</b></div>
+<table class="mt">
+<tr><td class="k">Case</td><td><b>{{caseTitle}}</b>{{caseNoExtra|raw}}</td></tr>
+<tr><td class="k">CNR / Registration</td><td>{{cino}} · No. {{regNo}} of {{regYear}}</td></tr>
+<tr><td class="k">Client</td><td><b>{{client}}</b><br>{{contactEn|raw}}</td></tr>
+<tr><td class="k">Opposite Party</td><td>{{respondent}}</td></tr>
+<tr><td class="k">Next Date</td><td>{{nextDateLong}}</td></tr>
+<tr><td class="k">On record</td><td>{{lastDateLong}} · {{statusNow}}</td></tr>
+<tr><td class="k">Office dues</td><td>{{feeDue}} (paid {{feePaid}})</td></tr>
+</table>
+<p>Sir / Madam,</p>
+<p>My office is appearing on your behalf in the above case. Despite repeated telephone calls, messages and reminders seeking instructions, documents and the further conduct of the matter, <b>no written or oral instruction has been received from you since {{fromDate}}, i.e. for {{days}} days</b>{{finalLine}}.</p>
+<p>The next date of hearing is <b>{{nextDateLong}}</b>. Should the case suffer any loss, adjournment, adverse order or dismissal for want of instructions and papers, <b>the entire responsibility shall be yours alone</b> and my office shall not be answerable for the same.</p>
+<p>You are hereby given a <b>final opportunity up to {{replyBy}}</b> to supply instructions, papers and the outstanding amount shown above. Failing this, the case shall be entered as <b>"Disposed"</b> and the file — including its pages and papers — <b>shall be shredded and destroyed</b>, with a permanent entry in the office Disposed Register. Outstanding fees and expenses shall remain recoverable from you.</p>
+{{docsBlock|raw}}
+{{remarkBlock|raw}}
+<p style="margin-top:8px">Yours faithfully,</p>
+<div class="pl"><div>Place : {{place}}<br>Dated : {{date}}</div><div class="sg">{{advocate}}</div></div>
+<div class="ft"><span>Ref. {{noticeNo}} · Mode : {{mode}} · Copy : office file / record of the case</span><span>Computer generated notice — {{today}}</span></div>`,
+                text:
+`{{officeName}}
+{{officeAddr}}
+
+Ref. {{noticeNo}} | Dated {{date}}
+
+Subject : No Instruction Pursis — final notice in {{caseTitle}} (CNR {{cino}}).
+
+Sir / Madam,
+My office is appearing for you in the above case. No instruction has been received from you since {{fromDate}} ({{days}} days) despite repeated reminders. The next date of hearing is {{nextDate}} before {{court}}.
+If instructions, papers and the outstanding dues are not supplied by {{replyBy}}, the case will be entered as "Disposed" and the file shredded; the consequences shall be yours alone and the dues remain recoverable.
+{{docsText}}Kindly contact the office on {{officeMobile}} immediately.
+
+— {{advocate}}, {{place}}`
+            },
+            {
+                id: 'nip-court', name: 'न्यायालयीन पर्सिस — मा. न्यायालयासमोर अर्जाच्या स्वरूपात', lang: 'मराठी', builtin: true,
+                html:
+`<div class="ctr" style="font-size:.92em">प्र. मा. <b>{{courtMr}}</b> यांचे न्यायालयात</div>
+<div class="ti">अर्ज क्र. {{noticeNo}}<br>अर्जदाराने सूचना न दिल्याबाबतचा न्यायालयीन पर्सिस</div>
+{{titleBlock}}
+<table class="mt">
+<tr><td class="k">प्रकरण</td><td><b>{{caseTitle}}</b> — क्र. {{regNo}} / सन {{regYear}}</td></tr>
+<tr><td class="k">CNR क्र.</td><td>{{cino}}</td></tr>
+<tr><td class="k">अर्जदार / वादी</td><td>{{clientMr}}<br>{{contactMr|raw}}</td></tr>
+<tr><td class="k">विरुद्ध</td><td>{{respondentMr}}</td></tr>
+<tr><td class="k">पुढील तारीख</td><td>{{nextDateLong}}</td></tr>
+</table>
+<p>मा. न्यायालयासमोर अर्जदारातर्फे हा पर्सिस नोंदविण्यात येतो की,</p>
+<p><span class="b">१)</span> सदर प्रकरण अर्जदारातर्फे मा. न्यायालयात सुरू असून, अर्जदाराने कार्यालयास सक्षम व पुरेशा सूचना दिल्यास प्रकरणाची पुढील कार्यावही, जबाब व पुरावे सादर करणे शक्य होणार आहे.</p>
+<p><span class="b">२)</span> अर्जदाराला अनेक वेळा दूरध्वनी व स्मरणपत्र पाठवून देखील <b>ता. {{fromDate}} पासून {{days}} दिवसांपासून</b> कोणतीही सूचना मिळालेली नाही; त्यामुळे प्रकरणाचा जबाब व इतर कार्यावही करणे शक्य झालेले नाही.</p>
+<p><span class="b">३)</span> सदर पर्सिस नोंदवून अर्जदाराला पुढील कार्यावहीसाठी <b>ता. {{replyBy}} पर्यंत</b> सूचना देण्याची संधी देण्यात यावी; अन्यथा प्रकरण अर्जदारांच्या अनास्थेमुळे निकाली काढण्यात यावे व त्याचा परिणाम अर्जदारांविरुद्ध होईल, अशी नोंद करण्यात यावी.</p>
+{{docsBlock|raw}}
+<p>म्हणून मा. न्यायालयासमोर हा पर्सिस नोंदविण्यात येत आहे.</p>
+<div class="pl"><div>ठिकाण : {{place}}<br>ता. {{date}}</div><div class="sg">अर्जदारातर्फे<br>{{advocate}}</div></div>`,
+                text:
+`प्र. मा. {{courtMr}} यांचे न्यायालयात
+प्रकरण : {{caseTitle}} (CNR {{cino}})
+
+अर्जदारातर्फे न्यायालयीन पर्सिस नोंदविण्यात येतो की, अर्जदार ता. {{fromDate}} पासून {{days}} दिवसांपासून कोणतीही सूचना देत नाही. प्रकरणाची पुढील तारीख {{nextDate}} रोजी आहे. अर्जदाराला ता. {{replyBy}} पर्यंत सूचना देण्याची संधी देऊन सदर पर्सिस नोंदविण्यात यावा, ही नम्र विनंती.
+
+— {{advocate}}`
+            }
+        ];
+
+        const nipFp = v => { if (!v) return ''; const p = String(v).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : String(v); };
+        let nipMissing = [];
+
+        function nipTokens(c, f) {
+            const s = nipSettings, T = {};
+            f = f || {};
+            if (c) Object.keys(c).forEach(k => { T[k] = c[k] == null ? '' : String(c[k]); });
+            const p = c ? profile(c) : {};
+            const fee = c ? (feeData[c.cino] || {}) : {};
+            const due = (fee.courtFeeDue || 0) + (fee.profFeeDue || 0) + (fee.ccFeeDue || 0);
+            const paid = (fee.courtFeePaid || 0) + (fee.profFeePaid || 0) + (fee.ccFeePaid || 0);
+            const pend = c ? (p.documents || []).filter(d => d.status === 'Pending').map(d => d.name) : [];
+            const hist = c ? nipRecords.filter(x => x.cino === c.cino) : [];
+            const docs = String(f.docs || '').trim();
+            const rmk = String(f.remark || '').trim();
+            Object.assign(T, {
+                officeName: s.officeName, office: s.officeName, officeAddr: s.officeAddr, officeMobile: s.mobile,
+                advocate: s.advocate, place: s.place,
+                today: fmtDS(TD), todayLong: fdl(TD), date: fmtDS(f.date || today()), dateISO: f.date || today(), dateLong: fdl(f.date || today()),
+                year: String(new Date((f.date || TD) + 'T00:00:00').getFullYear()),
+                noticeNo: f.no || '', mode: f.mode || '', dueDays: f.due || '', replyBy: fmtDS(f.replyBy), replyByLong: fdl(f.replyBy),
+                warnBy: fmtDS(f.warnBy), warnDays: f.warn || '',
+                cino: c ? c.cino : '', caseNo: c ? (c.case_no || '') : '', regNo: c ? (c.reg_no || '') : '', regYear: c ? (c.reg_year || '') : '',
+                caseType: c ? (c.type_name || '') : '', caseTypeMr: c ? (c.ltype_name || '') : '',
+                caseTitle: c ? (c.type_name + ' ' + c.reg_no + '/' + c.reg_year) : '',
+                caseNoExtra: c && c.case_no ? ' (प्रकरण क्र. ' + c.case_no + ')' : '',
+                court: f.court || (c ? String(c.establishment_name || '').replace(/^IN THE COURT OF /i, '') : ''),
+                courtMr: c ? (c.lestablishment_name || c.lcourt_no_desg_name || '') : '',
+                courtFull: c ? (c.establishment_name || '') : '',
+                designation: c ? (c.lcourt_no_desg_name || '') : '',
+                district: c ? ((c.district_name || '') + ' / ' + (c.state_name || '')) : '',
+                client: f.client || (c ? c.petparty_name : ''), clientMr: f.clientMr || (c ? (c.lpetparty_name || c.petparty_name) : ''),
+                petitioner: c ? (c.petparty_name || '') : '', respondent: c ? (c.resparty_name || '') : '',
+                respondentMr: c ? (c.lresparty_name || '') : '',
+                address: f.address || '', mobile: f.mobile || (c ? (c.client_mobile || '') : ''),
+                nextDate: fmtDS(f.nextDate), nextDateLong: fdl(f.nextDate),
+                lastDate: fmtDS(c && c.date_last_list), lastDateLong: fdl(c && c.date_last_list),
+                decisionDate: fmtDS(c && c.date_of_decision), decisionDateLong: fdl(c && c.date_of_decision),
+                fromDate: fmtDS(f.from), fromDateLong: fdl(f.from), toDate: fmtDS(f.date), days: f.days || '0',
+                statusNow: c ? (isDisposedCase(c) ? 'Disposed — file destroyed on ' + fmtDS((c.disposal || {}).disposeDate) : (c.date_of_decision ? 'Decided on ' + fmtDS(c.date_of_decision) : 'Pending')) : '',
+                stage: p.stage || '', provision: p.provision || '', relief: p.relief || '',
+                chronology: p.chronology || '', operativeOrder: p.operativeOrder || '',
+                caseNotes: c ? (c.updated || '') : '',
+                docsPending: pend.join(', '), docsCount: String(pend.length),
+                feeDue: '₹' + (due || 0).toLocaleString('en-IN'), feePaid: '₹' + (paid || 0).toLocaleString('en-IN'),
+                nipCount: String(hist.length), lastNipDate: hist.length ? fmtDS(hist[hist.length - 1].date) : '—',
+                docs: docs, remark: rmk, title: f.title || '',
+                contactMr: (f.address || '').trim() || (f.mobile || '').trim() ? 'रा. ' + ((f.address || '').trim() || '—') + ((f.mobile || '').trim() ? ' · मो.ब. ' + String(f.mobile).trim() : '') : 'पत्ता / मोबाईल नोंदवणीत नाही',
+                contactEn: (f.address || '').trim() || (f.mobile || '').trim() ? 'Res. ' + ((f.address || '').trim() || '—') + ((f.mobile || '').trim() ? ' · Mobile ' + String(f.mobile).trim() : '') : 'Address / mobile not on record',
+                docsBlock: docs ? '<div class="b" style="margin-top:6px">मागण्यात आलेली कागदपत्रे / सूचना :</div><div class="bx">' + esc(docs) + '</div>' : '',
+                docsText: docs ? 'कागदपत्रे / सूचना : ' + docs + '\n\n' : '',
+                remarkBlock: rmk ? '<div class="b" style="margin-top:6px">अतिरिक्त नोंद :</div><div class="bx">' + esc(rmk) + '</div>' : '',
+                titleBlock: f.title ? '<div class="ctr"><b>' + esc(f.title) + '</b></div>' : '',
+                finalLine: f.final ? (/^mr/.test(f.lang || '') || /मराठी/.test(f.lang || '') ? ', व ही या प्रकरणातील <span class="b">अंतिम सूचना</span> आहे' : ', and this is the <b>final notice</b> in the matter') : ''
+            });
+            Object.keys(f).forEach(k => { if (T[k] === undefined) T[k] = f[k]; });
+            T.cno = T.cino;
+            return T;
+        }
+
+        function nipMerge(src, T, plain) {
+            const miss = [];
+            const out = String(src || '').replace(/\{\{\s*([A-Za-z0-9_.\u0900-\u097F-]+)\s*(?:\|\s*(\w+)\s*)?\}\}/g, function (m, key, mod) {
+                if (!(key in T)) { if (miss.indexOf(key) < 0) miss.push(key); return m; }
+                const raw = T[key] == null ? '' : String(T[key]);
+                let v = (plain || mod === 'raw') ? raw : esc(raw);
+                if (mod === 'date') v = plain ? nipFp(raw) : esc(nipFp(raw));
+                else if (mod === 'longdate') v = plain ? fdl(raw) : esc(fdl(raw));
+                else if (mod === 'upper') v = plain ? raw.toUpperCase() : esc(raw.toUpperCase());
+                else if (mod === 'lower') v = plain ? raw.toLowerCase() : esc(raw.toLowerCase());
+                else if (mod === 'title') v = plain ? nipTitleCase(raw) : esc(nipTitleCase(raw));
+                else if (mod === 'bold') v = '<b>' + v + '</b>';
+                else if (mod === 'dotted') v = '<span class="u">' + (v || '&nbsp;') + '</span>';
+                return v;
+            });
+            nipMissing = miss;
+            return out;
+        }
+        function nipTitleCase(s) { return String(s || '').replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()); }
+
+        function nipTemplate(id) {
+            const all = NIP_BUILTIN.concat(nipTemplates || []);
+            return all.find(x => x.id === id) || all[0] || NIP_BUILTIN[0];
+        }
+        function nipFullDoc(inner, o) {
+            o = o || {};
+            if (/<html[\s>]/i.test(inner)) return inner;
+            return '<!doctype html><html lang="' + (o.lang || 'mr') + '"><head><meta charset="UTF-8"><title>' + esc(o.title || 'No Instruction Pursis') +
+                '</title><style>' + nipDocCSS(o.fontSize || (nipSettings && nipSettings.fontSize) || 13) + '</style></head><body>' + inner + '</body></html>';
+        }
+        function nipHtmlToText(html) {
+            const doc = new DOMParser().parseFromString(/<html[\s>]/i.test(html) ? html : '<!doctype html><html><body>' + html + '</body></html>', 'text/html');
+            const head = doc.head || doc.querySelector('head');
+            if (head) head.querySelectorAll('style,script,link,meta,title').forEach(n => n.remove());
+            doc.querySelectorAll('br').forEach(n => n.replaceWith('\n'));
+            doc.querySelectorAll('p,div,li,tr,h1,h2,h3,h4,td,th').forEach(n => n.insertAdjacentText('afterend', '\n'));
+            return (doc.body.textContent || '').replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+        }
+        function nipVal(id) { const e = g(id); return e ? String(e.value).trim() : ''; }
+
+        function nipFormValues() {
+            const from = nipVal('nip-from');
+            const to = nipVal('nip-date') || today();
+            let days = 0;
+            try { if (from) days = Math.max(0, Math.round((new Date(to + 'T00:00:00') - new Date(from + 'T00:00:00')) / 864e5)); } catch (e) {}
+            const shift = (d, n) => { try { const x = new Date(d + 'T00:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); } catch (e) { return ''; } };
+            const due = +nipVal('nip-due') || nipSettings.dueDays || 7;
+            const warn = +nipVal('nip-warn') || nipSettings.warnDays || 30;
+            return {
+                no: nipVal('nip-no'), date: to, from: from, days: String(days), due: String(due), warn: String(warn),
+                replyBy: shift(to, due), warnBy: shift(to, warn),
+                client: nipVal('nip-client'), clientMr: nipVal('nip-client-mr'), address: nipVal('nip-address'), mobile: nipVal('nip-mobile'),
+                court: nipVal('nip-court'), caseTitle: nipVal('nip-case'), nextDate: nipVal('nip-next'),
+                docs: nipVal('nip-docs'), remark: nipVal('nip-remark'), mode: nipVal('nip-mode'),
+                final: !!(g('nip-final') && g('nip-final').checked),
+                lang: nipVal('nip-lang') || 'mr', title: nipVal('nip-title')
+            };
+        }
+        function nipBuildDoc() {
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : null;
+            const f = nipFormValues();
+            const tpl = nipTemplate(currentNIPTpl);
+            const T = nipTokens(c, f);
+            const merged = nipMerge(tpl.html, T);
+            return {
+                tpl: tpl, f: f, c: c, T: T,
+                doc: nipFullDoc(merged, { lang: /[\u0900-\u097F]/.test(merged) ? 'mr' : 'en', title: 'No Instruction Pursis ' + (f.no || ''), fontSize: +nipVal('nip-font') || nipSettings.fontSize }),
+                text: tpl.text ? nipMerge(tpl.text, T, true) : ''
+            };
+        }
+        function dispLabelSafe(c) { return c ? ((c.type_name || '') + ' ' + (c.reg_no || '') + '/' + (c.reg_year || '')) : ''; }
+
+        function nipPreview() {
+            const frame = g('nipFrame');
+            if (!frame) return;
+            const built = nipBuildDoc();
+            frame.srcdoc = built.doc;
+            const t = g('nipDocTitle');
+            if (t) t.innerHTML = '📄 ' + esc(built.tpl.name) + ' · <b>' + esc(built.f.no || 'ref —') + '</b> · ' +
+                (built.c ? esc(dispLabelSafe(built.c)) + ' (' + esc(built.c.cino) + ')' : 'no case selected') +
+                ' · <span style="color:#b91c1c">' + (built.f.days || 0) + ' days without instructions</span>';
+            const warn = g('nipTokWarn');
+            if (warn) {
+                if (nipMissing.length) {
+                    warn.style.display = 'block';
+                    warn.innerHTML = '⚠️ Field' + (nipMissing.length > 1 ? 's' : '') + ' this app cannot fill (printed as typed): ' +
+                        nipMissing.map(x => '<span class="nip-tok bad">{{' + esc(x) + '}}</span>').join(' ') +
+                        ' — rename it to a field from the list below, or keep it if it must stay blank.';
+                } else warn.style.display = 'none';
+            }
+            const info = g('nipI');
+            if (info) info.textContent = built.c ? ('merged from MyCases · ' + built.c.cino) : 'search a case to auto-fill';
+        }
+        let nipPreviewTimer = null;
+        function nipPreviewSoon() { clearTimeout(nipPreviewTimer); nipPreviewTimer = setTimeout(nipPreview, 220); }
+
+        // ── screen ──
+        function renderNIP() {
+            if (!nipShellBuilt) { nipBuildShell(); nipShellBuilt = true; nipSyncTplSelect(); }
+            nipRenderCasePanel();
+            nipRenderHistory();
+            nipPreview();
+        }
+        function nipField(id, label, val, type) {
+            let inp;
+            if (type === 'area') inp = '<textarea id="' + id + '" rows="3" class="fi" oninput="nipPreviewSoon()">' + esc(val || '') + '</textarea>';
+            else if (type === 'date') inp = '<input type="date" id="' + id + '" class="fi" value="' + escA(val || '') + '" oninput="nipPreviewSoon()">';
+            else if (type === 'number') inp = '<input type="number" min="1" id="' + id + '" class="fi" value="' + escA(val || '') + '" oninput="nipPreviewSoon()">';
+            else inp = '<input id="' + id + '" class="fi" value="' + escA(val || '') + '" oninput="nipPreviewSoon()">';
+            return '<div class="fgroup' + (type === 'full' || type === 'area' ? ' full' : '') + '"><label>' + label + '</label>' + inp + '</div>';
+        }
+        function nipBuildShell() {
+            const modes = ['Registered Post A/D', 'Registered Post', 'Speed Post', 'Email + WhatsApp', 'WhatsApp only', 'In person (acknowledgement taken)', 'Filed before the Hon\'ble Court'];
+            const ui =
+                '<div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">' +
+                '<span class="tb-label">📪 No Instruction Pursis</span>' +
+                '<div class="pos-relative" style="flex:1;min-width:170px">' +
+                '<input type="text" id="nipSearch" placeholder="🔍 MyCases — client name / CNR / case no…" autocomplete="off" oninput="nipSearchCases(this.value)">' +
+                '<div class="search-dropdown" id="nipDropdown"></div></div>' +
+                '<select id="nipTpl" onchange="nipSetTpl(this.value)" title="Notice template"></select>' +
+                '<select id="nipLang" onchange="nipSetLang(this.value)" title="Language"><option value="mr">मराठी</option><option value="en">English</option></select>' +
+                '<input type="number" id="nip-font" min="9" max="22" step="0.5" value="' + (+nipSettings.fontSize || 13) + '" onchange="nipPreviewSoon()" title="Print font size" style="width:56px">' +
+                '<button class="btn btn-sm" onclick="nipOpenSettings()">⚙ Office &amp; templates</button>' +
+                '<button class="btn btn-gold btn-sm" onclick="nipPrint()">🖨️ Print / PDF</button>' +
+                '<button class="btn btn-success btn-sm" onclick="nipWhatsApp()">💬 WhatsApp</button>' +
+                '<button class="btn btn-primary btn-sm" onclick="nipSave()">💾 Record notice</button>' +
+                '<span class="text-muted text-xs" id="nipI"></span></div>';
+            const left =
+                '<div class="nip-col">' +
+                '<div class="panel"><div class="panel-title">📋 MyCases record <span id="nipCaseBadge"></span></div>' +
+                '<div class="panel-body" id="nipCasePanel"></div>' +
+                '<div class="flex-row no-print" style="margin-top:5px;gap:4px;flex-wrap:wrap">' +
+                '<button class="btn btn-xs" onclick="nipShowCaseJson()">🧾 all fields</button>' +
+                '<button class="btn btn-xs" onclick="nipOpenCase()">👁 open case</button>' +
+                '<button class="btn btn-xs" onclick="nipOpenNakal()">📜 nakal</button>' +
+                '<button class="btn btn-xs" onclick="nipBill()">🧾 bill</button>' +
+                '<button class="btn btn-xs btn-danger" onclick="nipDispose()">🗑️ dispose file</button></div></div>' +
+                '<div class="panel"><div class="panel-title">✍️ Notice details</div>' +
+                '<div class="grid-2" style="gap:5px">' +
+                nipField('nip-no', 'Notice / pursis reference', '') +
+                nipField('nip-date', 'Notice date', today(), 'date') +
+                nipField('nip-client', 'Client (addressee)', '') +
+                nipField('nip-client-mr', 'Client — मराठी', '') +
+                nipField('nip-address', 'Client address', '') +
+                nipField('nip-mobile', 'Client mobile', '') +
+                nipField('nip-case', 'Case line', '') +
+                nipField('nip-court', 'Court', '') +
+                nipField('nip-next', 'Next hearing date', '', 'date') +
+                nipField('nip-from', 'No instruction since', '', 'date') +
+                nipField('nip-due', 'Reply within (days)', String(nipSettings.dueDays || 7), 'number') +
+                nipField('nip-warn', 'Destroy file after (days)', String(nipSettings.warnDays || 30), 'number') +
+                nipField('nip-docs', 'Instructions / documents called for', '', 'area') +
+                nipField('nip-remark', 'Extra note printed on the notice', '', 'area') +
+                '<div class="fgroup"><label>Dispatch mode</label><select id="nip-mode" class="fi" onchange="nipPreviewSoon()">' + modes.map(m => '<option>' + esc(m) + '</option>').join('') + '</select></div>' +
+                '<div class="fgroup"><label>Extra title line (optional)</label><input id="nip-title" class="fi" oninput="nipPreviewSoon()" placeholder="blank = template title"></div>' +
+                '<div class="fgroup full"><label style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="nip-final" onchange="nipPreviewSoon()"> send as <b>final notice</b> (adds a final-notice line)</label></div>' +
+                '</div>' +
+                '<div id="nipTokWarn" class="nip-warn" style="display:none;margin-top:5px"></div>' +
+                '<div class="panel-title" style="margin:7px 0 4px;font-size:10px">🧩 Merge fields — click to copy into your template</div>' +
+                '<div class="nip-toks" id="nipToks"></div></div></div>';
+            const right =
+                '<div class="nip-col">' +
+                '<div class="nip-paper"><div class="npb-h"><span id="nipDocTitle">Preview</span>' +
+                '<span class="flex-row" style="gap:4px">' +
+                '<button class="btn btn-xs" onclick="nipCopyText()">📋 text</button>' +
+                '<button class="btn btn-xs" onclick="nipDownload()">⬇️ HTML</button>' +
+                '<button class="btn btn-xs" onclick="nipEditTpl()">✏️ template</button>' +
+                '<button class="btn btn-xs btn-gold" onclick="nipPrint()">🖨️ print</button></span></div>' +
+                '<iframe class="nip-frame" id="nipFrame" title="No Instruction Pursis preview"></iframe></div>' +
+                '<div class="panel no-print"><div class="panel-title">📪 NIP Register — notices issued <span class="text-xs" id="nipHistCount" style="font-weight:400;color:#64748b"></span></div>' +
+                '<div class="flex-row" style="gap:4px;flex-wrap:wrap;margin-bottom:4px">' +
+                '<input type="text" id="nipQ" placeholder="🔍 client / case / CNR / ref…" oninput="nipRenderHistory()" style="flex:1;min-width:120px;font-size:9px;padding:2px 5px">' +
+                '<input type="date" id="nhFrom" onchange="nipRenderHistory()" title="From date" style="font-size:9px;padding:2px 4px">' +
+                '<input type="date" id="nhTo" onchange="nipRenderHistory()" title="To date" style="font-size:9px;padding:2px 4px">' +
+                '<button class="btn btn-xs btn-gold" onclick="printNIPRegister()">🖨️ Print list with dates</button>' +
+                '<button class="btn btn-xs" onclick="exportNIPCSV()">📥 CSV</button></div>' +
+                '<div class="table-wrap" style="max-height:250px;overflow:auto"><table><thead><tr><th>#</th><th>Date</th><th>Ref.</th><th>Case</th><th>Client</th><th>Days</th><th>Reply by</th><th>Mode</th><th>Sent</th><th class="no-print">Action</th></tr></thead><tbody id="nipHist"></tbody></table></div>' +
+                '</div></div>';
+            const embed =
+                '<div class="nip-paper" style="flex:1"><div class="npb-h"><span>🔗 External NIP app — <b>' + esc(nipSettings.embedUrl) +
+                '</b> · reads every MyCases field through <b>window.NIP</b> / postMessage</span>' +
+                '<span class="flex-row" style="gap:4px">' +
+                '<button class="btn btn-xs" onclick="nipPushToFrame()">📤 send case data</button>' +
+                '<button class="btn btn-xs" onclick="window.open(nipSettings.embedUrl,\'_blank\')">↗ new tab</button>' +
+                '<button class="btn btn-xs btn-danger" onclick="nipClearEmbed()">✕ use built-in screen</button></span></div>' +
+                '<iframe class="nip-frame" id="nipExt" src="' + escA(nipSettings.embedUrl) + '" style="height:calc(100vh - 210px)" onload="nipPushToFrame()" title="External NIP application"></iframe></div>';
+            g('nipUI').innerHTML = ui + (nipSettings.embedUrl ? embed : '<div class="nip-shell">' + left + right + '</div>');
+            if (!nipSettings.embedUrl) {
+                g('nip-no').value = nipNextNo();
+                if (currentNIPCino) nipFillFromCase(currentNIPCino);
+                nipRenderTokens();
+            }
+        }
+        function nipBill() {
+            const c = CASES.find(x => x.cino === currentNIPCino);
+            if (!c) { showToast('🔍 Select a case first'); return; }
+            currentBillingCase = c.cino;
+            goTab('billing');
+        }
+        function nipNextNo() {
+            const y = new Date().getFullYear();
+            const pfx = (nipSettings.prefix || 'NIP/') + y + '/';
+            let n = nipRecords.filter(r => String(r.no || '').indexOf(pfx) === 0).length + 1;
+            let no = pfx + String(n).padStart(3, '0');
+            while (nipRecords.some(r => r.no === no)) { n++; no = pfx + String(n).padStart(3, '0'); }
+            return no;
+        }
+        function nipSyncTplSelect() {
+            const sel = g('nipTpl');
+            if (!sel) return;
+            sel.innerHTML = NIP_BUILTIN.concat(nipTemplates || []).map(t => '<option value="' + escA(t.id) + '">' + esc(t.name) + '</option>').join('');
+            if (!Array.prototype.some.call(sel.options, o => o.value === currentNIPTpl)) currentNIPTpl = NIP_BUILTIN[0].id;
+            sel.value = currentNIPTpl;
+        }
+        function nipSetTpl(v) {
+            currentNIPTpl = v;
+            const t = nipTemplate(v), lg = g('nipLang');
+            if (lg) lg.value = /मराठी|Marathi/.test(t.lang || '') ? 'mr' : 'en';
+            nipRenderTokens();
+            nipPreview();
+        }
+        function nipSetLang(v) {
+            const want = v === 'mr' ? 'मराठी' : 'English';
+            const hit = NIP_BUILTIN.concat(nipTemplates || []).find(t => String(t.lang || '').indexOf(want) === 0);
+            if (hit) { currentNIPTpl = hit.id; const s = g('nipTpl'); if (s) s.value = hit.id; }
+            nipPreview();
+        }
+        const NIP_CORE_TOKENS = ['officeName', 'officeAddr', 'advocate', 'place', 'today', 'dateLong', 'noticeNo', 'caseTitle', 'cino', 'regNo', 'regYear',
+            'client', 'clientMr', 'petitioner', 'respondent', 'respondentMr', 'court', 'courtMr', 'designation', 'nextDate', 'lastDate', 'decisionDate',
+            'fromDate', 'days', 'replyBy', 'warnBy', 'dueDays', 'mode', 'docs', 'docsPending', 'feeDue', 'feePaid', 'nipCount', 'lastNipDate', 'stage',
+            'provision', 'address', 'mobile', 'statusNow', 'caseNotes', 'title'];
+        function nipRenderTokens() {
+            const box = g('nipToks');
+            if (!box) return;
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : null;
+            const keys = NIP_CORE_TOKENS.slice();
+            if (c) Object.keys(c).forEach(k => { if (keys.indexOf(k) < 0) keys.push(k); });
+            box.innerHTML = keys.map(k => '<span class="nip-tok" title="Click to copy {{' + esc(k) + '}}" onclick="copyText(\'{{' + esc(k) + '}}\',\'{{' + esc(k) + '}} copied\')">{{' + esc(k) + '}}</span>').join('');
+        }
+        function nipSearchCases(q) {
+            const dd = g('nipDropdown');
+            if (!dd) return;
+            const res = searchCases(q, 16);
+            if (!q || q.length < 2 || !res.length) { dd.style.display = 'none'; return; }
+            dd.innerHTML = res.map(c => '<div class="sd-item" onclick="nipSelectCase(\'' + escA(c.cino) + '\')">' +
+                '<div class="sd-title">' + esc(c.type_name + ' ' + c.reg_no + '/' + c.reg_year) + (isDisposedCase(c) ? ' <span class="badge badge-disposed">Disposed</span>' : '') + '</div>' +
+                '<div class="sd-sub">' + esc(tr(c.petparty_name, 30)) + ' vs ' + esc(tr(c.resparty_name, 24)) + ' · ' + esc(c.cino) + '</div></div>').join('');
+            dd.style.display = 'block';
+        }
+        function nipSelectCase(cino) {
+            if (!g('nip-client')) goTab('nip');
+            setTimeout(() => nipFillFromCase(cino), 60);
+        }
+        function nipFillFromCase(cino) {
+            const c = CASES.find(x => x.cino === cino);
+            if (!c) { showToast('⚠️ Case not found in MyCases'); return; }
+            if (!g('nip-client')) { goTab('nip'); setTimeout(() => nipFillFromCase(cino), 120); return; }
+            currentNIPCino = c.cino;
+            const set = (id, v) => { const e = g(id); if (e) e.value = v || ''; };
+            const dd = g('nipDropdown');
+            if (dd) dd.style.display = 'none';
+            const s = g('nipSearch');
+            if (s) s.value = c.type_name + ' ' + c.reg_no + '/' + c.reg_year + ' — ' + c.petparty_name;
+            set('nip-client', c.petparty_name || '');
+            set('nip-client-mr', c.lpetparty_name || c.petparty_name || '');
+            set('nip-mobile', c.client_mobile || '');
+            set('nip-case', dispLabelSafe(c) + (c.case_no ? ' (प्रकरण क्र. ' + c.case_no + ')' : ''));
+            set('nip-court', String(c.establishment_name || '').replace(/^IN THE COURT OF /i, ''));
+            set('nip-next', c.date_next_list || '');
+            set('nip-from', c.date_last_list || c.date_next_list || today());
+            if (g('nip-no')) set('nip-no', nipNextNo());
+            const pend = (profile(c).documents || []).filter(d => d.status === 'Pending').map(d => d.name);
+            if (pend.length && g('nip-docs') && !String(g('nip-docs').value).trim()) set('nip-docs', pend.join('\n'));
+            nipRenderCasePanel();
+            nipRenderTokens();
+            nipPreview();
+            showToast('✅ ' + dispLabelSafe(c) + ' loaded into the pursis');
+        }
+        function nipRenderCasePanel() {
+            const box = g('nipCasePanel'), badge = g('nipCaseBadge');
+            if (!box) return;
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : null;
+            if (badge) badge.innerHTML = c ? statusBadge(getStatus(c)) : '';
+            if (!c) {
+                box.innerHTML = '<div class="text-sm" style="color:#64748b;padding:5px 0">👆 Search a case above — parties (English + मराठी), court, CNR, dates, stage, pending documents, fee dues and earlier pursis are then merged into the notice automatically.</div>';
+                return;
+            }
+            const p = profile(c), fee = feeData[c.cino] || {};
+            const due = (fee.courtFeeDue || 0) + (fee.profFeeDue || 0) + (fee.ccFeeDue || 0);
+            const pend = (p.documents || []).filter(d => d.status === 'Pending').map(d => d.name);
+            const hist = nipRecords.filter(x => x.cino === c.cino);
+            const last = hist.length ? hist[hist.length - 1] : null;
+            const row = (k, v, raw) => '<div class="k">' + k + '</div><div class="v">' + (raw ? v : esc(v || '')) + '</div>';
+            box.innerHTML = '<div class="nip-kv">' +
+                row('CNR', c.cino) + row('Case', dispLabelSafe(c) + (c.case_no ? ' · ' + c.case_no : '')) +
+                row('Court', c.establishment_name) + row('Designation', c.lcourt_no_desg_name || c.lestablishment_name || '') +
+                row('Petitioner', c.petparty_name) + row('Respondent', c.resparty_name) +
+                row('याचिकाकर्ता', c.lpetparty_name) + row('प्रतिवादी', c.lresparty_name) +
+                row('Type', (c.type_name || '') + ' / ' + (c.ltype_name || '')) +
+                row('Registration', (c.reg_no || '') + ' / सन ' + (c.reg_year || '') + (c.fil_no ? ' (filing ' + c.fil_no + '/' + c.fil_year + ')' : '')) +
+                row('District', (c.district_name || '') + ' / ' + (c.state_name || '')) +
+                row('Next date', fdl(c.date_next_list)) + row('Last date', fmtDS(c.date_last_list)) +
+                row('Decision', c.date_of_decision ? fmtDS(c.date_of_decision) : 'Pending') + row('Status', statusBadge(getStatus(c)), 1) +
+                row('Stage', p.stage) + row('Provision', p.provision) +
+                row('Pending docs', pend.length ? pend.join(', ') : 'all received') +
+                row('Fee due', '₹' + (due || 0).toLocaleString('en-IN')) + row('Client mobile', c.client_mobile || 'not recorded') +
+                row('Pursis sent', hist.length + (last ? ' · last ' + fmtDS(last.date) + ' (ref ' + (last.no || '—') + ')' : '')) +
+                row('Office notes', c.updated || p.chronology) +
+                '</div>' +
+                (hist.length ? '<div class="nip-ok" style="margin-top:5px">📪 ' + hist.length + ' pursis already issued' + (hist.length >= 2 ? ' — if there is still no reply, record the file as disposed (🗑️ button below).' : '') + '</div>' : '') +
+                (isDisposedCase(c) ? '<div class="nip-warn" style="margin-top:5px">🗑️ This case is already marked <b>Disposed</b> (file destroyed on ' + fmtDS((c.disposal || {}).disposeDate) + ').</div>' : '');
+        }
+        function nipShowCaseJson() {
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : null;
+            if (!c) { showToast('🔍 Select a case first'); return; }
+            const data = {
+                case: c, officeNotes: profile(c), fee: feeData[c.cino] || {}, disposal: c.disposal || null,
+                nipHistory: nipRecords.filter(x => x.cino === c.cino).map(x => ({ date: x.date, no: x.no, days: x.days, mode: x.mode, channel: x.channel, remarks: x.remark }))
+            };
+            const txt = JSON.stringify(data, null, 2);
+            g('preview-modal-title').textContent = '🧾 Full MyCases record — ' + dispLabelSafe(c);
+            g('preview-body').innerHTML =
+                '<div class="text-xs" style="margin-bottom:4px">Every field below can be used in any NIP template as <b>{{name}}</b> (e.g. <b>{{petparty_name}}</b>, <b>{{date_next_list}}</b>, <b>{{lcourt_no_desg_name}}</b>), and is handed to an embedded NIP app through <b>window.NIP</b>.</div>' +
+                '<textarea id="nipJsonBox" class="nip-code" readonly style="min-height:300px">' + esc(txt) + '</textarea>' +
+                '<div class="flex-row" style="margin-top:6px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="copyText(document.getElementById(\'nipJsonBox\').value,\'📋 case record copied\')">📋 Copy all</button>' +
+                '<button class="btn btn-primary btn-sm" onclick="closeModal(\'m-preview\')">Close</button></div>';
+            g('m-preview').classList.remove('hidden');
+        }
+        function nipOpenCase() {
+            const c = CASES.find(x => x.cino === currentNIPCino);
+            if (!c) { showToast('🔍 Select a case first'); return; }
+            goTab('allcases');
+            setTimeout(() => viewCase(c._i), 60);
+        }
+        function nipOpenNakal() {
+            const c = CASES.find(x => x.cino === currentNIPCino);
+            if (!c) { showToast('🔍 Select a case first'); return; }
+            goTab('nakal');
+            setTimeout(() => { try { selectNakalCase(c.cino); } catch (e) { showToast('⚠️ Nakal screen could not be opened'); } }, 80);
+        }
+        function nipDispose() {
+            const c = CASES.find(x => x.cino === currentNIPCino);
+            if (!c) { showToast('🔍 Select a case first'); return; }
+            const f = nipFormValues();
+            openDisposeDialog(c._i);
+            const r = g('dp-reason');
+            if (r && !r.value) r.value = 'No instructions despite No Instruction Pursis dated ' + fmtDS(f.date) + ' (ref ' + (f.no || '—') + ')';
+            const rm = g('dp-remarks');
+            if (rm && !rm.value) rm.value = 'Pursis ' + (f.no || '') + ' sent by ' + (f.mode || 'post') + '; reply was due ' + fmtDS(f.replyBy) + '. Client silent for ' + (f.days || 0) + ' days.';
+        }
+        function nipCopyText() { const b = nipBuildDoc(); copyText(b.text || nipHtmlToText(b.doc), '📋 Notice text copied — paste anywhere'); }
+        function nipDownload() {
+            const b = nipBuildDoc();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([b.doc], { type: 'text/html' }));
+            a.download = 'NIP_' + String(b.f.no || 'notice').replace(/[^\w.\-]/g, '') + (b.c ? '_' + b.c.cino : '') + '.html';
+            a.click();
+            showToast('⬇️ Notice HTML downloaded');
+        }
+        function nipPrint() {
+            const b = nipBuildDoc();
+            if (!b.c && !b.f.client) { showToast('⚠️ Pick a case (or type the client name) before printing'); return; }
+            openPrint(b.doc);
+            nipTouchRecord('Print');
+            nipRenderHistory();
+        }
+        function nipWhatsApp() {
+            const b = nipBuildDoc();
+            const c = b.c;
+            const txt = b.text || nipHtmlToText(b.doc);
+            const ph = String(b.f.mobile || (c && c.client_mobile) || '').replace(/\D/g, '').replace(/^0/, '');
+            if (!c && !ph) { showToast('⚠️ Search and select a case first'); return; }
+            if (ph.length < 10) { showToast('⚠️ Client mobile is missing — type it in the form above'); const m = g('nip-mobile'); if (m) m.focus(); return; }
+            window.open('https://wa.me/' + (ph.length === 10 ? '91' + ph : ph) + '?text=' + encodeURIComponent(txt), '_blank');
+            audit('No Instruction Pursis opened on WhatsApp', (c ? dispLabelSafe(c) + ' | ' : '') + (b.f.no || '') + ' → ' + ph);
+            nipTouchRecord('WhatsApp');
+            saveAllData();
+            nipRenderHistory();
+        }
+        function nipTouchRecord(channel) {
+            const last = nipRecords.find(x => x.no === nipVal('nip-no') && x.cino === currentNIPCino);
+            if (!last) return;
+            if (!last.channel || last.channel.indexOf(channel) < 0) last.channel = (last.channel && last.channel !== 'Saved' ? last.channel + ' + ' : '') + channel;
+            last.sentAt = new Date().toISOString();
+        }
+        function nipSave() {
+            const b = nipBuildDoc();
+            if (!b.f.client) { showToast('⚠️ Client name is required'); return; }
+            const rec = {
+                id: 'NIP' + Date.now(), at: new Date().toISOString(),
+                date: b.f.date, no: b.f.no, cino: b.c ? b.c.cino : '', caseLabel: b.c ? dispLabelSafe(b.c) : (b.f.caseTitle || ''),
+                client: b.f.client, clientMr: b.f.clientMr, address: b.f.address, mobile: b.f.mobile,
+                court: b.f.court, nextDate: b.f.nextDate, from: b.f.from, days: b.f.days,
+                dueDays: b.f.due, replyBy: b.f.replyBy, warnBy: b.f.warnBy, warnDays: b.f.warn,
+                mode: b.f.mode, docs: b.f.docs, remark: b.f.remark, final: b.f.final, lang: b.f.lang,
+                tpl: b.tpl.id, templateName: b.tpl.name, channel: 'Saved', values: b.f
+            };
+            const old = nipRecords.findIndex(x => x.no === rec.no && x.cino === rec.cino && x.date === rec.date);
+            if (old >= 0) {
+                rec.id = nipRecords[old].id;
+                if (nipRecords[old].channel && nipRecords[old].channel !== 'Saved') rec.channel = nipRecords[old].channel;
+                nipRecords[old] = rec;
+            } else nipRecords.unshift(rec);
+            if (nipRecords.length > 800) nipRecords = nipRecords.slice(0, 800);
+            audit('No Instruction Pursis recorded', (rec.caseLabel || '') + ' | ' + rec.no + ' | ' + fmtDS(rec.date) + ' | ' + rec.days + ' days silent');
+            saveAllData();
+            nipRenderHistory();
+            nipRenderCasePanel();
+            showToast('💾 Notice ' + rec.no + ' recorded in the NIP register');
+            if (nipSettings.autoDisposeWarn && +rec.days >= 60) setTimeout(() => showToast('⚠️ ' + rec.days + ' days of silence — consider 🗑️ dispose file'), 1000);
+        }
+        function nipFilteredHistory() {
+            const q = (nipVal('nipQ') || '').toLowerCase().trim();
+            const from = nipVal('nhFrom'), to = nipVal('nhTo');
+            return nipRecords.map((r, i) => ({ r: r, i: i }))
+                .filter(x => {
+                    const r = x.r;
+                    if (from && String(r.date || '') < from) return false;
+                    if (to && String(r.date || '') > to) return false;
+                    if (q && ![r.no, r.caseLabel, r.cino, r.client, r.clientMr, r.court, r.mode, r.remark, r.docs].join(' ').toLowerCase().includes(q)) return false;
+                    return true;
+                })
+                .sort((a, b) => String(b.r.date || '').localeCompare(String(a.r.date || '')) || String(b.r.at || '').localeCompare(String(a.r.at || '')));
+        }
+        function nipRenderHistory() {
+            const tb = g('nipHist');
+            if (!tb) return;
+            const cnt = g('nipHistCount');
+            if (cnt) {
+                const silent = nipRecords.filter(r => { const c = CASES.find(x => x.cino === r.cino); return !c || (!c.date_of_decision && !isDisposedCase(c)); }).length;
+                cnt.textContent = '(' + nipRecords.length + ' recorded · ' + silent + ' still awaiting reply)';
+            }
+            const rows = nipFilteredHistory();
+            if (!rows.length) {
+                tb.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:12px;color:#64748b">' + (nipRecords.length ? 'No notice matches this filter.' : 'No pursis recorded yet — fill the form and press 💾 Record notice.') + '</td></tr>';
+                return;
+            }
+            tb.innerHTML = rows.map((x, n) => {
+                const r = x.r;
+                return '<tr><td>' + (n + 1) + '</td><td>' + fmtDS(r.date) + '</td><td><b>' + esc(r.no || '—') + '</b></td>' +
+                    '<td class="w" title="' + escA(r.cino || '') + '">' + esc(r.caseLabel || '—') + '</td>' +
+                    '<td class="w" title="' + escA((r.clientMr || '') + ' / ' + (r.client || '')) + '">' + esc(tr(r.clientMr || r.client, 24)) + '</td>' +
+                    '<td>' + (r.days || '—') + '</td><td>' + fmtDS(r.replyBy) + '</td>' +
+                    '<td class="w" style="font-size:8px">' + esc(tr(r.mode, 18)) + '</td><td>' + esc(r.channel || '—') + '</td>' +
+                    '<td class="no-print" style="white-space:nowrap">' +
+                    '<button class="btn btn-xs" onclick="nipLoadRecord(' + x.i + ')" title="Load into the form">✏️</button> ' +
+                    '<button class="btn btn-xs btn-gold" onclick="nipLoadRecord(' + x.i + ');setTimeout(nipPrint,240)" title="Print again">🖨️</button> ' +
+                    '<button class="btn btn-xs btn-success" onclick="nipLoadRecord(' + x.i + ');setTimeout(nipWhatsApp,240)" title="Send on WhatsApp">💬</button> ' +
+                    '<button class="btn btn-xs btn-danger" onclick="nipDeleteRecord(' + x.i + ')" title="Delete entry">🗑</button></td></tr>';
+            }).join('');
+        }
+        function nipLoadRecord(i) {
+            const r = nipRecords[i];
+            if (!r) return;
+            if (currentTab !== 'nip') goTab('nip');
+            setTimeout(() => {
+                if (r.cino && CASES.some(x => x.cino === r.cino)) nipFillFromCase(r.cino);
+                const set = (id, v) => { const e = g(id); if (e) e.value = v == null ? '' : v; };
+                set('nip-no', r.no); set('nip-date', r.date); set('nip-client', r.client); set('nip-client-mr', r.clientMr);
+                set('nip-address', r.address); set('nip-mobile', r.mobile); set('nip-case', r.caseLabel); set('nip-court', r.court);
+                set('nip-next', r.nextDate); set('nip-from', r.from); set('nip-due', r.dueDays); set('nip-warn', r.warnDays);
+                set('nip-docs', r.docs); set('nip-remark', r.remark);
+                const fm = g('nip-mode'); if (fm) fm.value = r.mode || fm.value;
+                const ff = g('nip-final'); if (ff) ff.checked = !!r.final;
+                const fl = g('nipLang'); if (fl) fl.value = r.lang || 'mr';
+                if (r.tpl) { currentNIPTpl = r.tpl; const s = g('nipTpl'); if (s) s.value = r.tpl; }
+                nipPreview();
+                showToast('✏️ Notice ' + (r.no || '') + ' loaded');
+            }, 90);
+        }
+        function nipDeleteRecord(i) {
+            const r = nipRecords[i];
+            if (!r) return;
+            if (!confirm('Delete NIP entry ' + (r.no || '') + ' (' + (r.client || '') + ')?')) return;
+            nipRecords.splice(i, 1);
+            audit('No Instruction Pursis entry deleted', (r.caseLabel || '') + ' | ' + (r.no || ''));
+            saveAllData();
+            nipRenderHistory();
+            nipRenderCasePanel();
+        }
+        function printNIPRegister() {
+            const rows = nipFilteredHistory();
+            if (!rows.length) { showToast('⚠️ No notices recorded for this filter'); return; }
+            const from = nipVal('nhFrom'), to = nipVal('nhTo');
+            const body = rows.map((x, i) => {
+                const r = x.r;
+                return '<tr><td>' + (i + 1) + '</td><td>' + fmtDS(r.date) + '</td><td>' + esc(r.no || '') + '</td><td>' + esc(r.caseLabel || '') +
+                    '<br><span style="color:#475569">' + esc(r.cino || '') + '</span></td><td>' + esc((r.clientMr || '') + (r.client ? ' / ' + r.client : '')) + '</td>' +
+                    '<td style="text-align:right">' + (r.days || '—') + '</td><td>' + fmtDS(r.replyBy) + '</td><td>' + esc(r.mode || '') + '</td>' +
+                    '<td>' + esc(r.channel || '') + '</td><td>' + esc(r.remark || '') + '</td></tr>';
+            }).join('');
+            const h = '<!doctype html><html><head><meta charset="UTF-8"><title>No Instruction Pursis Register</title><style>' + disposedPrintCSS('landscape') +
+                '</style></head><body>' +
+                disposedHeadBlock('No Instruction Pursis Register — सूचना न देण्याबाबत पाठवलेल्या नोटिसी',
+                    'Notices issued to clients who did not attend or give instructions' +
+                    (from || to ? ' · period ' + (from ? fmtDS(from) : '—') + ' to ' + (to ? fmtDS(to) : fmtDS(today())) : '')) +
+                '<div class="meta"><span><b>Notices:</b> ' + rows.length + '</span><span><b>Clients silent over 60 days:</b> ' + rows.filter(x => +x.r.days >= 60).length +
+                '</span><span><b>Printed:</b> ' + esc(new Date().toLocaleString('en-IN')) + '</span></div>' +
+                '<table><thead><tr><th>#</th><th>Notice date</th><th>Ref. no.</th><th>Case / CNR</th><th>Client</th><th>Days without instruction</th><th>Reply by</th><th>Mode of dispatch</th><th>Sent through</th><th>Remarks</th></tr></thead><tbody>' + body + '</tbody></table>' +
+                '<div class="cert">It is certified that the notices shown above were issued to the respective clients from the office of ' + esc(nipSettings.officeName) +
+                ', ' + esc(nipSettings.place) + ', in the matters stated, for want of instructions and/or attendance. Where no reply was received within the time granted, the matter was dealt with as per the instructions then on record and, where so recorded, the case file was disposed of and entered in the Disposed Register.</div>' +
+                '<div class="ft"><span>Place: ' + esc(nipSettings.place) + ' · Date: ' + fmtDS(today()) + '</span><div class="sg">' + esc(nipSettings.advocate) + '</div></div>' +
+                '</body></html>';
+            openPrint(h);
+            audit('NIP register printed', rows.length + ' notices');
+            saveAllData();
+        }
+        function exportNIPCSV() {
+            const rows = nipFilteredHistory();
+            if (!rows.length) { showToast('⚠️ Nothing to export'); return; }
+            let csv = 'Notice Date,Ref No,Case,CNR,Client,Client (Marathi),Court,Next Date,No Instruction Since,Days,Reply By,Mode,Sent Through,Docs Called For,Remarks\n';
+            rows.forEach(x => {
+                const r = x.r;
+                csv += [r.date, r.no, r.caseLabel, r.cino, r.client, r.clientMr, r.court, r.nextDate, r.from, r.days, r.replyBy, r.mode, r.channel, r.docs, r.remark]
+                    .map(v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"').join(',') + '\n';
+            });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+            a.download = 'nip_notices_' + today() + '.csv';
+            a.click();
+            showToast('📥 ' + rows.length + ' notices exported');
+        }
+
+        // ── office settings + template manager ──
+        function nipOpenSettings() {
+            const s = nipSettings;
+            g('preview-modal-title').textContent = '⚙ NIP — office letter head, templates & your own HTML';
+            g('preview-body').innerHTML =
+                '<div class="grid-2" style="gap:5px">' +
+                '<div class="fgroup"><label>Office name (letter head)</label><input id="ns-name" class="fi" value="' + escA(s.officeName) + '"></div>' +
+                '<div class="fgroup"><label>Signing advocate</label><input id="ns-adv" class="fi" value="' + escA(s.advocate) + '"></div>' +
+                '<div class="fgroup full"><label>Letter-head line(s)</label><textarea id="ns-addr" rows="2" class="fi">' + esc(s.officeAddr) + '</textarea></div>' +
+                '<div class="fgroup"><label>Place</label><input id="ns-place" class="fi" value="' + escA(s.place) + '"></div>' +
+                '<div class="fgroup"><label>Office mobile</label><input id="ns-mobile" class="fi" value="' + escA(s.mobile) + '"></div>' +
+                '<div class="fgroup"><label>Reference prefix</label><input id="ns-prefix" class="fi" value="' + escA(s.prefix) + '" placeholder="NIP/ICH/"></div>' +
+                '<div class="fgroup"><label>Reply days</label><input type="number" id="ns-due" class="fi" min="1" value="' + (+s.dueDays || 7) + '"></div>' +
+                '<div class="fgroup"><label>Destroy file after (days)</label><input type="number" id="ns-warn" class="fi" min="1" value="' + (+s.warnDays || 30) + '"></div>' +
+                '<div class="fgroup"><label>Print font size</label><input type="number" id="ns-font" class="fi" min="9" max="22" step="0.5" value="' + (+s.fontSize || 13) + '"></div>' +
+                '<div class="fgroup full"><label>External NIP app — your own HTML file or URL (optional)</label>' +
+                '<input id="ns-embed" class="fi" value="' + escA(s.embedUrl || '') + '" placeholder="e.g. nip.html — leave blank for the built-in screen">' +
+                '<div class="text-xs" style="color:#64748b;margin-top:2px">Put your HTML file beside <b>index.html</b> (or give its URL) and this tab opens it full-screen, handing it every case: <b>window.NIP.cases()</b>, <b>window.NIP.tokens(cnr)</b> or <code>postMessage({nip:"cases"})</code>; it can also ask this app to print, record a notice or mark a file disposed.</div></div>' +
+                '<div class="fgroup full"><label style="display:flex;gap:5px;align-items:center"><input type="checkbox" id="ns-autowarn"' + (s.autoDisposeWarn ? ' checked' : '') + '> when a silent client crosses 60 days, remind me to dispose the file after the notice is recorded</label></div>' +
+                '</div>' +
+                '<div class="panel-title" style="margin:8px 0 4px">📑 Notice templates — pick one, edit it, or import your own HTML</div>' +
+                '<div id="nipTplList" style="max-height:170px;overflow:auto">' + nipTplListHTML() + '</div>' +
+                '<div class="flex-row" style="gap:4px;flex-wrap:wrap;margin-top:5px">' +
+                '<button class="btn btn-primary btn-sm" onclick="nipEditTemplate(\'\')">➕ New blank template</button>' +
+                '<button class="btn btn-gold btn-sm" onclick="nipImportBox()">📥 Import my HTML file</button>' +
+                '<button class="btn btn-sm" onclick="nipResetBuiltins()">↺ Restore built-in templates</button></div>' +
+                '<div class="flex-row" style="margin-top:8px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="closeModal(\'m-preview\')">Cancel</button>' +
+                '<button class="btn btn-primary btn-sm" onclick="saveNipSettings()">💾 Save settings</button></div>';
+            g('m-preview').classList.remove('hidden');
+        }
+        function nipTplListHTML() {
+            return NIP_BUILTIN.concat(nipTemplates || []).map(t =>
+                '<div class="rec-item" style="display:flex;align-items:center;gap:5px">' +
+                '<input type="radio" name="nipTplPick" value="' + escA(t.id) + '"' + (t.id === currentNIPTpl ? ' checked' : '') + ' title="Use this template">' +
+                '<div style="flex:1"><b>' + esc(t.name) + '</b> <span class="text-xs text-muted">' + esc(t.lang || '') + (t.builtin ? ' · built-in' : ' · yours') + ' · ' + String(t.html || '').length + ' chars</span></div>' +
+                '<button class="btn btn-xs" onclick="nipEditTemplate(\'' + escA(t.id) + '\')">✏️</button>' +
+                (t.builtin ? '<button class="btn btn-xs" onclick="nipForkTemplate(\'' + escA(t.id) + '\')" title="Copy it so you can edit">📑</button>'
+                    : '<button class="btn btn-xs btn-danger" onclick="nipDeleteTemplate(\'' + escA(t.id) + '\')">🗑</button>') +
+                '</div>').join('');
+        }
+        function saveNipSettings() {
+            const v = id => { const e = g(id); return e ? e.value : ''; };
+            const picked = document.querySelector('input[name="nipTplPick"]:checked');
+            nipSettings = {
+                officeName: (v('ns-name') || 'Advocate').trim(), officeAddr: v('ns-addr').trim(), advocate: (v('ns-adv') || v('ns-name') || '').trim(),
+                place: (v('ns-place') || 'Ichalkaranji').trim(), mobile: v('ns-mobile').trim(), prefix: (v('ns-prefix') || 'NIP/').trim(),
+                dueDays: +v('ns-due') || 7, warnDays: +v('ns-warn') || 30, fontSize: +v('ns-font') || 13,
+                embedUrl: v('ns-embed').trim(), autoDisposeWarn: !!(g('ns-autowarn') && g('ns-autowarn').checked)
+            };
+            if (picked) currentNIPTpl = picked.value;
+            saveAllData();
+            closeModal('m-preview');
+            nipShellBuilt = false;
+            renderNIP();
+            showToast('✅ NIP settings saved');
+        }
+        function nipImportBox() {
+            g('preview-modal-title').textContent = '📥 Import your own HTML notice';
+            g('preview-body').innerHTML =
+                '<div class="nip-ok" style="margin-bottom:5px">Paste the whole contents of your HTML file (or choose it below). Your own styles, margins and layout are kept exactly as they are — every <b>{{field}}</b> in it is filled from the selected case, so your printed notice stays in your format while pulling MyCases data.</div>' +
+                '<div class="grid-2"><div class="fgroup"><label>Template name</label><input id="ni-name" class="fi" placeholder="e.g. My No Instruction Pursis"></div>' +
+                '<div class="fgroup"><label>Language</label><select id="ni-lang" class="fi"><option>मराठी</option><option>English</option></select></div></div>' +
+                '<div class="fgroup" style="margin-top:4px"><label>Choose .html file</label><input type="file" id="ni-file" accept=".html,.htm,.txt" onchange="nipReadFile(this)"></div>' +
+                '<div class="fgroup" style="margin-top:4px"><label>… or paste the HTML here</label><textarea id="ni-html" class="nip-code" rows="8" placeholder="<!doctype html><html> … {{caseTitle}} … {{clientMr}} … {{days}} …"></textarea></div>' +
+                '<div class="fgroup" style="margin-top:4px"><label>WhatsApp text (optional — derived from the HTML if left blank)</label><textarea id="ni-text" class="fi" rows="3" placeholder="plain message using {{tokens}}"></textarea></div>' +
+                '<div id="ni-report" class="text-xs" style="margin-top:4px;color:#444"></div>' +
+                '<div class="flex-row" style="margin-top:6px;gap:4px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="nipDetectTokens()">🔍 Check my fields</button>' +
+                '<button class="btn btn-sm" onclick="nipOpenSettings()">← Back</button>' +
+                '<button class="btn btn-primary btn-sm" onclick="nipSaveImport()">💾 Add as template</button></div>';
+            g('m-preview').classList.remove('hidden');
+        }
+        function nipReadFile(inp) {
+            const f = inp.files && inp.files[0];
+            if (!f) return;
+            const r = new FileReader();
+            r.onload = () => {
+                g('ni-html').value = String(r.result || '');
+                if (!g('ni-name').value) g('ni-name').value = f.name.replace(/\.(html?|txt)$/i, '');
+                nipDetectTokens();
+                showToast('📥 ' + f.name + ' loaded — check the fields, then Add as template');
+            };
+            r.onerror = () => showToast('❌ Could not read the file');
+            r.readAsText(f);
+            inp.value = '';
+        }
+        function nipTplKeys() {
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : (CASES.find(x => !isDisposedCase(x)) || CASES[0] || null);
+            return Object.keys(nipTokens(c, nipFormValues()));
+        }
+        function nipScanTokens(src, T) {
+            const seen = [], bad = [];
+            String(src || '').replace(/\{\{\s*([A-Za-z0-9_.\u0900-\u097F-]+)\s*(?:\|\s*\w+\s*)?\}\}/g, (m, k) => {
+                if (seen.indexOf(k) < 0) { seen.push(k); if (!(k in T)) bad.push(k); }
+                return m;
+            });
+            return { seen: seen, bad: bad };
+        }
+        function nipDetectTokens() {
+            const T = {};
+            nipTplKeys().forEach(k => T[k] = 1);
+            const res = nipScanTokens(g('ni-html').value + ' ' + g('ni-text').value, T);
+            g('ni-report').innerHTML = res.seen.length
+                ? '🔎 ' + res.seen.length + ' field(s) used: ' + res.seen.map(k => '<span class="nip-tok' + (k in T ? '' : ' bad') + '" title="' + (k in T ? 'filled from MyCases' : 'not a known field — printed as typed') + '">' + esc(k) + '</span>').join(' ') +
+                (res.bad.length ? ' <b style="color:#b91c1c">⚠ ' + res.bad.length + ' unknown</b> — rename to a field above (all MyCases column names such as <b>petparty_name</b> or <b>date_next_list</b> work).' : ' <b style="color:#065f46">✓ every field will be filled</b>')
+                : '⚠ No <b>{{tokens}}</b> found. Add fields like <b>{{client}}</b>, <b>{{caseTitle}}</b>, <b>{{court}}</b>, <b>{{days}}</b> so MyCases can fill your notice.';
+        }
+        function nipSaveImport() {
+            const html = String(g('ni-html').value || '');
+            if (html.length < 12) { showToast('⚠️ Paste or choose the HTML first'); return; }
+            const name = (g('ni-name').value || 'My notice ' + ((nipTemplates || []).length + 1)).trim();
+            const t = { id: 'nip-u' + Date.now(), name: name, lang: g('ni-lang').value, html: html, text: g('ni-text').value || '', builtin: false };
+            nipTemplates.push(t);
+            currentNIPTpl = t.id;
+            saveAllData();
+            nipShellBuilt = false;
+            renderNIP();
+            nipOpenSettings();
+            showToast('✅ "' + name + '" added and selected');
+        }
+        function nipEditTemplate(id) {
+            const all = NIP_BUILTIN.concat(nipTemplates || []);
+            const blank = {
+                id: '', name: 'My new template', lang: 'मराठी', builtin: false, text: '',
+                html: '<div class="hd"><div class="nm">{{officeName}}</div><div class="sb">{{officeAddr}}</div></div>\n<div class="ti">{{title}}</div>\n<p>{{clientMr}} — प्रकरण {{caseTitle}} (CNR {{cino}}) मध्ये ता. {{fromDate}} पासून {{days}} दिवसांपासून सूचना मिळालेली नाही. ता. {{replyBy}} पर्यंत सूचना व कागदपत्रे दिल्यास प्रकरण चालवणे शक्य होईल; अन्यथा फाईल नष्ट (shred) करण्यात येईल.</p>\n<div class="pl"><div>ठिकाण : {{place}}<br>ता. {{date}}</div><div class="sg">{{advocate}}</div></div>'
+            };
+            const t = id ? (all.find(x => x.id === id) || blank) : blank;
+            const ro = t.builtin ? ' readonly' : '';
+            g('preview-modal-title').textContent = (t.builtin ? '👁 Built-in template — copy it to edit' : '✏️ Template — ') + (t.name || '');
+            g('preview-body').innerHTML =
+                '<div class="grid-2"><div class="fgroup"><label>Name</label><input id="nt-name" class="fi" value="' + escA(t.name) + '"' + ro + '></div>' +
+                '<div class="fgroup"><label>Language</label><select id="nt-lang" class="fi"' + ro + '><option' + (/मराठी/.test(t.lang || '') ? ' selected' : '') + '>मराठी</option><option' + (/English/.test(t.lang || '') ? ' selected' : '') + '>English</option></select></div></div>' +
+                '<div class="fgroup" style="margin-top:4px"><label>HTML body — {{field}} tokens are merged with the case' +
+                (t.builtin ? ' <button class="btn btn-xs" onclick="nipForkTemplate(\'' + escA(t.id) + '\')">📑 copy to edit</button>' : '') + '</label>' +
+                '<textarea id="nt-html" class="nip-code" rows="12"' + ro + '>' + esc(t.html) + '</textarea></div>' +
+                '<div class="fgroup" style="margin-top:4px"><label>WhatsApp text (plain, {{tokens}} allowed)</label><textarea id="nt-text" class="fi" rows="4"' + ro + '>' + esc(t.text || '') + '</textarea></div>' +
+                '<div id="nt-report" class="text-xs" style="margin-top:4px;color:#444"></div>' +
+                '<div class="flex-row" style="margin-top:6px;gap:4px;justify-content:flex-end">' +
+                '<button class="btn btn-sm" onclick="ntCheck()">🔍 Check fields</button>' +
+                '<button class="btn btn-sm" onclick="copyText(document.getElementById(\'nt-html\').value,\'📋 template copied\')">📋 copy</button>' +
+                '<button class="btn btn-sm" onclick="closeModal(\'m-preview\')">← close</button>' +
+                (t.builtin ? '<button class="btn btn-gold btn-sm" onclick="nipForkTemplate(\'' + escA(t.id) + '\')">📑 copy to edit</button>' : '<button class="btn btn-primary btn-sm" onclick="nipSaveTemplate(\'' + escA(t.id) + '\')">💾 Save template</button>') + '</div>' +
+                '<div class="panel-title" style="margin:8px 0 3px;font-size:10px">Available fields — click to copy</div>' +
+                '<div class="nip-toks">' + nipTplKeys().sort().map(k => '<span class="nip-tok" onclick="copyText(\'{{' + esc(k) + '}}\',\'{{' + esc(k) + '}} copied\')">{{' + esc(k) + '}}</span>').join('') + '</div>';
+            g('m-preview').classList.remove('hidden');
+        }
+        function ntCheck() {
+            const T = {};
+            nipTplKeys().forEach(k => T[k] = 1);
+            const res = nipScanTokens(g('nt-html').value + ' ' + g('nt-text').value, T);
+            g('nt-report').innerHTML = res.seen.length
+                ? '🔎 ' + res.seen.length + ' field(s)' + (res.bad.length ? ' · <b style="color:#b91c1c">⚠ unknown: ' + res.bad.map(esc).join(', ') + '</b>' : ' · <b style="color:#065f46">✓ all filled from MyCases</b>')
+                : '⚠ no {{tokens}} in this template — it would print the same for every case.';
+        }
+        function nipSaveTemplate(id) {
+            const t = (nipTemplates || []).find(x => x.id === id) || { id: id || 'nip-u' + Date.now() };
+            const name = (g('nt-name').value || 'My template').trim();
+            t.name = name;
+            t.lang = g('nt-lang').value;
+            t.html = g('nt-html').value;
+            t.text = g('nt-text').value;
+            if (!nipTemplates.some(x => x.id === t.id)) { nipTemplates.push(t); currentNIPTpl = t.id; }
+            saveAllData();
+            closeModal('m-preview');
+            nipShellBuilt = false;
+            renderNIP();
+            nipOpenSettings();
+            showToast('✅ Template "' + name + '" saved');
+        }
+        function nipForkTemplate(id) {
+            const src = NIP_BUILTIN.concat(nipTemplates || []).find(x => x.id === id);
+            if (!src) return;
+            const t = { id: 'nip-u' + Date.now(), name: (src.name || 'template') + ' (my copy)', lang: src.lang, html: src.html, text: src.text || '', builtin: false };
+            nipTemplates.push(t);
+            currentNIPTpl = t.id;
+            saveAllData();
+            nipShellBuilt = false;
+            renderNIP();
+            nipEditTemplate(t.id);
+            showToast('📑 Copied — edit freely');
+        }
+        function nipDeleteTemplate(id) {
+            const t = (nipTemplates || []).find(x => x.id === id);
+            if (!t) return;
+            if (!confirm('Delete template "' + t.name + '"? Notices already recorded keep their text.')) return;
+            nipTemplates = (nipTemplates || []).filter(x => x.id !== id);
+            if (currentNIPTpl === id) currentNIPTpl = 'nip-mr';
+            saveAllData();
+            nipShellBuilt = false;
+            renderNIP();
+            nipOpenSettings();
+        }
+        function nipResetBuiltins() {
+            if (!confirm('Discard your saved template copies and go back to the 3 built-in templates?\n\nThe register of notices already sent is not touched.')) return;
+            nipTemplates = [];
+            currentNIPTpl = 'nip-mr';
+            saveAllData();
+            nipShellBuilt = false;
+            renderNIP();
+            nipOpenSettings();
+            showToast('↺ Built-in templates restored');
+        }
+        function nipEditTpl() { nipOpenSettings(); setTimeout(() => nipEditTemplate(currentNIPTpl), 80); }
+        function nipClearEmbed() { nipSettings.embedUrl = ''; saveAllData(); nipShellBuilt = false; renderNIP(); showToast('↩ Built-in NIP screen restored'); }
+
+        // ── bridge: an embedded / external NIP app gets the whole register ──
+        function nipPublicCase(c) {
+            const p = profile(c), fee = feeData[c.cino] || {};
+            return Object.assign({}, c, {
+                _status: getStatus(c), _disposed: isDisposedCase(c), _disposal: c.disposal || null,
+                _notes: { stage: p.stage || '', provision: p.provision || '', relief: p.relief || '', operativeOrder: p.operativeOrder || '', chronology: p.chronology || '' },
+                _documents: (p.documents || []).map(d => ({ name: d.name, status: d.status, note: d.note || '' })),
+                _fee: fee,
+                _nip: nipRecords.filter(x => x.cino === c.cino).map(x => ({ date: x.date, no: x.no, days: x.days, mode: x.mode, channel: x.channel, replyBy: x.replyBy }))
+            });
+        }
+        function nipFramePayload(reqId) {
+            const c = currentNIPCino ? CASES.find(x => x.cino === currentNIPCino) : null;
+            return {
+                nip: 'state', reqId: reqId || 0, at: new Date().toISOString(),
+                office: nipSettings, courtNames: courtAssignments,
+                fields: c ? nipFormValues() : null,
+                tokens: c ? nipTokens(c, nipFormValues()) : null,
+                selected: c ? nipPublicCase(c) : null,
+                cases: CASES.map(nipPublicCase),
+                disposed: disposedRecords,
+                notices: nipRecords
+            };
+        }
+        function nipPushToFrame() {
+            const f = g('nipExt');
+            if (!f || !f.contentWindow) { showToast('⚠️ No external NIP frame is open'); return; }
+            try { f.contentWindow.postMessage(nipFramePayload(0), '*'); showToast('📤 Case data sent to the NIP app'); }
+            catch (e) { showToast('⚠️ Could not post data: ' + e.message); }
+        }
+        window.addEventListener('message', function (e) {
+            const d = e.data;
+            if (!d || typeof d !== 'object' || !d.nip) return;
+            if (d.nip === 'cases' || d.nip === 'state') { if (e.source) { try { e.source.postMessage(nipFramePayload(d.reqId || 0), '*'); } catch (err) {} } return; }
+            if (!nipShellBuilt) return;
+            if (d.nip === 'select') { if (d.cino) nipSelectCase(d.cino); return; }
+            if (d.nip === 'print') { nipPrint(); return; }
+            if (d.nip === 'save') { nipSave(); return; }
+            if (d.nip === 'whatsapp') { nipWhatsApp(); return; }
+            if (d.nip === 'dispose') { nipDispose(); return; }
+            if (d.nip === 'preview' && e.source) { const b = nipBuildDoc(); try { e.source.postMessage({ nip: 'preview', doc: b.doc, text: b.text }, '*'); } catch (err) {} }
+        });
+
+        // global API for the NIP screen, imported templates and embedded apps
+        window.NIP = {
+            cases: () => CASES.map(c => JSON.parse(JSON.stringify(c))),
+            records: () => CASES.map(nipPublicCase),
+            find: cino => { const c = CASES.find(x => x.cino === cino); return c ? nipPublicCase(c) : null; },
+            search: q => searchCases(q, 30).map(nipPublicCase),
+            tokens: cino => { const c = CASES.find(x => x.cino === cino); return c ? nipTokens(c, nipFormValues()) : null; },
+            form: () => nipFormValues(),
+            select: cino => nipSelectCase(cino),
+            preview: () => nipBuildDoc().doc,
+            text: () => nipBuildDoc().text,
+            print: () => nipPrint(),
+            whatsapp: () => nipWhatsApp(),
+            save: () => nipSave(),
+            notices: () => nipRecords.slice(),
+            disposed: () => disposedRecords.slice(),
+            dispose: cino => openDisposeDialog(cino || currentNIPCino),
+            merge: (html, cino) => nipMerge(html, nipTokens(CASES.find(x => x.cino === cino) || null, nipFormValues())),
+            settings: () => nipSettings,
+            version: '2026.10'
+        };
 
         // ── PRINT WITHOUT OPENING NEW TAB/WINDOW ──
         function clearPrintFrame() {
