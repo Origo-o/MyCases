@@ -2778,6 +2778,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             <!-- Menu Bar -->
             <div class="menu-bar">
                 <span class="menu-item active" onclick="goTab('home')">🏠 Home</span>
+                <span class="menu-item" onclick="goTab('dashboard')" title="Pending, decided, disposed and court-wise dashboard with logs">📊 Dashboard</span>
                 <span class="menu-item" onclick="goTab('causelist')">📅 Cause List</span>
                 <span class="menu-item" onclick="goTab('allcases')">📋 All Cases</span>
                 
@@ -2785,7 +2786,6 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <span class="menu-item" onclick="goTab('appeal')">⏱️ Appeal</span>
                 <span class="menu-item" onclick="goTab('order22')">☠️ Order22</span>
                 <span class="menu-item" onclick="goTab('billing')">🧾 Bills & Invoices</span>
-                <span class="menu-item" onclick="goTab('docrequest')">📨 Document Requester</span>
                 <span class="menu-item" onclick="goTab('activity')">📜 Activity</span>
                 <span class="menu-item" onclick="goTab('nakal')">📜 Nakal</span>
                 <span class="menu-item" onclick="goTab('nip')" title="No Instruction Pursis — notice to clients who give no instructions">📪 NIP</span>
@@ -2832,6 +2832,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         </div>
                     </div>
                     <div class="home-grid">
+                        <div class="home-card" onclick="goTab('dashboard')"><div class="ico">📊</div><div class="title">Dashboard</div><div class="desc">Pending · courts · logs</div></div>
                         <div class="home-card" onclick="goTab('causelist')"><div class="ico">📅</div><div class="title">Cause List</div><div class="desc">Date-wise hearings</div></div>
                         <div class="home-card" onclick="goTab('allcases')"><div class="ico">📋</div><div class="title">All Cases</div><div class="desc">Search & filter</div></div>
                         <div class="home-card" onclick="goTab('receipt')"><div class="ico">🧾</div><div class="title">Fee Receipt</div><div class="desc">Print receipts</div></div>
@@ -2846,9 +2847,35 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     </div>
                 </div>
 
+                <!-- ═══ DASHBOARD (pending, courts, disposed, logs) ═══ -->
+                <div class="view" id="view-dashboard">
+                    <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">
+                        <span class="tb-label" style="font-weight:700;color:#0f766e;font-size:11px">📊 Dashboard</span>
+                        <button class="btn btn-sm" onclick="renderDashboard()">↻ Refresh</button>
+                        <button class="btn btn-sm" onclick="manageCourtAssignments()">🏛️ Courts</button>
+                        <button class="btn btn-gold btn-sm" onclick="printDashboard()">🖨️ Print</button>
+                        <button class="btn btn-primary btn-sm" onclick="goTab('activity')">📜 Full Activity</button>
+                        <span class="text-muted text-xs" id="dashInfo"></span>
+                    </div>
+                    <div style="flex:1;overflow:auto">
+                        <div class="panel no-print">
+                            <div class="panel-title">🏛️ Courts — pending &amp; decided</div>
+                            <div class="court-grid" id="courtGrid"></div>
+                            <div class="text-muted text-xs" style="margin-top:2px">Tap a court card to open its cause list.</div>
+                        </div>
+                        <div class="panel" id="dashSummaryPanel">
+                            <div class="panel-title">📈 Pending / Disposed Summary</div>
+                            <div class="panel-body" id="dashSummary" style="font-size:10px">Loading…</div>
+                        </div>
+                        <div class="panel">
+                            <div class="panel-title">📜 Logs — latest activity on this device</div>
+                            <div class="panel-body" id="dashLog" style="font-size:10px">Loading…</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ═══ CAUSE LIST ═══ -->
                 <div class="view" id="view-causelist">
-                    <div class="court-grid no-print" id="courtGrid"></div>
                     <div class="toolbar no-print" style="border:1px solid;border-color:#ffffff #808080 #808080 #ffffff;background:#f0f0f0;padding:3px 6px">
                         <select id="clR" onchange="renderCauseList()" style="font-size:9px;padding:1px 4px;height:20px">
                             <option value="today">Today</option>
@@ -3176,7 +3203,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <div style="margin-top:6px;padding:8px;background:#e8f6fb;border:1px dashed #0e7490;border-radius:10px;text-align:center;font-size:14px;font-weight:700">CNR : <span class="cnr-copy" id="nkCNRDisplay" title="Tap / शीटवर क्लिक करून CNR कॉपी करा" data-cnr="" style="color:#0f766e;font-weight:800">—</span> <span style="font-size:10px;color:#666">(टॅप करून कॉपी करा)</span></div>
                         <div style="text-align:center;margin-top:3px;font-size:13px;font-weight:600">अर्जदार ज्या कागदाच्या नकला मागितल्या असतील त्याचा तपशील :</div>
                         <div class="nf-details"><b>नि.</b><textarea id="nkDetails" style="width:100%;height:46px;border:none;font-size:inherit;resize:none" placeholder="तपशील"></textarea></div>
-                        <div class="nf-purpose">सदरचा प्रमाणित नकला <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>माहितीसाठी</option><option>कोर्ट कामासाठी</option><option>इतर</option></select> मिळाव्यात. सदरचा नकला अॅड. <input type="text" id="nkAdvocate" style="width:auto;min-width:110px;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit" value="व्ही. बी. चव्हाण"> यांना दिल्यास मला मिळतील.</div>
+                        <div class="nf-purpose">सदरचा प्रमाणित नकला <select id="nkPurpose" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><option>माहितीसाठी</option><option>कोर्ट कामासाठी</option><option>इतर</option></select> मिळाव्यात. सदरचा नकला अॅड. <input type="text" id="nkAdvocate" style="width:auto;min-width:180px;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit" value="इंद्रजित वसंत चव्हाण"> यांना दिल्यास मला मिळतील.</div>
                         <div class="nf-place">इचलकरंजी<br>ता. <input type="date" id="nkDate" class="np-date-inp" style="border:none;border-bottom:1px dotted #000;font-size:inherit"><span class="np-date" id="nkDateP"></span></div>
                         <div class="nf-sig">अर्जदाराची सही</div>
                     </div>
@@ -3285,8 +3312,6 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="view" id="view-billing">
                   <div id="billingUI" style="flex:1;overflow:auto"></div>
                 </div>
-                <!-- ═══ DOCUMENT REQUESTER ═══ -->
-                <div class="view" id="view-docrequest"><div id="docRequesterUI" style="flex:1;overflow:auto"></div></div>
                 <!-- ═══ ACTIVITY / BACKUP HISTORY ═══ -->
                 <div class="view" id="view-activity"><div id="activityUI" style="flex:1;overflow:auto"></div></div>
 
@@ -3833,14 +3858,15 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const menu = document.querySelector(`.menu-item[onclick*="goTab('${name}')"]`);
             if (view) view.classList.add('active');
             if (menu) menu.classList.add('active');
-            if (name === 'causelist') { buildCourtGrid();
+            if (name === 'dashboard') { buildCourtGrid();
+                renderDashboard(); }
+            if (name === 'causelist') { populateCauseCourtSelect();
                 renderCauseList(); }
             if (name === 'allcases') { populateAllCaseFilters();
                 renderAllCases(); }
             if (name === 'fees') renderFees();
             if (name === 'billing') renderBilling();
             if (name === 'receipt') updateReceipt();
-            if (name === 'docrequest') renderDocumentRequester();
             if (name === 'activity') renderActivity();
             if (name === 'nakal') renderNakalHistory();
             if (name === 'ledger') renderLedger();
@@ -4312,7 +4338,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                             <div style="display:inline-block;padding:3px;border:1px solid #000;background:#fff;font-family:monospace;font-size:7px;line-height:1">
                                 [ 📱 UPI VERIFIED / SCAN TO CONFIRM ]
                             </div>
-                            <div style="font-size:7.5px;margin-top:2px;color:#333">UPI: 8055284444@okaxis · Adv. Indrajit Chavan</div>
+                            <div style="font-size:7.5px;margin-top:2px;color:#333">UPI: 8055284444@superyes · Adv. Indrajit Chavan</div>
                         </div>
                         <div class="th-barcode">||| |||| || |||||| | ||||| ||| |||||||</div>
                         <div class="th-foot">
@@ -4892,6 +4918,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             else if (currentTab === 's138') printS138();
             else if (currentTab === 'appeal') printAppeal();
             else if (currentTab === 'order22') printO22();
+            else if (currentTab === 'dashboard') printDashboard();
             else if (currentTab === 'causelist') printCauseList();
             else if (currentTab === 'nakal') printNakal();
             else if (currentTab === 'disposed') printDisposedRegister();
@@ -4925,42 +4952,108 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             return '<span class="badge badge-pending">Pending</span>';
         }
 
-        function buildCourtGrid() {
-            const courts = {},
-                cnames = {},
-                cpend = {};
-            const gridPool = activeCases();
-            for (const c of gridPool) {
+        function courtStats() {
+            const courts = {}, cnames = {}, cpend = {};
+            const pool = activeCases();
+            for (const c of pool) {
                 const cd = c.establishment_code || '?';
                 courts[cd] = (courts[cd] || 0) + 1;
                 if (!cnames[cd]) cnames[cd] = c.establishment_name || cd;
                 if (!c.date_of_decision) cpend[cd] = (cpend[cd] || 0) + 1;
             }
             const keys = Object.keys(courts).sort((a, b) => (cpend[b] || 0) - (cpend[a] || 0));
-            let h =
-                `<div class="court-card${activeCourt===''?' active':''}" onclick="filterCourt('')"><div class="name">🏛️ ALL COURTS</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${gridPool.length}</span><span class="pend">${Object.values(cpend).reduce((a,b)=>a+b,0)} pending</span></div></div>` +
-                (disposedRecords.length ? `<div class="court-card" onclick="goTab('disposed')" title="Files destroyed — open the register"><div class="name">🗑️ DISPOSED</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num" style="color:#7f1d1d">${disposedRecords.length}</span><span class="pend">shredded</span></div></div>` : '')
+            return { pool, courts, cnames, cpend, keys };
+        }
+
+        function courtShortName(n) {
+            return String(n || '').replace(/IN THE COURT OF /i, '').replace(/CIVIL COURT /i, '').replace(/DISTRICT /i,
+                'Dist. ').replace(/SENIOR DIVISION /i, 'Sr.Div. ');
+        }
+
+        // Court filter dropdown belongs to the Cause List; the cards live in Dashboard.
+        function populateCauseCourtSelect() {
+            const sel = document.getElementById('clCourt');
+            if (!sel) return;
+            const { keys, cnames } = courtStats();
+            const current = sel.value;
+            sel.innerHTML = '<option value="">All Courts</option>' +
+                keys.map(k => `<option value="${esc(k)}">${esc(cnames[k])}</option>`).join('');
+            if (current) sel.value = current;
+        }
+
+        function buildCourtGrid() {
+            const { pool, courts, cnames, cpend, keys } = courtStats();
+            const totalPending = Object.values(cpend).reduce((a, b) => a + b, 0);
+            let h = `<div class="court-card${activeCourt===''?' active':''}" onclick="openCourtCauseList('')" title="Show every matter in the cause list"><div class="name">🏛️ ALL COURTS</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${pool.length}</span><span class="pend">${totalPending} pending</span></div><div class="stats"><span>✅ ${pool.length-totalPending} decided</span></div></div>` +
+                (disposedRecords.length ? `<div class="court-card" onclick="goTab('disposed')" title="Files destroyed — open the register"><div class="name">🗑️ DISPOSED</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num" style="color:#7f1d1d">${disposedRecords.length}</span><span class="pend">shredded</span></div></div>` : '');
             for (const k of keys) {
                 const pn = cpend[k] || 0;
                 if (pn === 0 && activeCourt !== k) continue;
-                const sn = cnames[k].replace(/IN THE COURT OF /i, '').replace(/CIVIL COURT /i, '').replace(/DISTRICT /i,
-                    'Dist. ').replace(/SENIOR DIVISION /i, 'Sr.Div. ');
-                h +=
-                    `<div class="court-card${activeCourt===k?' active':''}" onclick="filterCourt('${k}')" title="${esc(cnames[k])}"><div class="name">🏛️ ${esc(sn)}</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${courts[k]}</span><span class="pend">${pn} pending</span></div><div class="stats"><span>✅ ${courts[k]-pn} decided</span></div></div>`;
+                h += `<div class="court-card${activeCourt===k?' active':''}" onclick="openCourtCauseList('${k}')" title="${esc(cnames[k])}"><div class="name">🏛️ ${esc(courtShortName(cnames[k]))}</div><div style="display:flex;align-items:baseline;gap:6px"><span class="num">${courts[k]}</span><span class="pend">${pn} pending</span></div><div class="stats"><span>✅ ${courts[k]-pn} decided</span></div></div>`;
             }
-            document.getElementById('courtGrid').innerHTML = h;
+            const gridEl = document.getElementById('courtGrid');
+            if (gridEl) gridEl.innerHTML = h;
+            populateCauseCourtSelect();
+        }
+
+        // ── DASHBOARD (moved out of the Cause List screen) ──
+        function renderDashboard() {
+            buildCourtGrid();
+            const { pool, courts, cnames, cpend, keys } = courtStats();
+            const pending = pool.filter(c => !c.date_of_decision).length;
+            const decided = pool.length - pending;
+            const today = pool.filter(c => c.date_next_list === TD && !c.date_of_decision).length;
+            const weekEnd = new Date(new Date(TD + 'T00:00:00').getTime() + 7 * 864e5).toISOString().slice(0, 10);
+            const week = pool.filter(c => c.date_next_list && c.date_next_list >= TD && c.date_next_list <= weekEnd && !c.date_of_decision).length;
+            const pages = disposedRecords.reduce((a, r) => a + (+r.pages || 0), 0);
+            const sum = g('dashSummary');
+            if (sum) {
+                sum.innerHTML = `<div class="home-grid mb-1">
+                        <div class="home-card" onclick="goTab('allcases')"><div class="ico">📋</div><div class="title">${pool.length}</div><div class="desc">Active files</div></div>
+                        <div class="home-card" onclick="goTab('causelist')"><div class="ico">⏳</div><div class="title">${pending}</div><div class="desc">Pending</div></div>
+                        <div class="home-card" onclick="goTab('allcases')"><div class="ico">✅</div><div class="title">${decided}</div><div class="desc">Decided</div></div>
+                        <div class="home-card" onclick="goTab('disposed')"><div class="ico">🗑️</div><div class="title">${disposedRecords.length}</div><div class="desc">Disposed · ${pages} pages</div></div>
+                        <div class="home-card" onclick="goTab('causelist')"><div class="ico">📌</div><div class="title">${today}</div><div class="desc">Today's matters</div></div>
+                        <div class="home-card" onclick="goTab('causelist')"><div class="ico">📅</div><div class="title">${week}</div><div class="desc">Next 7 days</div></div>
+                    </div>
+                    <div class="table-wrap"><table><thead><tr><th>Court / Allotment</th><th>Total</th><th>Pending</th><th>Decided</th><th class="no-print">Cause List</th></tr></thead><tbody>${keys.map(k => `<tr><td>${esc(courtDisplay({ establishment_code: k, establishment_name: cnames[k] }))}</td><td>${courts[k]}</td><td><b style="color:#800000">${cpend[k]||0}</b></td><td>${courts[k]-(cpend[k]||0)}</td><td class="no-print"><button class="btn btn-xs btn-primary" onclick="openCourtCauseList('${k}')">📅 Open</button></td></tr>`).join('') || '<tr><td colspan="5" class="text-center">No cases yet.</td></tr>'}</tbody>
+                    <tfoot><tr><th>All courts</th><th>${pool.length}</th><th>${pending}</th><th>${decided}</th><th class="no-print"></th></tr></tfoot></table></div>`;
+            }
+            const logBox = g('dashLog');
+            if (logBox) {
+                const rows = (auditLog || []).slice(0, 40);
+                logBox.innerHTML = `<div class="flex-row no-print" style="margin-bottom:5px"><span class="text-muted text-xs">${(auditLog||[]).length} log entries · newest first</span><button class="btn btn-xs btn-gold" onclick="exportAuditCSV()">📥 CSV</button></div><div class="table-wrap"><table><thead><tr><th>Date &amp; Time</th><th>Activity</th><th>Details</th></tr></thead><tbody>${rows.map(x => `<tr><td style="white-space:nowrap">${new Date(x.at).toLocaleString('en-IN')}</td><td>${esc(x.action)}</td><td>${esc(x.detail)}</td></tr>`).join('') || '<tr><td colspan="3" class="text-center">No activity logs yet. Actions like date changes, WhatsApp messages and bills are recorded here.</td></tr>'}</tbody></table></div>${(auditLog||[]).length > 40 ? `<div class="text-muted text-xs" style="margin-top:4px">Showing latest 40 — open Full Activity for everything.</div>` : ''}`;
+            }
+            const info = g('dashInfo');
+            if (info) info.textContent = pool.length + ' active · ' + disposedRecords.length + ' disposed';
+        }
+
+        function printDashboard() {
+            const { pool, courts, cnames, cpend, keys } = courtStats();
+            const pending = pool.filter(c => !c.date_of_decision).length;
+            const rows = keys.map(k => [cnames[k], String(courts[k]), String(cpend[k] || 0), String(courts[k] - (cpend[k] || 0))]);
+            let html = '<table><thead><tr><th>Court</th><th>Total</th><th>Pending</th><th>Decided</th></tr></thead><tbody>' +
+                rows.map(r => `<tr><td>${esc(r[0])}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('') +
+                `</tbody><tfoot><tr><th>All courts</th><th>${pool.length}</th><th>${pending}</th><th>${pool.length-pending}</th></tr></tfoot></table>`;
+            html += `<h3>Disposed Register</h3><table><thead><tr><th>#</th><th>Case</th><th>Parties</th><th>Shredded On</th><th>Pages</th></tr></thead><tbody>${disposedRecords.map((r, i) => `<tr><td>${i+1}</td><td>${esc(dispLabel(r))}</td><td>${esc(dispParties(r))}</td><td>${esc(fmtDS(r.disposeDate))}</td><td>${esc(String(r.pages || ''))}</td></tr>`).join('') || '<tr><td colspan="5">No disposed records.</td></tr>'}</tbody></table>`;
+            html += `<h3>Recent Logs</h3><table><thead><tr><th>Date &amp; Time</th><th>Activity</th><th>Details</th></tr></thead><tbody>${(auditLog||[]).slice(0, 100).map(x => `<tr><td>${new Date(x.at).toLocaleString('en-IN')}</td><td>${esc(x.action)}</td><td>${esc(x.detail)}</td></tr>`).join('')}</tbody></table>`;
+            openPrint(`<!doctype html><html><head><meta charset="utf-8"><title>Dashboard</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;font-size:10px;color:#000}.head{border-bottom:3px solid #0f766e;padding-bottom:7px}.name{font-size:18px;font-weight:bold;color:#0f766e}h2{margin:10px 0 3px;color:#0f766e}h3{font-size:12px;background:#e8e8ff;padding:5px;margin:10px 0 0}table{border-collapse:collapse;width:100%}th{background:#0f766e;color:#fff;padding:5px;text-align:left}td{border:1px solid #aaa;padding:5px;vertical-align:top}tfoot th{background:#0e7490}</style></head><body><div class="head"><div class="name">Adv. Indrajit Vasant Chavan</div><div>Advocate &amp; Legal Consultant · Ichalkaranji · 8055284444</div></div><h2>Dashboard — Pending / Disposed</h2><div>Printed: ${new Date().toLocaleString('en-IN')}</div>${html}</body></html>`);
+        }
+
+        // Card tap on the dashboard opens that court's cause list
+        function openCourtCauseList(code) {
+            activeCourt = code || '';
+            goTab('causelist');
             const sel = document.getElementById('clCourt');
-            if (sel.options.length <= 1) {
-                keys.forEach(k => { const o = document.createElement('option');
-                    o.value = k;
-                    o.textContent = cnames[k];
-                    sel.appendChild(o); });
-            }
+            if (sel) sel.value = activeCourt;
+            buildCourtGrid();
+            renderCauseList();
         }
 
         function filterCourt(code) {
             activeCourt = code;
-            document.getElementById('clCourt').value = code;
+            const sel = document.getElementById('clCourt');
+            if (sel) sel.value = code;
             buildCourtGrid();
             renderCauseList();
         }
@@ -5062,7 +5155,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     }
                     h += `<table><thead><tr><th>#</th><th>CNR</th><th>Type</th><th>Reg</th><th>Petitioner</th><th>Respondent</th>`;
                     if (courtKeys.length <= 1) h += '<th>Court</th>';
-                    h += '<th>Next Date</th><th class="no-print">Actions</th></tr></thead><tbody>';
+                    h += '<th>Next Date</th><th class="no-print">💬 WhatsApp</th><th class="no-print">Actions</th></tr></thead><tbody>';
                     for (let j = 0; j < cg.idxs.length; j++) {
                         const ci = cg.idxs[j];
                         const c = CASES[ci];
@@ -5075,6 +5168,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                             `<td title="${esc(c.establishment_name)}">${esc(tr(c.establishment_name,20))}</td>`;
                         h +=
                             `<td><input type="date" class="nd-inp" value="${c.date_next_list||''}" onchange="inlineDateChange(${ci},this)" style="width:85px;font-size:8px;padding:1px 3px;border:1px solid;border-color:#808080 #ffffff #ffffff #808080"></td>`;
+                        const hasWa = phoneOf(c).length >= 10;
+                        h +=
+                            `<td class="no-print"><button class="btn btn-xs btn-success" onclick="event.stopPropagation();openCaseWhatsApp(${ci})" title="${hasWa?'Send WhatsApp message to the client':'Add the client mobile number and send WhatsApp'}">💬 ${hasWa?'Send':'Add no.'}</button></td>`;
                         h +=
                             `<td class="no-print"><button class="btn btn-xs" onclick="viewCase(${ci})">👁</button> <button class="btn btn-xs" onclick="editCase(${ci})">✏️</button></td></tr>`;
                     }
@@ -6674,7 +6770,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <div style="display:inline-block;padding:2px 4px;border:1px solid #000;background:#fff;font-family:monospace;font-size:7px">
                         [ 📱 SCAN TO PAY REMAINING DUE ]
                     </div>
-                    <div style="font-size:7.5px;margin-top:1px">UPI: 8055284444@okaxis · Adv. Indrajit Chavan</div>
+                    <div style="font-size:7.5px;margin-top:1px">UPI: 8055284444@superyes · Adv. Indrajit Chavan</div>
                 </div>
                 <div class="barcode">||| |||| || |||||| | ||||| ||| |||||||</div>
                 <div class="foot">
@@ -6784,7 +6880,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="foot">
                     <div style="font-size:9px;color:#64748b">
                         Payment Mode: UPI / Cash / Bank Transfer<br>
-                        UPI ID: 8055284444@okaxis
+                        UPI ID: 8055284444@superyes
                     </div>
                     <div style="text-align:right">
                         <div style="font-size:11px;font-weight:700">For Adv. Indrajit Vasant Chavan</div>
@@ -6879,13 +6975,6 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         }
 
         // ── STANDALONE DOCUMENT REQUESTER ──
-        function renderDocumentRequester(){const ui=g('docRequesterUI');ui.innerHTML=`<div class="panel"><div class="panel-title">📨 Document Requester — saved case or new client</div><div class="toolbar no-print"><input id="drSearch" placeholder="Search saved CNR / party (optional)" oninput="drSearchCases()" style="flex:1"><select id="drSaved" onchange="drLoadSavedCase()" style="min-width:200px"><option value="">Select saved case (optional)</option></select></div><div class="grid-2"><div class="fgroup"><label>Client / Party 1 Name</label><input id="drP1" class="fi"></div><div class="fgroup"><label>Other Party Name</label><input id="drP2" class="fi"></div><div class="fgroup"><label>WhatsApp Mobile *</label><input id="drMobile" class="fi" placeholder="91XXXXXXXXXX"></div><div class="fgroup"><label>Case / Proceeding</label><input id="drCase" class="fi"></div><div class="fgroup full"><label>Documents / Evidence Required (one per line)</label><textarea id="drDocs" class="fi" rows="8" placeholder="7/12 Extract\nProperty Card\nPhotos\nAny other document"></textarea></div><div class="fgroup"><label>Language</label><select id="drLang" class="fi"><option value="en" selected>English (Recommended)</option><option value="mr">मराठी</option></select></div></div><div class="flex-row mt-1"><button class="btn btn-success btn-sm" onclick="sendStandaloneDocRequest()">💬 Open WhatsApp</button><button class="btn btn-gold btn-sm" onclick="printStandaloneDocRequest()">🖨️ Print / PDF</button><button class="btn btn-primary btn-sm" onclick="saveStandaloneDocRequest()">💾 Save Request</button></div></div>`;}
-        function drSearchCases(){const q=g('drSearch').value.trim(),sel=g('drSaved');const r=q.length>1?searchCases(q,25):[];sel.innerHTML='<option value="">Select saved case (optional)</option>'+r.map(c=>`<option value="${c.cino}">${esc(c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name)}</option>`).join('');}
-        function drLoadSavedCase(){const c=CASES.find(x=>x.cino===g('drSaved').value);if(!c)return;g('drP1').value=c.petparty_name||'';g('drP2').value=c.resparty_name||'';g('drMobile').value=c.client_mobile||'';g('drCase').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' | CNR: '+c.cino;}
-        function drMessage(){const p1=g('drP1').value,p2=g('drP2').value,cs=g('drCase').value,docs=g('drDocs').value.split(/\n/).filter(Boolean).map(x=>'• '+x).join('\n');return g('drLang').value==='mr'?`आदरणीय ${p1}${p2?' व '+p2:''},\n\n${cs?'प्रकरण: '+cs+'\n\n':''}कृपया खालील कागदपत्रे/पुरावे तातडीने कार्यालयात जमा करावेत:\n${docs}\n\nकागदपत्रे न दिल्यास किंवा विलंब झाल्यास प्रकरणाच्या तयारीवर व पुढील कार्यवाहीवर परिणाम होऊ शकतो. कृपया तातडीने कार्यालयाशी संपर्क साधावा.\n\n— अॅड. इंद्रजित वसंत चव्हाण`:`Dear ${p1}${p2?' and '+p2:''},\n\n${cs?'Case: '+cs+'\n\n':''}Please submit the following documents/evidence at the office urgently:\n${docs}\n\nDelay or non-submission may affect preparation and further proceedings. Please contact the office urgently.\n\n— Adv. Indrajit Vasant Chavan`;}
-        function sendStandaloneDocRequest(){const ph=String(g('drMobile').value).replace(/\D/g,'');if(ph.length<10){showToast('Enter a valid WhatsApp mobile number');return;}window.open('https://wa.me/'+(ph.length===10?'91'+ph:ph)+'?text='+encodeURIComponent(drMessage()),'_blank');audit('Document request WhatsApp opened',g('drP1').value+' | '+g('drCase').value);saveAllData();}
-        function printStandaloneDocRequest(){openPrint(buildSummaryPrint('Request for Documents / Evidence',[['Client(s)',g('drP1').value+(g('drP2').value?' & '+g('drP2').value:'')],['Case',g('drCase').value],['Required documents',g('drDocs').value.replace(/\n/g,'; ')],['Important','Delay/non-submission may affect preparation and further proceedings.']]));}
-        function saveStandaloneDocRequest(){audit('Document request saved',g('drP1').value+' | '+g('drCase').value);saveAllData();showToast('✅ Document request saved in Activity');}
         function renderActivity(){const ui=g('activityUI');ui.innerHTML=`<div class="panel"><div class="panel-title">📜 Important Activity / Backup History</div><div class="flex-row no-print"><button class="btn btn-gold btn-sm" onclick="exportAuditCSV()">📥 Export CSV</button><button class="btn btn-sm" onclick="printActivity()">🖨️ Print</button><button class="btn btn-danger btn-sm" onclick="if(confirm('Clear activity history?')){auditLog=[];saveAllData();renderActivity()}">🗑 Clear</button><span class="text-muted text-sm">${auditLog.length} records</span></div><div class="table-wrap mt-1"><table><thead><tr><th>Date & Time</th><th>Activity</th><th>Details</th></tr></thead><tbody>${auditLog.map(x=>`<tr><td>${new Date(x.at).toLocaleString('en-IN')}</td><td>${esc(x.action)}</td><td>${esc(x.detail)}</td></tr>`).join('')||'<tr><td colspan="3" class="text-center">No important activity records yet.</td></tr>'}</tbody></table></div></div>`;}
         function exportAuditCSV(){let x='Date,Activity,Details\n'+auditLog.map(a=>[a.at,a.action,a.detail].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(',')).join('\n');const l=document.createElement('a');l.href=URL.createObjectURL(new Blob([x],{type:'text/csv'}));l.download='legal_suite_activity_'+today()+'.csv';l.click();}
         function printActivity(){const old=currentTab;goTab('activity');setTimeout(()=>window.print(),100);}
@@ -7987,7 +8076,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 ['home', '🏠', 'Home'], ['causelist', '📅', 'Cause List'], ['allcases', '📋', 'All Cases'],
                 ['receipt', '🧾', 'Fee Receipt'], ['s138', '📄', 'Sec. 138'], ['appeal', '⏱️', 'Appeal'],
                 ['order22', '☠️', 'Order 22'], ['nakal', '📜', 'Nakal'], ['billing', '🧾', 'Bills & Invoices'],
-                ['docrequest', '📨', 'Document Requester'], ['activity', '📋', 'Activity'], ['compare', '🔎', 'Selected Cases'],
+                ['dashboard', '📊', 'Dashboard'], ['activity', '📋', 'Activity'], ['compare', '🔎', 'Selected Cases'],
                 ['documents', '📁', 'Documents'], ['propertymap', '🗺️', 'Property Map'], ['fees', '💰', 'Fee Register'],
                 ['ledger', '📒', 'Client Ledger'], ['maintenance', '💳', 'Maintenance'],
                 ['nip', '📪', 'No Instruction Pursis'], ['disposed', '🗑️', 'Disposed Cases']
