@@ -5257,7 +5257,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 h +=
                     `<tr class="${st === 'disposed' ? 'disposed' : ''}" data-idx="${c._i}" data-status="${st}" data-type="${esc(c.type_name)}" data-court="${esc(c.establishment_code)}" data-year="${c.reg_year}">
                 <td>${i+1}</td>
-                <td><span class="cnr-copy" data-cnr="${esc(c.cino)}" title="Tap/click to copy CNR" style="font-weight:700;color:#0f766e;font-size:10px">${esc(c.cino)}</span></td>
+                <td>${c.cino ? `<a class="cnr-copy cnr-status-link" href="https://casestatus.in/" target="_blank" rel="noopener noreferrer" title="Copy CNR and open Case Status India in a new tab" style="font-weight:700;color:#0f766e;font-size:10px">${esc(c.cino)}</a>` : '—'}</td>
                 <td title="${esc(c.ltype_name||'')}">${esc(c.type_name)}</td>
                 <td>${esc(c.reg_no)}</td><td>${esc(c.reg_year)}</td>
                 <td class="w" title="${esc(c.petparty_name)}">${esc(tr(c.petparty_name,30))}</td>
@@ -8096,12 +8096,14 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             val = String(val || '').trim();
             if (!val) return;
             const done = function () { showToast(msg || ('📋 ' + val + ' copied')); };
+            const fallback = function () {
+                if (fallbackCopy(val)) done();
+                else showToast('⚠️ Copy failed. Please copy the text manually.');
+            };
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(val).then(done).catch(function () {
-                    fallbackCopy(val); done();
-                });
+                navigator.clipboard.writeText(val).then(done).catch(fallback);
             } else {
-                fallbackCopy(val); done();
+                fallback();
             }
         }
         function fallbackCopy(val) {
@@ -8110,15 +8112,19 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             ta.style.cssText = 'position:fixed;top:-999px;left:-999px;opacity:0';
             document.body.appendChild(ta);
             ta.focus(); ta.select();
-            try { document.execCommand('copy'); } catch (e) {}
+            let copied = false;
+            try { copied = document.execCommand('copy'); } catch (e) {}
             document.body.removeChild(ta);
+            return copied;
         }
         document.addEventListener('click', function (e) {
             const el = e.target.closest ? e.target.closest('.cnr-copy') : null;
             if (el) {
                 const val = el.getAttribute('data-cnr') || el.textContent || '';
                 copyText(val, '📋 CNR copied: ' + val);
-                e.preventDefault();
+                // Let the All Cases link open normally, preserving the user gesture
+                // so browsers allow the new tab. Other CNRs remain copy-only.
+                if (!el.classList.contains('cnr-status-link')) e.preventDefault();
                 e.stopPropagation();
             }
         });
