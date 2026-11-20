@@ -1117,6 +1117,38 @@
             margin-left: 3px;
         }
 
+        /* ── Nakal Dashboard (KPI) ── */
+        .nk-dash { margin-top: 2px; }
+        .nk-dash-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+        .nk-dash-head .nk-title { font-size: 13px; font-weight: 800; color: #0f766e; display: flex; align-items: center; gap: 6px; }
+        .nk-target { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #475569; }
+        .nk-target input { width: 52px; text-align: center; font-weight: 800; color: #0f766e; border: 1px solid #cbd5e1; border-radius: 8px; padding: 3px 4px; font-size: 12px; }
+        .nk-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+        .nk-kpi { background: linear-gradient(160deg, #ffffff, #f1fafa); border: 1px solid #e2eef0; border-radius: 14px; padding: 10px 12px; box-shadow: 0 2px 6px rgba(15,118,110,.06); position: relative; overflow: hidden; min-width: 0; }
+        .nk-kpi::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #0f766e; opacity: .85; }
+        .nk-kpi.green::before { background: #168980; }
+        .nk-kpi.red::before { background: #e11d48; }
+        .nk-kpi.amber::before { background: #f59e0b; }
+        .nk-kpi .nk-ico { font-size: 16px; }
+        .nk-kpi .nk-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #64748b; margin-top: 2px; }
+        .nk-kpi .nk-val { font-size: 19px; font-weight: 800; color: #0f172a; line-height: 1.15; margin-top: 1px; }
+        .nk-kpi.green .nk-val { color: #168980; }
+        .nk-kpi.red .nk-val { color: #e11d48; }
+        .nk-kpi.amber .nk-val { color: #b45309; }
+        .nk-kpi .nk-sub { font-size: 9px; color: #94a3b8; font-weight: 600; }
+        .nk-track { margin-top: 9px; }
+        .nk-track-label { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 4px; }
+        .nk-prog { height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+        .nk-prog-fill { height: 100%; background: linear-gradient(90deg, #0f766e, #14b8a6); border-radius: 99px; transition: width .4s ease; }
+        .nk-chips { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+        .nk-chip { flex: 1; min-width: 120px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px 10px; }
+        .nk-chip .c-l { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; color: #64748b; }
+        .nk-chip .c-v { font-size: 15px; font-weight: 800; color: #0f172a; }
+        .nk-chip.in .c-v { color: #168980; }
+        .nk-chip.due .c-v { color: #e11d48; }
+        @media screen and (max-width: 620px) { .nk-kpis { grid-template-columns: 1fr 1fr; } }
+        @media screen and (max-width: 420px) { .nk-kpis { grid-template-columns: 1fr; } }
+
         /* ── Toast ── */
         .toast {
             position: fixed;
@@ -3185,6 +3217,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <button class="btn btn-success btn-sm" onclick="printNakal()">🖨️ Print / PDF</button>
                         <button class="btn btn-primary btn-sm" onclick="saveNakalRecord()">💾 Save</button>
                     </div>
+                    <div id="nakalDashboard" class="panel no-print" style="margin-top:6px"></div>
                     <div class="nakal-form" id="nakalForm" style="flex:1;overflow:auto">
                         <div class="nf-title">नकलेचा अर्ज</div>
                         <div class="nf-court">मे. <select id="nkCourt" style="font-weight:700;width:auto;max-width:100%;border:none;border-bottom:1px dotted #000;font-size:inherit"><option>जिल्हा न्यायाधीशसो., इचलकरंजी</option><option>सिव्हील जज्ज सिनिअर डिव्हिजन, इचलकरंजी</option><option>सिव्हील जज्ज ज्युनिअर डिव्हिजन, इचलकरंजी</option><option>प्रथम वर्ग न्यायदंडाधिकारीसो., इचलकरंजी</option></select> यांचे कोर्टात</div>
@@ -3868,7 +3901,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (name === 'billing') renderBilling();
             if (name === 'receipt') updateReceipt();
             if (name === 'activity') renderActivity();
-            if (name === 'nakal') renderNakalHistory();
+            if (name === 'nakal') { renderNakalHistory(); renderNakalDashboard(); }
             if (name === 'ledger') renderLedger();
             if (name === 'compare') renderCompare();
             if (name === 'documents') renderDocuments();
@@ -5983,8 +6016,13 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <div class="panel-title">⚡ KFC &amp; Walmart Touch &amp; Go Billing &amp; Ledger Suite</div>
                     <select id="billResults" size="14" style="width:100%;font-size:10px" onchange="billOpenCase()"></select>
                     <div class="text-muted text-sm mt-1">Search and select any case to open its Touch &amp; Go POS register and detailed client ledger.</div>
+                </div>
+                <div class="panel" style="margin-top:8px">
+                    <div class="panel-title">📜 Nakal Collections (synced with Nakal tab)</div>
+                    <div id="billingNakalSummary"></div>
                 </div>`;
                 billSearch();
+                renderNakalBillingSummary('billingNakalSummary');
                 return;
             }
 
@@ -6032,6 +6070,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <div class="fs-val">₹${totals.pending.toLocaleString('en-IN')}</div>
                     </div>
                 </div>
+                <div class="panel" style="margin-top:8px;background:#f8fafc;border:1px dashed #5eead4">
+                    <div class="panel-title">📜 Nakal Collections (synced with Nakal tab)</div>
+                    <div id="billingNakalSummary"></div>
+                </div>
             </div>
 
             <!-- Subview Content -->
@@ -6040,6 +6082,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             </div>
             `;
 
+            renderNakalBillingSummary('billingNakalSummary', c.cino);
             if (billingSubTab === 'pos') {
                 renderPOSGrid();
                 renderPOSCart();
@@ -7215,6 +7258,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             editingNakalIndex = null;
             saveAllData();
             renderNakalHistory();
+            renderNakalDashboard();
             showToast('💾 Nakal application saved!');
         }
 
@@ -7237,7 +7281,88 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         function editNakalFee(i){loadNakalRecord(i);}
         function settleNakalFee(i){loadNakalRecord(i);}
         
-        function deleteNakalFee(i){if(!confirm('Delete this Nakal fee record?'))return;const r=nakalRecords[i],f=feeData[r.cino];if(f){f.ccFeePaid=Math.max(0,(+f.ccFeePaid||0)-(+r.ccPaid||0));}nakalRecords.splice(i,1);saveAllData();renderNakalHistory();showToast('🗑️ Nakal fee record deleted');}
+        function deleteNakalFee(i){if(!confirm('Delete this Nakal fee record?'))return;const r=nakalRecords[i],f=feeData[r.cino];if(f){f.ccFeePaid=Math.max(0,(+f.ccFeePaid||0)-(+r.ccPaid||0));}nakalRecords.splice(i,1);saveAllData();renderNakalHistory();renderNakalDashboard();showToast('🗑️ Nakal fee record deleted');}
+
+        // ── NAKAL DASHBOARD + BILLING SYNC ──
+        const NAKAL_DEFAULT_TARGET = 15;
+        function fmtINR(n) { return '₹' + (Math.round(n || 0)).toLocaleString('en-IN'); }
+
+        function getNakalTarget() {
+            let t = NAKAL_DEFAULT_TARGET;
+            try { const v = +localStorage.getItem('nakalTargetV1'); if (v >= 1) t = v; } catch (e) {}
+            return t;
+        }
+        function setNakalTarget(v) {
+            v = Math.max(1, Math.round(+v || NAKAL_DEFAULT_TARGET));
+            try { localStorage.setItem('nakalTargetV1', String(v)); } catch (e) {}
+            renderNakalDashboard();
+            if (currentTab === 'billing') renderBilling();
+        }
+
+        function nakalGlobalStats() {
+            let totalPaid = 0, totalDue = 0;
+            nakalRecords.forEach(r => { totalPaid += (+r.ccPaid || 0); totalDue += (+r.ccDue || 0); });
+            const ym = (today().slice(0, 7)); // YYYY-MM of current month
+            let mCount = 0, mPaid = 0, mDue = 0;
+            nakalRecords.forEach(r => {
+                if ((r.date || '').slice(0, 7) === ym) { mCount++; mPaid += (+r.ccPaid || 0); mDue += (+r.ccDue || 0); }
+            });
+            const target = getNakalTarget();
+            const count = nakalRecords.length;
+            const pct = Math.min(100, Math.round((mCount / target) * 100));
+            const avg = count ? Math.round(totalPaid / count) : 0;
+            return { totalPaid, totalDue, count, mCount, mPaid, mDue, target, pct, avg, ym };
+        }
+
+        function renderNakalDashboard() {
+            const el = g('nakalDashboard'); if (!el) return;
+            const s = nakalGlobalStats();
+            el.innerHTML =
+                `<div class="nk-dash-head">
+                    <div class="nk-title">📊 Nakal Dashboard</div>
+                    <label class="nk-target">🎯 Monthly Target
+                        <input type="number" min="1" value="${s.target}" onchange="setNakalTarget(this.value)" title="Applications target per month"> apps</label>
+                </div>
+                <div class="nk-kpis">
+                    <div class="nk-kpi green"><div class="nk-ico">🟢</div><div class="nk-label">Total Received</div><div class="nk-val">${fmtINR(s.totalPaid)}</div><div class="nk-sub">across ${s.count} applications</div></div>
+                    <div class="nk-kpi red"><div class="nk-ico">🔴</div><div class="nk-label">Total Due</div><div class="nk-val">${fmtINR(s.totalDue)}</div><div class="nk-sub">outstanding</div></div>
+                    <div class="nk-kpi amber"><div class="nk-ico">📋</div><div class="nk-label">This Month</div><div class="nk-val">${s.mCount} / ${s.target}</div><div class="nk-sub">applications</div></div>
+                    <div class="nk-kpi"><div class="nk-ico">💎</div><div class="nk-label">Avg / App</div><div class="nk-val">${fmtINR(s.avg)}</div><div class="nk-sub">received</div></div>
+                </div>
+                <div class="nk-track">
+                    <div class="nk-track-label"><span>Monthly Target Progress</span><span>${s.mCount} of ${s.target} · ${s.pct}%</span></div>
+                    <div class="nk-prog"><div class="nk-prog-fill" style="width:${s.pct}%"></div></div>
+                </div>
+                <div class="nk-chips">
+                    <div class="nk-chip in"><div class="c-l">💰 Collected this month</div><div class="c-v">${fmtINR(s.mPaid)}</div></div>
+                    <div class="nk-chip due"><div class="c-l">🧾 Remaining due (in hand to collect)</div><div class="c-v">${fmtINR(s.mDue)}</div></div>
+                </div>`;
+        }
+
+        // shared renderer used by the Billing section (overview + per-client)
+        function renderNakalBillingSummary(containerId, cino) {
+            const el = g(containerId); if (!el) return;
+            if (!cino) {
+                const s = nakalGlobalStats();
+                el.innerHTML =
+                    `<div class="grid-4">
+                        <div class="fee-sum green"><div class="fs-label">Nakal Received</div><div class="fs-val">${fmtINR(s.totalPaid)}</div></div>
+                        <div class="fee-sum red"><div class="fs-label">Nakal Due</div><div class="fs-val">${fmtINR(s.totalDue)}</div></div>
+                        <div class="fee-sum blue"><div class="fs-label">Apps (Total)</div><div class="fs-val">${s.count}</div></div>
+                        <div class="fee-sum"><div class="fs-label">This Month</div><div class="fs-val">${s.mCount}/${s.target}</div></div>
+                    </div>`;
+                return;
+            }
+            const f = feeData[cino] || {};
+            const ccP = +f.ccFeePaid || 0, ccD = +f.ccFeeDue || 0;
+            const nCount = nakalRecords.filter(r => r.cino === cino).length;
+            el.innerHTML =
+                `<div class="grid-3">
+                    <div class="fee-sum"><div class="fs-label">Nakal Applications</div><div class="fs-val">${nCount}</div></div>
+                    <div class="fee-sum green"><div class="fs-label">Nakal Received</div><div class="fs-val">${fmtINR(ccP)}</div></div>
+                    <div class="fee-sum red"><div class="fs-label">Nakal Due</div><div class="fs-val">${fmtINR(ccD)}</div></div>
+                </div>`;
+        }
 
         // ── DEDICATED CLIENT LEDGER WITH BILL-WISE REMAINING TRACKING ──
         function addTransaction() {
@@ -7901,6 +8026,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (typeof renderDisposed === 'function') renderDisposed();
             if (typeof renderNIP === 'function') { nipShellBuilt = false; if (currentTab === 'nip') renderNIP(); }
             applyNakalCourts();
+            if (typeof renderNakalDashboard === 'function') { try { renderNakalDashboard(); } catch (e) {} }
+            if (currentTab === 'nakal') { try { renderNakalHistory(); } catch (e) {} }
             // Refresh open advanced tabs immediately when a Realtime Database update arrives.
             // Each refresh is individually guarded: a tab whose DOM is not present yet
             // (e.g. Maintenance workspace) must not abort the rest of the sync handler.
@@ -9701,6 +9828,7 @@ If instructions, papers and the outstanding dues are not supplied by {{replyBy}}
             populateAllCaseFilters();
             renderAllCases();
             updateHomeStats();
+            renderNakalDashboard();
 
             const total = (DB.receipts || []).length + (DB.s138 || []).length + (DB.appeals || []).length + (DB
                 .order22 || []).length;
