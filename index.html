@@ -3246,6 +3246,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                             <div class="flex-row">
                                 <div class="fgroup" style="flex:1;min-width:80px"><label>CC Paid ₹</label><input type="number" class="fi" id="nkCCPaid" value="0" style="font-size:12px;padding:6px 8px"></div>
                                 <div class="fgroup" style="flex:1;min-width:80px"><label>CC Due ₹</label><input type="number" class="fi" id="nkCCDue" value="0" style="font-size:12px;padding:6px 8px"></div>
+                                <div class="fgroup" style="flex:1;min-width:90px"><label>Court Fee ₹</label><input type="number" class="fi" id="nkCourtFee" value="0" style="font-size:12px;padding:6px 8px"></div>
                                 <div class="fgroup" style="flex:1;min-width:100px"><label>Nakal Register No.</label><input type="text" class="fi" id="nkRegisterNo" style="font-size:12px;padding:6px 8px"></div>
                                 <div class="fgroup" style="flex:1;min-width:80px"><label>Receipt</label><input type="text" class="fi" id="nkReceipt" style="font-size:12px;padding:6px 8px"></div>
                                 <div class="fgroup" style="flex:1;min-width:90px"><label>Date</label><input type="date" class="fi" id="nkCCDate" style="font-size:12px;padding:6px 8px"></div>
@@ -6006,10 +6007,24 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const c = CASES.find(x => x.cino === currentBillingCase);
 
             if (!c) {
+                if (billingSubTab === 'unified') {
+                    ui.innerHTML = `
+                    <div class="toolbar no-print" style="border:1px solid;border-color:#fff #808080 #808080 #fff;background:#f0f0f0;padding:4px">
+                        <button class="btn btn-sm" onclick="billingSubTab='pos';renderBilling()">← Client Search</button>
+                        <span class="tb-label" style="font-size:13px;font-weight:800;color:#0f766e">🧾 Unified Billing — All Clients</span>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-title">🧾 Unified Billing (Services + Nakal), date-wise</div>
+                        <div id="unifiedBillBody"></div>
+                    </div>`;
+                    renderUnifiedBilling('unifiedBillBody', null);
+                    return;
+                }
                 ui.innerHTML = `
                 <div class="toolbar no-print" style="border:1px solid;border-color:#fff #808080 #808080 #fff;background:#f0f0f0;padding:4px">
                     <input id="billSearch" placeholder="🔍 Search CNR, Client Name, Case No..." oninput="billSearch()" style="flex:1">
                     <button class="btn btn-primary btn-sm" onclick="billOpenCase()">⚡ Open Touch &amp; Go Bills</button>
+                    <button class="btn btn-sm" onclick="billingSubTab='unified';renderBilling()">🧾 Unified Billing</button>
                     <button class="btn btn-sm" onclick="openPOSCatalogModal()">⚙️ Manage Catalog</button>
                 </div>
                 <div class="panel">
@@ -6041,6 +6056,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">
                     <button class="btn btn-sm ${billingSubTab==='pos'?'btn-primary':''}" onclick="setBillingSubTab('pos')">⚡ Touch &amp; Go POS</button>
                     <button class="btn btn-sm ${billingSubTab==='ledger'?'btn-primary':''}" onclick="setBillingSubTab('ledger')">📒 Client Ledger (${totals.totalBills} Bills)</button>
+                    <button class="btn btn-sm ${billingSubTab==='unified'?'btn-primary':''}" onclick="setBillingSubTab('unified')">🧾 Unified</button>
                     <button class="btn btn-sm" onclick="openPOSCatalogModal()">⚙️ Catalog</button>
                     <button class="btn btn-gold btn-sm" onclick="printClientLedgerStatement('${c.cino}')">🖨️ Statement</button>
                     <button class="btn btn-sm" onclick="exportBillingCSV()">📥 CSV</button>
@@ -6078,7 +6094,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
             <!-- Subview Content -->
             <div id="billingSubViewContainer">
-                ${billingSubTab === 'pos' ? renderPOSScreenHTML(c) : renderLedgerScreenHTML(c, totals, entries)}
+                ${billingSubTab === 'pos' ? renderPOSScreenHTML(c) : billingSubTab === 'unified' ? '<div id="unifiedBillBody"></div>' : renderLedgerScreenHTML(c, totals, entries)}
             </div>
             `;
 
@@ -6086,7 +6102,86 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (billingSubTab === 'pos') {
                 renderPOSGrid();
                 renderPOSCart();
+            } else if (billingSubTab === 'unified') {
+                renderUnifiedBilling('unifiedBillBody', c.cino);
             }
+        }
+
+        // ── UNIFIED BILLING (services + Nakal, date-wise) ──
+        // Builds bill rows for a client (or ALL clients when cino is null).
+        // Nakal applications are surfaced as bills keyed by their Nakal Reg. No.
+        function getUnifiedBills(cino) {
+            const rows = [];
+            // 1) Touch & Go POS / ledger bills
+            const billMap = cino ? { [cino]: billingLedger[cino] || [] }
+                                : Object.keys(billingLedger).reduce((m, k) => (m[k] = billingLedger[k] || [], m), {});
+            Object.keys(billMap).forEach(k => (billMap[k] || []).forEach(e => {
+                const ne = normalizeBillEntry(e);
+                const c = CASES.find(x => x.cino === k);
+                rows.push({
+                    date: e.date || '', time: ne.time || '', ref: ne.billNo || '',
+                    kind: 'service', cino: k,
+                    party: c ? (c.type_name + ' ' + c.reg_no + '/' + c.reg_year + ' — ' + c.petparty_name) : k,
+                    title: (ne.items || []).map(it => it.name).join(', ') || e.category || 'Service',
+                    nakalReg: '',
+                    amount: +ne.amount || 0, paid: +ne.paidAmount || 0, due: +ne.remaining || 0, status: ne.status
+                });
+            }));
+            // 2) Nakal applications → generated bills
+            const nlist = cino ? nakalRecords.filter(r => r.cino === cino) : nakalRecords;
+            nlist.forEach(r => {
+                const c = CASES.find(x => x.cino === r.cino);
+                const amt = (+r.ccPaid || 0) + (+r.ccDue || 0);
+                const paid = (+r.ccPaid || 0), due = (+r.ccDue || 0);
+                const court = (+r.courtFee || 0);
+                rows.push({
+                    date: r.date || '', time: '', ref: 'NAKAL-' + (r.registerNo || (r.cino || '').slice(-6)),
+                    kind: 'nakal', cino: r.cino,
+                    party: c ? (c.type_name + ' ' + c.reg_no + '/' + c.reg_year + ' — ' + c.petparty_name) : (r.cino || ''),
+                    title: 'Nakal (Certified Copy)' + (r.applicant ? ' — ' + r.applicant : '') + (court ? ' · court fee ₹' + court : ''),
+                    nakalReg: r.registerNo || '',
+                    amount: amt, paid: paid, due: due,
+                    status: due > 0 ? (paid > 0 ? 'Partial' : 'Unpaid') : (amt > 0 ? 'Paid' : '—')
+                });
+            });
+            rows.sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.time || '').localeCompare(a.time || ''));
+            return rows;
+        }
+
+        function renderUnifiedBilling(containerId, cino) {
+            const el = g(containerId); if (!el) return;
+            const rows = getUnifiedBills(cino);
+            if (!rows.length) { el.innerHTML = '<div style="font-size:11px;color:#64748b;padding:10px">No bills yet for this view.</div>'; return; }
+            let tAmt = 0, tPaid = 0, tDue = 0, tNakal = 0;
+            let h = '<div style="overflow:auto"><table style="font-size:8px;width:100%;border-collapse:collapse">'
+                + '<thead><tr style="background:#0f766e;color:#fff">'
+                + '<th style="padding:3px 4px;text-align:left">Date</th><th style="padding:3px 4px;text-align:left">Bill / Ref</th>'
+                + '<th style="padding:3px 4px;text-align:left">Client & Particulars</th><th style="padding:3px 4px;text-align:left">Type</th>'
+                + '<th style="padding:3px 4px;text-align:right">Billed ₹</th><th style="padding:3px 4px;text-align:right">Paid ₹</th>'
+                + '<th style="padding:3px 4px;text-align:right">Due ₹</th><th style="padding:3px 4px;text-align:left">Status</th></tr></thead><tbody>';
+            rows.forEach(r => {
+                tAmt += r.amount; tPaid += r.paid; tDue += r.due; if (r.kind === 'nakal') tNakal++;
+                const badge = r.kind === 'nakal'
+                    ? '<span style="padding:1px 5px;background:#0e7490;color:#fff;border-radius:6px;font-size:7.5px;font-weight:700">📜 Nakal' + (r.nakalReg ? ' · ' + esc(r.nakalReg) : '') + '</span>'
+                    : '<span style="padding:1px 5px;background:#475569;color:#fff;border-radius:6px;font-size:7.5px;font-weight:700">⚡ Service</span>';
+                const stColor = r.status === 'Paid' ? '#008000' : (r.status === 'Unpaid' ? '#800000' : (r.status === 'Partial' ? '#b45309' : '#64748b'));
+                h += `<tr style="border-bottom:1px solid #e2e8f0">`
+                    + `<td style="padding:2px 4px;white-space:nowrap">${fmtDS(r.date)}</td>`
+                    + `<td style="padding:2px 4px;font-weight:700;color:#0f766e">${esc(r.ref)}</td>`
+                    + `<td style="padding:2px 4px">${esc(r.party)}<br><span style="color:#475569">${esc(r.title)}</span></td>`
+                    + `<td style="padding:2px 4px;white-space:nowrap">${badge}</td>`
+                    + `<td style="padding:2px 4px;text-align:right;font-weight:700">₹${r.amount}</td>`
+                    + `<td style="padding:2px 4px;text-align:right;color:#008000">₹${r.paid}</td>`
+                    + `<td style="padding:2px 4px;text-align:right;color:${r.due>0?'#800000':'#008000'};font-weight:700">₹${r.due}</td>`
+                    + `<td style="padding:2px 4px;color:${stColor};font-weight:700;white-space:nowrap">${r.status}</td></tr>`;
+            });
+            h += '</tbody><tfoot><tr style="background:#0f766e;color:#fff;font-weight:700">'
+                + `<td colspan="4" style="padding:3px 4px">TOTAL (${rows.length} bills · ${tNakal} Nakal)</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${tAmt}</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${tPaid}</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${tDue}</td>`
+                + '<td style="padding:3px 4px"></td></tr></tfoot></table></div>';
+            el.innerHTML = h;
         }
 
         function renderPOSScreenHTML(c) {
@@ -7243,6 +7338,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 purpose: document.getElementById('nkPurpose').value,
                 ccPaid: +document.getElementById('nkCCPaid').value || 0,
                 ccDue: +document.getElementById('nkCCDue').value || 0,
+                courtFee: +document.getElementById('nkCourtFee').value || 0,
                 registerNo: document.getElementById('nkRegisterNo').value,
                 receipt: document.getElementById('nkReceipt').value,
                 remark: document.getElementById('nkCCRemark').value,
@@ -7253,8 +7349,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (editingNakalIndex !== null) nakalRecords[editingNakalIndex] = rec; else nakalRecords.push(rec);
             if (!feeData[cino]) feeData[cino] = { courtFeePaid: 0, courtFeeDue: 0, profFeePaid: 0, profFeeDue: 0,
                 ccFeePaid: 0, ccFeeDue: 0, notes: '' };
-            feeData[cino].ccFeePaid = Math.max(0, (feeData[cino].ccFeePaid || 0) - (oldRec ? (+oldRec.ccPaid || 0) : 0) + rec.ccPaid);
-            feeData[cino].ccFeeDue = rec.ccDue;
+            syncNakalFeeFor(cino);
             editingNakalIndex = null;
             saveAllData();
             renderNakalHistory();
@@ -7266,22 +7361,82 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (!nakalRecords.length) { document.getElementById('nakalHistory').innerHTML = 'No records yet.'; return; }
             const nq = (g('nakalHistorySearch')?.value || '').toLowerCase().trim();
             const filteredRecords = nakalRecords.map((r,i)=>({r,i,c:CASES.find(x=>x.cino===r.cino)})).filter(x=>!nq || [x.r.registerNo,x.r.receipt,x.r.applicant,x.r.cino,x.c?.type_name,x.c?.reg_no,x.c?.reg_year,x.c?.petparty_name,x.c?.resparty_name].join(' ').toLowerCase().includes(nq));
+            let totP=0, totC=0, totK=0, totD=0;
             let h =
-                '<table style="font-size:8px"><thead><tr style="background:#0f766e;color:#fff"><th style="padding:2px 4px">#</th><th>Date</th><th>Case</th><th>Applicant</th><th>Purpose</th><th>CC Paid</th><th>CC Due</th><th>Nakal Reg. No.</th><th>Receipt</th><th class="no-print">Action</th></tr></thead><tbody>';
+                '<div style="overflow:auto"><table style="font-size:8px;width:100%;border-collapse:collapse"><thead><tr style="background:#0f766e;color:#fff">'
+                + '<th style="padding:3px 4px;text-align:left">#</th><th style="padding:3px 4px;text-align:left">Date</th><th style="padding:3px 4px;text-align:left">Case</th>'
+                + '<th style="padding:3px 4px;text-align:left">Applicant</th><th style="padding:3px 4px;text-align:left">Nakal Reg. No.</th>'
+                + '<th style="padding:3px 4px;text-align:right">Received ₹</th><th style="padding:3px 4px;text-align:right">Court Fee ₹</th>'
+                + '<th style="padding:3px 4px;text-align:right">Kept ₹</th><th style="padding:3px 4px;text-align:right">Due ₹</th>'
+                + '<th style="padding:3px 4px;text-align:left">Status</th><th class="no-print" style="padding:3px 4px;text-align:left">Action</th></tr></thead><tbody>';
             for (let z = filteredRecords.length - 1; z >= 0; z--) {
                 const {r,i,c} = filteredRecords[z];
+                const paid = (+r.ccPaid||0), court = (+r.courtFee||0), due = (+r.ccDue||0), kept = Math.max(0, paid - court);
+                totP += paid; totC += court; totK += kept; totD += due;
+                const status = due>0 ? (paid>0 ? '🟡 Partial' : '🔴 Due') : (paid>0 ? '🟢 Settled' : '—');
                 h +=
-                    `<tr style="cursor:pointer" onclick="loadNakalRecord(${i})"><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${filteredRecords.length-z}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${fmtDS(r.date)}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${c?esc(c.type_name+' '+c.reg_no+'/'+c.reg_year):esc(r.cino)}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${esc(r.applicant)}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${esc(r.purpose)}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">₹${r.ccPaid||0}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0;color:#800000">₹${r.ccDue||0}</td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0"><b>${esc(r.registerNo||'—')}</b></td><td style="padding:2px 4px;border-bottom:1px solid #d0d0d0">${esc(r.receipt)}</td><td class="no-print" style="padding:2px 4px"><button class="btn btn-xs" onclick="event.stopPropagation();loadNakalRecord(${i})">✏️</button><button class="btn btn-xs btn-success" onclick="event.stopPropagation();loadNakalRecord(${i});g('nkCCDue').focus()">₹ Settle</button><button class="btn btn-xs btn-danger" onclick="event.stopPropagation();deleteNakalFee(${i})">🗑</button></td></tr>`;
+                    `<tr style="cursor:pointer" onclick="loadNakalRecord(${i})"><td style="padding:2px 4px;border-bottom:1px solid #e2e8f0">${filteredRecords.length-z}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0">${fmtDS(r.date)}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0">${c?esc(c.type_name+' '+c.reg_no+'/'+c.reg_year):esc(r.cino)}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0">${esc(r.applicant)}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0"><b>${esc(r.registerNo||'—')}</b></td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0;text-align:right;color:#008000;font-weight:700">₹${paid}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0;text-align:right;color:#b45309">₹${court}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0;text-align:right;color:#0f766e;font-weight:700">₹${kept}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0;text-align:right;color:${due>0?'#800000':'#008000'};font-weight:700">₹${due}</td>`
+                    + `<td style="padding:2px 4px;border-bottom:1px solid #e2e8f0;white-space:nowrap">${status}</td>`
+                    + `<td class="no-print" style="padding:2px 4px;white-space:nowrap"><button class="btn btn-xs" onclick="event.stopPropagation();loadNakalRecord(${i})" title="Edit">✏️</button>`
+                    + `<button class="btn btn-xs btn-success" onclick="event.stopPropagation();settleNakalFee(${i})" title="Mark due as received">✅ Settle</button>`
+                    + `<button class="btn btn-xs btn-danger" onclick="event.stopPropagation();deleteNakalFee(${i})" title="Delete">🗑</button></td></tr>`;
             }
-            h += '</tbody></table>';
+            h += '</tbody>'
+                + '<tfoot><tr style="background:#0f766e;color:#fff;font-weight:700">'
+                + '<td colspan="5" style="padding:3px 4px">TOTAL (${filteredRecords.length} applications)</td>'
+                + `<td style="padding:3px 4px;text-align:right">₹${totP}</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${totC}</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${totK}</td>`
+                + `<td style="padding:3px 4px;text-align:right">₹${totD}</td>`
+                + '<td colspan="2" style="padding:3px 4px"></td></tr></tfoot></table></div>';
             document.getElementById('nakalHistory').innerHTML = h;
         }
 
-        function loadNakalRecord(i){const r=nakalRecords[i];if(!r)return;editingNakalIndex=i;currentTab='nakal';goTab('nakal');const c=CASES.find(x=>x.cino===r.cino);if(c)g('nakalSearchInp').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name;const fd=r.formData||{};Object.keys(fd).forEach(id=>{const el=g(id);if(el)el.value=fd[id]||'';});g('nkApplicant').value=r.applicant||g('nkApplicant').value;g('nkMobile').value=r.mobile||g('nkMobile').value;g('nkDetails').value=r.details||g('nkDetails').value;g('nkCCPaid').value=r.ccPaid||0;g('nkCCDue').value=r.ccDue||0;g('nkRegisterNo').value=r.registerNo||'';g('nkReceipt').value=r.receipt||'';g('nkCCRemark').value=r.remark||'';const cnrEl=g('nkCNRDisplay');if(cnrEl){cnrEl.textContent=r.cino||'—';cnrEl.setAttribute('data-cnr',r.cino||'');}updateNakalPrintDates();showToast('✏️ Nakal record loaded — edit fields on page and click Save');}
+        function loadNakalRecord(i){const r=nakalRecords[i];if(!r)return;editingNakalIndex=i;currentTab='nakal';goTab('nakal');const c=CASES.find(x=>x.cino===r.cino);if(c)g('nakalSearchInp').value=c.type_name+' '+c.reg_no+'/'+c.reg_year+' — '+c.petparty_name;const fd=r.formData||{};Object.keys(fd).forEach(id=>{const el=g(id);if(el)el.value=fd[id]||'';});g('nkApplicant').value=r.applicant||g('nkApplicant').value;g('nkMobile').value=r.mobile||g('nkMobile').value;g('nkDetails').value=r.details||g('nkDetails').value;g('nkCCPaid').value=r.ccPaid||0;g('nkCCDue').value=r.ccDue||0;g('nkCourtFee').value=r.courtFee||0;g('nkRegisterNo').value=r.registerNo||'';g('nkReceipt').value=r.receipt||'';g('nkCCRemark').value=r.remark||'';const cnrEl=g('nkCNRDisplay');if(cnrEl){cnrEl.textContent=r.cino||'—';cnrEl.setAttribute('data-cnr',r.cino||'');}updateNakalPrintDates();showToast('✏️ Nakal record loaded — edit fields on page and click Save');}
         function editNakalFee(i){loadNakalRecord(i);}
-        function settleNakalFee(i){loadNakalRecord(i);}
-        
-        function deleteNakalFee(i){if(!confirm('Delete this Nakal fee record?'))return;const r=nakalRecords[i],f=feeData[r.cino];if(f){f.ccFeePaid=Math.max(0,(+f.ccFeePaid||0)-(+r.ccPaid||0));}nakalRecords.splice(i,1);saveAllData();renderNakalHistory();renderNakalDashboard();showToast('🗑️ Nakal fee record deleted');}
+
+        // Settle = the amount asked/due has been received from the client.
+        // The due is folded into received and cleared, so it is never double-counted.
+        function settleNakalFee(i){
+            const r = nakalRecords[i]; if(!r) return;
+            const due = (+r.ccDue||0);
+            if (due <= 0) { showToast('✅ Already settled — no due pending'); return; }
+            if (!confirm('Settle this Nakal? The due amount ₹'+due+' will be marked as RECEIVED from the client.')) return;
+            r.ccPaid = (+r.ccPaid||0) + due;
+            r.ccDue = 0;
+            syncNakalFeeFor(r.cino);
+            saveAllData();
+            renderNakalHistory();
+            renderNakalDashboard();
+            showToast('✅ Nakal settled — due ₹'+due+' marked received');
+        }
+
+        function deleteNakalFee(i){
+            if(!confirm('Delete this Nakal fee record?'))return;
+            const r=nakalRecords[i];const cino=r?r.cino:null;
+            nakalRecords.splice(i,1);
+            if(cino)syncNakalFeeFor(cino);
+            saveAllData();renderNakalHistory();renderNakalDashboard();
+            showToast('🗑️ Nakal fee record deleted');
+        }
+
+        // Recompute a client's Nakal totals in feeData from the canonical nakalRecords.
+        function syncNakalFeeFor(cino) {
+            if (!feeData[cino]) feeData[cino] = { courtFeePaid: 0, courtFeeDue: 0, profFeePaid: 0, profFeeDue: 0,
+                ccFeePaid: 0, ccFeeDue: 0, notes: '' };
+            let p = 0, d = 0;
+            nakalRecords.forEach(r => { if (r.cino === cino) { p += (+r.ccPaid || 0); d += (+r.ccDue || 0); } });
+            feeData[cino].ccFeePaid = p;
+            feeData[cino].ccFeeDue = d;
+        }
 
         // ── NAKAL DASHBOARD + BILLING SYNC ──
         const NAKAL_DEFAULT_TARGET = 15;
@@ -7300,18 +7455,20 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         }
 
         function nakalGlobalStats() {
-            let totalPaid = 0, totalDue = 0;
-            nakalRecords.forEach(r => { totalPaid += (+r.ccPaid || 0); totalDue += (+r.ccDue || 0); });
+            let totalPaid = 0, totalDue = 0, totalCourt = 0;
+            nakalRecords.forEach(r => { totalPaid += (+r.ccPaid || 0); totalDue += (+r.ccDue || 0); totalCourt += (+r.courtFee || 0); });
             const ym = (today().slice(0, 7)); // YYYY-MM of current month
-            let mCount = 0, mPaid = 0, mDue = 0;
+            let mCount = 0, mPaid = 0, mDue = 0, mCourt = 0;
             nakalRecords.forEach(r => {
-                if ((r.date || '').slice(0, 7) === ym) { mCount++; mPaid += (+r.ccPaid || 0); mDue += (+r.ccDue || 0); }
+                if ((r.date || '').slice(0, 7) === ym) { mCount++; mPaid += (+r.ccPaid || 0); mDue += (+r.ccDue || 0); mCourt += (+r.courtFee || 0); }
             });
             const target = getNakalTarget();
             const count = nakalRecords.length;
+            const totalKept = Math.max(0, totalPaid - totalCourt);
+            const mKept = Math.max(0, mPaid - mCourt);
             const pct = Math.min(100, Math.round((mCount / target) * 100));
             const avg = count ? Math.round(totalPaid / count) : 0;
-            return { totalPaid, totalDue, count, mCount, mPaid, mDue, target, pct, avg, ym };
+            return { totalPaid, totalDue, totalCourt, totalKept, count, mCount, mPaid, mDue, mCourt, mKept, target, pct, avg, ym };
         }
 
         function renderNakalDashboard() {
@@ -7324,18 +7481,19 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <input type="number" min="1" value="${s.target}" onchange="setNakalTarget(this.value)" title="Applications target per month"> apps</label>
                 </div>
                 <div class="nk-kpis">
-                    <div class="nk-kpi green"><div class="nk-ico">🟢</div><div class="nk-label">Total Received</div><div class="nk-val">${fmtINR(s.totalPaid)}</div><div class="nk-sub">across ${s.count} applications</div></div>
+                    <div class="nk-kpi green"><div class="nk-ico">🟢</div><div class="nk-label">Total Received</div><div class="nk-val">${fmtINR(s.totalPaid)}</div><div class="nk-sub">from client</div></div>
+                    <div class="nk-kpi amber"><div class="nk-ico">🏛️</div><div class="nk-label">Court Fee (Outflow)</div><div class="nk-val">${fmtINR(s.totalCourt)}</div><div class="nk-sub">paid to court</div></div>
+                    <div class="nk-kpi"><div class="nk-ico">💼</div><div class="nk-label">Amount Kept</div><div class="nk-val">${fmtINR(s.totalKept)}</div><div class="nk-sub">in hand (recv − court)</div></div>
                     <div class="nk-kpi red"><div class="nk-ico">🔴</div><div class="nk-label">Total Due</div><div class="nk-val">${fmtINR(s.totalDue)}</div><div class="nk-sub">outstanding</div></div>
-                    <div class="nk-kpi amber"><div class="nk-ico">📋</div><div class="nk-label">This Month</div><div class="nk-val">${s.mCount} / ${s.target}</div><div class="nk-sub">applications</div></div>
-                    <div class="nk-kpi"><div class="nk-ico">💎</div><div class="nk-label">Avg / App</div><div class="nk-val">${fmtINR(s.avg)}</div><div class="nk-sub">received</div></div>
                 </div>
                 <div class="nk-track">
                     <div class="nk-track-label"><span>Monthly Target Progress</span><span>${s.mCount} of ${s.target} · ${s.pct}%</span></div>
                     <div class="nk-prog"><div class="nk-prog-fill" style="width:${s.pct}%"></div></div>
                 </div>
                 <div class="nk-chips">
-                    <div class="nk-chip in"><div class="c-l">💰 Collected this month</div><div class="c-v">${fmtINR(s.mPaid)}</div></div>
-                    <div class="nk-chip due"><div class="c-l">🧾 Remaining due (in hand to collect)</div><div class="c-v">${fmtINR(s.mDue)}</div></div>
+                    <div class="nk-chip in"><div class="c-l">💰 Received this month</div><div class="c-v">${fmtINR(s.mPaid)}</div></div>
+                    <div class="nk-chip"><div class="c-l">🏛️ Court fee this month</div><div class="c-v">${fmtINR(s.mCourt)}</div></div>
+                    <div class="nk-chip due"><div class="c-l">🧾 Due this month</div><div class="c-v">${fmtINR(s.mDue)}</div></div>
                 </div>`;
         }
 
@@ -7355,11 +7513,18 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             }
             const f = feeData[cino] || {};
             const ccP = +f.ccFeePaid || 0, ccD = +f.ccFeeDue || 0;
+            let ccCourt = 0;
+            nakalRecords.forEach(r => { if (r.cino === cino) ccCourt += (+r.courtFee || 0); });
+            const kept = Math.max(0, ccP - ccCourt);
             const nCount = nakalRecords.filter(r => r.cino === cino).length;
             el.innerHTML =
-                `<div class="grid-3">
+                `<div class="grid-4">
                     <div class="fee-sum"><div class="fs-label">Nakal Applications</div><div class="fs-val">${nCount}</div></div>
-                    <div class="fee-sum green"><div class="fs-label">Nakal Received</div><div class="fs-val">${fmtINR(ccP)}</div></div>
+                    <div class="fee-sum green"><div class="fs-label">Received</div><div class="fs-val">${fmtINR(ccP)}</div></div>
+                    <div class="fee-sum amber"><div class="fs-label">Court Fee</div><div class="fs-val">${fmtINR(ccCourt)}</div></div>
+                    <div class="fee-sum"><div class="fs-label">Kept (In Hand)</div><div class="fs-val">${fmtINR(kept)}</div></div>
+                </div>
+                <div class="grid-4" style="margin-top:6px">
                     <div class="fee-sum red"><div class="fs-label">Nakal Due</div><div class="fs-val">${fmtINR(ccD)}</div></div>
                 </div>`;
         }
