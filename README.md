@@ -114,3 +114,27 @@ app, with a record of every one issued.
 | `manifest.webmanifest` | installable web app: name, icons, theme, shortcuts |
 | `icon.svg` | favicon + maskable app icon |
 | `icon-192.png`, `icon-512.png` | launcher / home-screen icons |
+
+## Billing: services and installments
+
+Open **Bills & Invoices**, search for a case and select the client. The **Services &
+Payments** ledger shows each bill's services, service date, debit (charge), credit
+(payments) and remaining balance. Choose **New Service Bill** to add multiple services;
+set a date on each service or leave it blank to use the bill date. Add the same service
+more than once for different dates. Use the service search in the ledger to find it later.
+Select **Bill Due**,
+**Partial** or **Paid in Full**, then **Save Bill (selected payment)**. A bill can have
+any number of installments: use **+ Credit payment** beside a service or the bill-level
+button, then enter the date, amount, mode and reference. Payments cannot exceed the
+selected service or bill balance. The ledger statement includes service balances and
+payment history.
+
+Bill-wide payments (including payments on existing bills) are applied to services in
+listed order; service-specific payments are applied to the selected service. Bill
+discounts are apportioned across services in proportion to their original charges,
+rounded to paise. Existing standalone receipts are shown in collections, but are not
+implicitly applied to individual bills; their amounts are identified separately. Nakal
+collections remain separate and are available in the Unified view. Billing is stored in
+the existing `billingLedgerV1` data and included in the existing backup/cloud sync.
+
+Run the billing regression checks with `node tests/billing.test.js`.

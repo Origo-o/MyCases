@@ -2261,6 +2261,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             display: flex;
             gap: 4px;
             align-items: center;
+            flex-wrap: wrap;
         }
         .pos-item-note {
             font-size: 9px;
@@ -3586,7 +3587,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="grid-2" style="gap:4px">
                     <div class="fgroup"><label>Payment Date</label><input type="date" class="fi" id="bpmDate"></div>
                     <div class="fgroup"><label>Time</label><input type="time" class="fi" id="bpmTime"></div>
-                    <div class="fgroup"><label>Amount Paid (₹) *</label><input type="number" class="fi" id="bpmAmount" style="font-size:12px;font-weight:800;color:#0f766e"></div>
+                    <div class="fgroup full"><label>Credit payment to</label><select class="fi" id="bpmService" onchange="updateBillPaymentAmount()"></select><small>Bill-wide payments are applied to services in order.</small></div>
+                    <div class="fgroup"><label>Amount Paid (₹) *</label><input type="number" min="0.01" step="0.01" class="fi" id="bpmAmount" style="font-size:12px;font-weight:800;color:#0f766e"></div>
                     <div class="fgroup"><label>Payment Mode</label><select class="fi" id="bpmMode"><option value="Cash">Cash</option><option value="UPI">UPI / QR</option><option value="GPay">GPay / PhonePe</option><option value="NEFT">Bank Transfer / NEFT</option><option value="Cheque">Cheque</option><option value="Card">Card</option></select></div>
                     <div class="fgroup" style="grid-column:span 2"><label>Payment Note / Reference / Cheque #</label><input type="text" class="fi" id="bpmNote" placeholder="e.g. Advance installment / Exh hearing"></div>
                 </div>
@@ -3761,7 +3763,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         let currentPOSCart = [];
         let posActiveCategory = 'all';
         let posSearchQuery = '';
-        let posPaymentType = 'full'; // 'full' | 'partial' | 'due'
+        let posPaymentType = 'due'; // 'full' | 'partial' | 'due'
         let posPaymentMode = 'Cash'; // 'Cash' | 'UPI' | 'GPay' | 'NEFT' | 'Cheque' | 'Card'
         let posPartialAmount = 0;
         let posDiscountAmount = 0;
@@ -5613,14 +5615,38 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     e.status = 'Unpaid';
                 }
             } else {
-                const sumPaid = e.payments.reduce((sum, p) => sum + (+p.amount || 0), 0);
+                const sumPaid = e.type === 'Paid' && !e.payments.length ? (+e.amount || 0) : Math.round(e.payments.reduce((sum, p) => sum + (+p.amount || 0), 0) * 100) / 100;
                 e.paidAmount = sumPaid;
-                e.remaining = Math.max(0, (+e.amount || 0) - sumPaid);
+                e.remaining = Math.max(0, Math.round(((+e.amount || 0) - sumPaid) * 100) / 100);
                 if (e.remaining <= 0) e.status = 'Paid';
                 else if (e.paidAmount > 0) e.status = 'Partial';
                 else e.status = 'Unpaid';
             }
             return e;
+        }
+
+        // Amounts are distributed in paise so service totals always add up to the bill.
+        // Older bill-wide payments have no service allocation: apply them in item order.
+        function billServiceBalances(b) {
+            normalizeBillEntry(b);
+            const items = b.items || [];
+            const total = Math.max(0, Math.round((+b.amount || 0) * 100));
+            const weights = items.map(it => Math.max(0, +it.amount || 0));
+            const weightTotal = weights.reduce((a, x) => a + x, 0);
+            const portions = items.map((it, i) => weightTotal ? total * weights[i] / weightTotal : total / items.length);
+            const cents = portions.map(Math.floor);
+            let remainder = total - cents.reduce((a, x) => a + x, 0);
+            const order = portions.map((x, i) => i).sort((a, z) => (portions[z] - cents[z]) - (portions[a] - cents[a]) || a - z);
+            for (let i = 0; i < remainder; i++) cents[order[i % order.length]]++;
+            const paid = items.map(() => 0);
+            const payments = b.payments.length ? b.payments : (b.type === 'Paid' && b.paidAmount ? [{amount:b.paidAmount}] : []);
+            payments.forEach(p => {
+                let left = Math.max(0, Math.round((+p.amount || 0) * 100));
+                const targets = Number.isInteger(p.serviceIndex) && p.serviceIndex >= 0 && p.serviceIndex < items.length
+                    ? [p.serviceIndex] : items.map((_, i) => i);
+                targets.forEach(i => { const take = Math.min(left, Math.max(0, cents[i] - paid[i])); paid[i] += take; left -= take; });
+            });
+            return items.map((item, i) => ({ item, index:i, amount:cents[i] / 100, paid:paid[i] / 100, due:(cents[i] - paid[i]) / 100 }));
         }
 
         function billTotals(cino) {
@@ -5635,13 +5661,15 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 if (e.type === 'Asked' || e.type === 'Adjustment') {
                     asked += (+e.amount || 0);
                     paid += (+e.paidAmount || 0);
-                    remaining += (+e.remaining !== undefined ? +e.remaining : Math.max(0, (+e.amount || 0) - (+e.paidAmount || 0)));
+                    remaining += e.remaining !== undefined ? +e.remaining : Math.max(0, (+e.amount || 0) - (+e.paidAmount || 0));
                 } else if (e.type === 'Paid') {
                     paid += (+e.amount || 0);
                 }
             });
             
-            const pending = Math.max(0, asked - paid);
+            // Standalone legacy receipts are not assigned to any bill; do not silently
+            // reduce individual bill balances with them.
+            const pending = Math.round(remaining * 100) / 100;
             return {
                 asked,
                 paid,
@@ -5649,7 +5677,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 pending,
                 totalBills: entries.filter(e => e.type === 'Asked' || e.type === 'Adjustment').length,
                 settledBills: entries.filter(e => (e.type === 'Asked' || e.type === 'Adjustment') && e.status === 'Paid').length,
-                pendingBills: entries.filter(e => (e.type === 'Asked' || e.type === 'Adjustment') && e.status !== 'Paid').length
+                pendingBills: entries.filter(e => (e.type === 'Asked' || e.type === 'Adjustment') && e.status !== 'Paid').length,
+                unallocated: entries.filter(e => e.type === 'Paid').reduce((sum, e) => sum + (+e.amount || 0), 0)
             };
         }
 
@@ -5666,7 +5695,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             if (!id) { showToast('Search and select a case first'); return; }
             currentBillingCase = id;
             currentPOSCart = [];
-            billingSubTab = 'pos';
+            posPaymentType = 'due';
+            billingSubTab = 'ledger';
             renderBilling();
         }
 
@@ -5680,22 +5710,17 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const catalog = posCatalog || DEFAULT_POS_CATALOG;
             const p = catalog.find(x => x.id === prodId);
             if (!p) return;
-            const existing = currentPOSCart.find(x => x.id === p.id);
-            if (existing) {
-                existing.qty = (existing.qty || 1) + 1;
-                existing.amount = existing.qty * (existing.rate || p.rate);
-            } else {
-                currentPOSCart.push({
-                    id: p.id,
-                    name: p.name,
-                    category: p.category,
-                    catName: p.catName || 'Legal',
-                    rate: p.rate,
-                    qty: 1,
-                    amount: p.rate,
-                    note: ''
-                });
-            }
+            // Keep repeated services as separate lines so each can have its own date.
+            currentPOSCart.push({
+                id: p.id,
+                name: p.name,
+                category: p.category,
+                catName: p.catName || 'Legal',
+                rate: p.rate,
+                qty: 1,
+                amount: p.rate,
+                note: ''
+            });
             renderPOSCart();
             renderPOSGrid();
         }
@@ -5741,6 +5766,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             item.rate = Math.max(0, parseFloat(val) || 0);
             item.amount = (item.qty || 1) * item.rate;
             renderPOSCart();
+        }
+
+        function updatePOSCartItemDate(idx, val) {
+            if (currentPOSCart[idx]) currentPOSCart[idx].serviceDate = val;
         }
 
         function updatePOSCartItemNote(idx, val) {
@@ -5795,9 +5824,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
         }
 
         function calcPOSCartTotals() {
-            const subtotal = currentPOSCart.reduce((sum, x) => sum + (+x.amount || 0), 0);
+            const subtotal = Math.round(currentPOSCart.reduce((sum, x) => sum + (+x.amount || 0), 0) * 100) / 100;
             const discount = parseFloat(g('posDiscountInp')?.value) || 0;
-            const grandTotal = Math.max(0, subtotal - discount);
+            const grandTotal = Math.max(0, Math.round((subtotal - discount) * 100) / 100);
             let paidAmount = 0;
             let remaining = 0;
 
@@ -5830,8 +5859,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             });
 
             grid.innerHTML = filtered.map(p => {
-                const inCart = currentPOSCart.find(x => x.id === p.id);
-                const countBadge = inCart ? `<div class="p-cart-badge">${inCart.qty}x</div>` : '';
+                const count = currentPOSCart.filter(x => x.id === p.id).reduce((n, item) => n + (item.qty || 1), 0);
+                const countBadge = count ? `<div class="p-cart-badge">${count}x</div>` : '';
                 return `
                 <div class="pos-card" onclick="addToPOSCart('${p.id}')">
                     ${countBadge}
@@ -5868,6 +5897,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         <button type="button" class="btn btn-xs btn-danger" onclick="removeFromPOSCart(${i})" style="padding:0 4px">✕</button>
                     </div>
                     <div class="pos-item-extra">
+                        <input type="date" aria-label="Service date (optional)" title="Service date; blank uses bill date" value="${it.serviceDate || ''}" onchange="updatePOSCartItemDate(${i}, this.value)">
                         <input type="text" class="pos-item-note" placeholder="Note / memo..." value="${esc(it.note || '')}" onchange="updatePOSCartItemNote(${i}, this.value)">
                         <span style="font-size:8px;color:#64748b">₹/unit:</span>
                         <input type="number" class="pos-item-rate-inp" value="${it.rate || 0}" onchange="updatePOSCartItemRate(${i}, this.value)">
@@ -5929,6 +5959,11 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 finalPayType = 'due';
             }
 
+            if (!Number.isFinite(totals.discount) || Math.abs(totals.discount * 100 - Math.round(totals.discount * 100)) > 0.000001 || totals.discount < 0 || totals.discount > totals.subtotal) { showToast('Enter a discount between zero and the subtotal'); return; }
+            if (finalPayType === 'partial') {
+                const raw = Number(g('posPartialAmountInp')?.value);
+                if (!Number.isFinite(raw) || raw <= 0 || raw > totals.grandTotal || Math.abs(raw * 100 - Math.round(raw * 100)) > 0.000001) { showToast('Enter a valid payment up to the bill total (maximum 2 decimal places)'); return; }
+            }
             const initialPaid = finalPayType === 'full' ? totals.grandTotal : (finalPayType === 'partial' ? totals.paidAmount : 0);
             const remainingDue = Math.max(0, totals.grandTotal - initialPaid);
             const billStatus = remainingDue <= 0 ? 'Paid' : (initialPaid > 0 ? 'Partial' : 'Unpaid');
@@ -5996,6 +6031,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             }
 
             currentPOSCart = [];
+            posPaymentType = 'due';
             billingSubTab = 'ledger';
             renderBilling();
         }
@@ -6023,14 +6059,14 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 ui.innerHTML = `
                 <div class="toolbar no-print" style="border:1px solid;border-color:#fff #808080 #808080 #fff;background:#f0f0f0;padding:4px">
                     <input id="billSearch" placeholder="🔍 Search CNR, Client Name, Case No..." oninput="billSearch()" style="flex:1">
-                    <button class="btn btn-primary btn-sm" onclick="billOpenCase()">⚡ Open Touch &amp; Go Bills</button>
+                    <button class="btn btn-primary btn-sm" onclick="billOpenCase()">📒 Open Client Ledger</button>
                     <button class="btn btn-sm" onclick="billingSubTab='unified';renderBilling()">🧾 Unified Billing</button>
                     <button class="btn btn-sm" onclick="openPOSCatalogModal()">⚙️ Manage Catalog</button>
                 </div>
                 <div class="panel">
-                    <div class="panel-title">⚡ KFC &amp; Walmart Touch &amp; Go Billing &amp; Ledger Suite</div>
+                    <div class="panel-title">🧾 Client billing &amp; installments</div>
                     <select id="billResults" size="14" style="width:100%;font-size:10px" onchange="billOpenCase()"></select>
-                    <div class="text-muted text-sm mt-1">Search and select any case to open its Touch &amp; Go POS register and detailed client ledger.</div>
+                    <div class="text-muted text-sm mt-1">Search and select a case. Add services as debits, then record each installment as a credit.</div>
                 </div>
                 <div class="panel" style="margin-top:8px">
                     <div class="panel-title">📜 Nakal Collections (synced with Nakal tab)</div>
@@ -6054,8 +6090,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <span style="color:#0f766e">· ${esc(c.petparty_name)}</span>
                 </span>
                 <div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">
-                    <button class="btn btn-sm ${billingSubTab==='pos'?'btn-primary':''}" onclick="setBillingSubTab('pos')">⚡ Touch &amp; Go POS</button>
-                    <button class="btn btn-sm ${billingSubTab==='ledger'?'btn-primary':''}" onclick="setBillingSubTab('ledger')">📒 Client Ledger (${totals.totalBills} Bills)</button>
+                    <button class="btn btn-sm ${billingSubTab==='pos'?'btn-primary':''}" onclick="setBillingSubTab('pos')">➕ New Service Bill</button>
+                    <button class="btn btn-sm ${billingSubTab==='ledger'?'btn-primary':''}" onclick="setBillingSubTab('ledger')">📒 Services &amp; Payments (${totals.totalBills} Bills)</button>
                     <button class="btn btn-sm ${billingSubTab==='unified'?'btn-primary':''}" onclick="setBillingSubTab('unified')">🧾 Unified</button>
                     <button class="btn btn-sm" onclick="openPOSCatalogModal()">⚙️ Catalog</button>
                     <button class="btn btn-gold btn-sm" onclick="printClientLedgerStatement('${c.cino}')">🖨️ Statement</button>
@@ -6093,6 +6129,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             </div>
 
             <!-- Subview Content -->
+            ${totals.unallocated ? `<div class="panel">Standalone receipts: ₹${totals.unallocated.toLocaleString('en-IN')} are included in total collected but are not linked to individual bills or deducted from their balances.</div>` : ''}
             <div id="billingSubViewContainer">
                 ${billingSubTab === 'pos' ? renderPOSScreenHTML(c) : billingSubTab === 'unified' ? '<div id="unifiedBillBody"></div>' : renderLedgerScreenHTML(c, totals, entries)}
             </div>
@@ -6124,7 +6161,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     party: c ? (c.type_name + ' ' + c.reg_no + '/' + c.reg_year + ' — ' + c.petparty_name) : k,
                     title: (ne.items || []).map(it => it.name).join(', ') || e.category || 'Service',
                     nakalReg: '',
-                    amount: +ne.amount || 0, paid: +ne.paidAmount || 0, due: +ne.remaining || 0, status: ne.status
+                    amount: ne.type === 'Paid' ? 0 : (+ne.amount || 0), paid: +ne.paidAmount || 0, due: ne.type === 'Paid' ? 0 : (+ne.remaining || 0), status: ne.status
                 });
             }));
             // 2) Nakal applications → generated bills
@@ -6229,6 +6266,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     </div>
 
                     <!-- Cart Line Items List -->
+                    <div class="text-muted text-sm" style="padding:4px">Set a service date for each item, or leave it blank to use the bill date.</div>
                     <div class="pos-cart-items" id="posCartItemsList"></div>
 
                     <!-- Totals & Discounts -->
@@ -6251,14 +6289,14 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <div class="pos-pay-section">
                         <div style="font-size:8.5px;font-weight:700;color:#64748b;text-transform:uppercase">Payment Status Option</div>
                         <div class="pos-pay-types">
-                            <button type="button" id="btnPayType-full" class="pos-pay-type-btn active-full" onclick="setPOSPayType('full')">🟢 Paid in Full</button>
-                            <button type="button" id="btnPayType-partial" class="pos-pay-type-btn" onclick="setPOSPayType('partial')">🟡 Partial</button>
-                            <button type="button" id="btnPayType-due" class="pos-pay-type-btn" onclick="setPOSPayType('due')">🔴 Bill Due</button>
+                            <button type="button" id="btnPayType-full" class="pos-pay-type-btn ${posPaymentType==='full'?'active-full':''}" onclick="setPOSPayType('full')">🟢 Paid in Full</button>
+                            <button type="button" id="btnPayType-partial" class="pos-pay-type-btn ${posPaymentType==='partial'?'active-partial':''}" onclick="setPOSPayType('partial')">🟡 Partial</button>
+                            <button type="button" id="btnPayType-due" class="pos-pay-type-btn ${posPaymentType==='due'?'active-due':''}" onclick="setPOSPayType('due')">🔴 Bill Due</button>
                         </div>
-                        <div id="posPartialInputBox" style="display:none;background:#fef9c3;border:1px solid #fde047;border-radius:3px;padding:3px 5px">
+                        <div id="posPartialInputBox" style="display:${posPaymentType==='partial'?'block':'none'};background:#fef9c3;border:1px solid #fde047;border-radius:3px;padding:3px 5px">
                             <div style="display:flex;justify-content:space-between;align-items:center">
                                 <label style="font-size:8.5px;font-weight:700;color:#854d0e">Amount Paid Now (₹):</label>
-                                <input type="number" id="posPartialAmountInp" value="1000" min="0" oninput="renderPOSCartSummary()" style="width:70px;font-size:10px;font-weight:800;text-align:right;border:1px solid #ca8a04;padding:2px 4px">
+                                <input type="number" id="posPartialAmountInp" value="0" min="0" step="0.01" oninput="renderPOSCartSummary()" style="width:70px;font-size:10px;font-weight:800;text-align:right;border:1px solid #ca8a04;padding:2px 4px">
                             </div>
                             <div style="font-size:8px;color:#854d0e;margin-top:2px;display:flex;justify-content:space-between">
                                 <span>Remaining Due on Bill:</span>
@@ -6268,18 +6306,19 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
 
                         <div style="font-size:8.5px;font-weight:700;color:#64748b;text-transform:uppercase;margin-top:2px">Payment Mode</div>
                         <div class="pos-pay-modes">
-                            <button type="button" id="btnPayMode-Cash" class="pos-mode-btn active" onclick="setPOSPayMode('Cash')">💵 Cash</button>
-                            <button type="button" id="btnPayMode-UPI" class="pos-mode-btn" onclick="setPOSPayMode('UPI')">📱 UPI</button>
-                            <button type="button" id="btnPayMode-GPay" class="pos-mode-btn" onclick="setPOSPayMode('GPay')">⚡ GPay</button>
-                            <button type="button" id="btnPayMode-NEFT" class="pos-mode-btn" onclick="setPOSPayMode('NEFT')">🏛️ NEFT</button>
-                            <button type="button" id="btnPayMode-Cheque" class="pos-mode-btn" onclick="setPOSPayMode('Cheque')">💳 Cheque</button>
+                            <button type="button" id="btnPayMode-Cash" class="pos-mode-btn ${posPaymentMode==='Cash'?'active':''}" onclick="setPOSPayMode('Cash')">💵 Cash</button>
+                            <button type="button" id="btnPayMode-UPI" class="pos-mode-btn ${posPaymentMode==='UPI'?'active':''}" onclick="setPOSPayMode('UPI')">📱 UPI</button>
+                            <button type="button" id="btnPayMode-GPay" class="pos-mode-btn ${posPaymentMode==='GPay'?'active':''}" onclick="setPOSPayMode('GPay')">⚡ GPay</button>
+                            <button type="button" id="btnPayMode-NEFT" class="pos-mode-btn ${posPaymentMode==='NEFT'?'active':''}" onclick="setPOSPayMode('NEFT')">🏛️ NEFT</button>
+                            <button type="button" id="btnPayMode-Cheque" class="pos-mode-btn ${posPaymentMode==='Cheque'?'active':''}" onclick="setPOSPayMode('Cheque')">💳 Cheque</button>
                         </div>
                         <input type="text" id="posBillRefNote" placeholder="Payment memo / Cheque # / UTR..." style="font-size:9px;padding:2px 4px;border:1px solid #cbd5e1;border-radius:2px;margin-top:2px">
 
                         <!-- 1-Tap Touch Actions Bar -->
                         <div class="pos-actions-grid">
-                            <button type="button" class="pos-touch-btn btn-cash" onclick="checkoutPOSBill('cash')">⚡ 1-Tap Cash</button>
-                            <button type="button" class="pos-touch-btn btn-upi" onclick="checkoutPOSBill('upi')">⚡ 1-Tap UPI</button>
+                            <button type="button" class="pos-touch-btn btn-due" style="grid-column:span 2" onclick="checkoutPOSBill('save')">💾 Save Bill (selected payment)</button>
+                            <button type="button" class="pos-touch-btn btn-cash" onclick="checkoutPOSBill('cash')">⚡ Paid in Full · Cash</button>
+                            <button type="button" class="pos-touch-btn btn-upi" onclick="checkoutPOSBill('upi')">⚡ Paid in Full · UPI</button>
                             <button type="button" class="pos-touch-btn btn-due" onclick="checkoutPOSBill('due')">🧾 1-Tap Bill Due</button>
                             <button type="button" class="pos-touch-btn btn-thermal" onclick="checkoutPOSBill('thermal_print')">🖨️ Thermal Bill</button>
                             <button type="button" class="pos-touch-btn btn-wa" style="grid-column:span 2" onclick="checkoutPOSBill('whatsapp')">💬 Save &amp; WhatsApp Bill</button>
@@ -6296,8 +6335,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 <div class="panel" style="text-align:center;padding:32px 16px">
                     <div style="font-size:28px">🧾</div>
                     <div style="font-weight:700;font-size:12px;color:#0f766e;margin-top:4px">No bills or ledger records yet for this client</div>
-                    <div class="text-muted text-sm" style="margin-top:2px">Use the Touch &amp; Go POS tab to issue the first service bill.</div>
-                    <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="setBillingSubTab('pos')">⚡ Open Touch &amp; Go POS</button>
+                    <div class="text-muted text-sm" style="margin-top:2px">Add one or more services to create the first debit / bill.</div>
+                    <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="setBillingSubTab('pos')">➕ Add Services / New Bill</button>
                 </div>`;
             }
 
@@ -6314,8 +6353,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     </div>
                 </div>
 
+                <div class="fgroup" style="margin-bottom:8px"><label for="billingServiceFilter">Find a service in this client’s ledger</label><input id="billingServiceFilter" class="fi" type="search" placeholder="Search by service name" oninput="filterBillingServices(this.value)"></div>
+                <div id="billingFilterEmpty" class="text-muted" style="display:none">No matching services.</div>
                 <!-- Bill-by-Bill Breakdown List -->
-                <div style="display:flex;flex-direction:column;gap:6px">
+                <div id="billingCards" style="display:flex;flex-direction:column;gap:6px">
                     ${entries.map((b, idx) => {
                         const billNo = b.billNo || ('BILL-' + (b.id ? String(b.id).slice(-4) : idx + 1));
                         const billDate = b.date ? fmtDS(b.date) : '—';
@@ -6326,6 +6367,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                         const status = b.status || (remainingAmt <= 0 ? 'Paid' : (paidAmt > 0 ? 'Partial' : 'Unpaid'));
                         const items = Array.isArray(b.items) && b.items.length ? b.items : [{ name: b.category || 'Legal Service', qty: 1, rate: askedAmt, amount: askedAmt }];
                         const payments = Array.isArray(b.payments) ? b.payments : [];
+                        const services = billServiceBalances(b);
 
                         const badgeClass = status === 'Paid' ? 'bill-badge-paid' : (status === 'Partial' ? 'bill-badge-partial' : 'bill-badge-unpaid');
                         const cardStatusClass = status === 'Paid' ? 'status-paid' : (status === 'Partial' ? 'status-partial' : 'status-unpaid');
@@ -6344,35 +6386,28 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                                 </div>
                             </div>
 
-                            <!-- Services Breakdown Table -->
-                            <div style="margin:4px 0">
-                                <table style="width:100%;font-size:9px;border-collapse:collapse;background:#fff">
-                                    <thead>
-                                        <tr style="background:#f1f5f9;color:#334155;border-bottom:1px solid #cbd5e1">
-                                            <th style="padding:3px 6px;text-align:left;background:none;color:#334155">Service / Product</th>
-                                            <th style="padding:3px 6px;text-align:center;background:none;color:#334155;width:40px">Qty</th>
-                                            <th style="padding:3px 6px;text-align:right;background:none;color:#334155;width:70px">Rate</th>
-                                            <th style="padding:3px 6px;text-align:right;background:none;color:#334155;width:80px">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${items.map(it => `
-                                            <tr style="border-bottom:1px solid #f1f5f9">
-                                                <td style="padding:3px 6px">${esc(it.name)}${it.note ? `<div style="font-size:8px;color:#64748b">${esc(it.note)}</div>` : ''}</td>
-                                                <td style="padding:3px 6px;text-align:center">${it.qty || 1}</td>
-                                                <td style="padding:3px 6px;text-align:right">₹${(+it.rate || 0).toLocaleString('en-IN')}</td>
-                                                <td style="padding:3px 6px;text-align:right;font-weight:700">₹${(+it.amount || 0).toLocaleString('en-IN')}</td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
+                            <!-- Service charges (debits) and allocated payments (credits) -->
+                            ${b.type === 'Paid' ? '<div class="text-muted text-sm">Standalone receipt — not linked to any bill.</div>' : ''}
+                            <div class="table-wrap" style="margin:4px 0">
+                                <table style="width:100%;font-size:11px;background:#fff">
+                                    <thead><tr><th>Service</th><th>Service date</th><th>Debit / Charge</th><th>Credit / Paid</th><th>Remaining</th><th class="no-print">Action</th></tr></thead>
+                                    <tbody>${services.map(row => `<tr class="billing-service-row">
+                                        <td class="billing-service-name">${esc(row.item.name)}${row.item.note ? `<div>${esc(row.item.note)}</div>` : ''}</td>
+                                        <td>${fmtDS(row.item.serviceDate || b.date)}</td>
+                                        <td>${b.type === 'Paid' ? '—' : '₹' + row.amount.toLocaleString('en-IN')}</td>
+                                        <td>₹${row.paid.toLocaleString('en-IN')}</td>
+                                        <td>${b.type === 'Paid' ? '—' : '₹' + row.due.toLocaleString('en-IN')}</td>
+                                        <td class="no-print">${row.due > 0 && b.type !== 'Paid' ? `<button class="btn btn-xs btn-success" onclick="openAddBillPaymentModal('${c.cino}', ${b.id}, ${row.index})">+ Credit payment</button>` : '—'}</td>
+                                    </tr>`).join('')}</tbody>
                                 </table>
+                                <div class="text-muted text-sm">If no service date was recorded, the bill date is shown. Charges include the bill discount proportionally. Bill-wide and older payments are applied in service order.</div>
                             </div>
 
                             <!-- Financials Bar -->
                             <div class="bill-fin-bar">
                                 <div class="bill-fin-col">
-                                    <span class="bill-fin-lbl">Total Billed</span>
-                                    <span class="bill-fin-val" style="color:#0f766e">₹${askedAmt.toLocaleString('en-IN')}</span>
+                                    <span class="bill-fin-lbl">${b.type === 'Paid' ? 'Standalone receipt (not a bill)' : 'Total Billed'}</span>
+                                    <span class="bill-fin-val" style="color:#0f766e">${b.type === 'Paid' ? '—' : '₹' + askedAmt.toLocaleString('en-IN')}</span>
                                 </div>
                                 <div class="bill-fin-col">
                                     <span class="bill-fin-lbl">Paid so far</span>
@@ -6395,7 +6430,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                                 ${payments.map(p => `
                                     <div class="bill-pay-item">
                                         <span>📅 ${fmtDS(p.date)} ${p.time || ''} · <strong style="color:#15803d">₹${(+p.amount||0).toLocaleString('en-IN')}</strong> (${esc(p.mode||'Cash')})</span>
-                                        <span style="color:#64748b">${esc(p.note || '')}</span>
+                                        <span style="color:#64748b">${esc(p.note || '')}${Number.isInteger(p.serviceIndex) && items[p.serviceIndex] ? ' · Service: ' + esc(items[p.serviceIndex].name) : ' · Bill-wide (service order)'}</span>
                                     </div>
                                 `).join('')}
                             </div>
@@ -6404,7 +6439,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                             <!-- Action Buttons -->
                             <div class="bill-card-actions no-print">
                                 ${remainingAmt > 0 ? `
-                                    <button class="btn btn-xs btn-success" onclick="openAddBillPaymentModal('${c.cino}', ${b.id})">💵 + Add Payment</button>
+                                    <button class="btn btn-xs btn-success" onclick="openAddBillPaymentModal('${c.cino}', ${b.id})">💵 + Credit Payment</button>
                                 ` : ''}
                                 <button class="btn btn-xs btn-gold" onclick="printThermalBill('${c.cino}', ${b.id})">🧾 Thermal Bill</button>
                                 <button class="btn btn-xs btn-primary" onclick="printA4Invoice('${c.cino}', ${b.id})">📄 A4 Invoice</button>
@@ -6419,8 +6454,25 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             `;
         }
 
+        function filterBillingServices(query) {
+            const q = query.trim().toLocaleLowerCase();
+            let matches = 0;
+            document.querySelectorAll('#billingCards .bill-card').forEach(card => {
+                let visible = false;
+                card.querySelectorAll('.billing-service-row').forEach(row => {
+                    const match = !q || row.querySelector('.billing-service-name').textContent.toLocaleLowerCase().includes(q);
+                    row.style.display = match ? '' : 'none';
+                    visible = visible || match;
+                });
+                card.style.display = visible ? '' : 'none';
+                if (visible) matches++;
+            });
+            const empty = g('billingFilterEmpty');
+            if (empty) empty.style.display = matches ? 'none' : 'block';
+        }
+
         // ── BILL PAYMENT & INSTALLMENT MODAL ──
-        function openAddBillPaymentModal(cino, billId) {
+        function openAddBillPaymentModal(cino, billId, serviceIndex) {
             const c = CASES.find(x => x.cino === cino);
             if (!c) return;
             const entries = billEntries(cino);
@@ -6432,7 +6484,10 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             g('bpmBillId').value = billId;
             g('bpmDate').value = today();
             g('bpmTime').value = new Date().toTimeString().slice(0, 5);
-            g('bpmAmount').value = b.remaining;
+            const services = billServiceBalances(b);
+            g('bpmService').innerHTML = '<option value="all">Whole bill — service order</option>' + services.filter(row => row.due > 0).map(row => `<option value="${row.index}">${esc(row.item.name)} — due ₹${row.due.toLocaleString('en-IN')}</option>`).join('');
+            g('bpmService').value = Number.isInteger(serviceIndex) ? String(serviceIndex) : 'all';
+            updateBillPaymentAmount();
             g('bpmMode').value = 'Cash';
             g('bpmNote').value = 'Installment against bill ' + b.billNo;
 
@@ -6450,17 +6505,33 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             g('m-bill-payment').classList.remove('hidden');
         }
 
+        function updateBillPaymentAmount() {
+            const b = billEntries(g('bpmCino').value).find(x => x.id === +g('bpmBillId').value);
+            if (!b) return;
+            const selected = g('bpmService').value;
+            const row = billServiceBalances(b).find(x => String(x.index) === selected);
+            const maximum = row ? row.due : b.remaining;
+            g('bpmAmount').value = '';
+            g('bpmAmount').placeholder = 'Up to ₹' + maximum.toLocaleString('en-IN');
+            g('bpmAmount').max = maximum;
+        }
+
         function submitBillPayment() {
             const cino = g('bpmCino').value;
             const billId = +g('bpmBillId').value;
             const amt = parseFloat(g('bpmAmount').value) || 0;
-            if (!amt || amt <= 0) { showToast('⚠️ Enter payment amount'); return; }
+            if (!Number.isFinite(amt) || amt <= 0 || Math.abs(amt * 100 - Math.round(amt * 100)) > 0.000001) { showToast('⚠️ Enter a valid payment with at most 2 decimal places'); return; }
 
             const entries = billEntries(cino);
             const b = entries.find(x => x.id === billId);
             if (!b) return;
 
             normalizeBillEntry(b);
+            const selected = g('bpmService').value;
+            const service = selected === 'all' ? null : billServiceBalances(b).find(row => String(row.index) === selected);
+            if (selected !== 'all' && !service) { showToast('Select a valid service'); return; }
+            const max = service ? service.due : b.remaining;
+            if (Math.round(amt * 100) > Math.round(max * 100)) { showToast('Payment cannot exceed the remaining balance of ₹' + max.toLocaleString('en-IN')); return; }
             const pDate = g('bpmDate').value || today();
             const pTime = g('bpmTime').value || new Date().toTimeString().slice(0, 5);
             const pMode = g('bpmMode').value || 'Cash';
@@ -6472,6 +6543,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                 date: pDate,
                 time: pTime,
                 amount: amt,
+                ...(service ? { serviceIndex: service.index } : {}),
                 mode: pMode,
                 note: pNote,
                 receiptNo: 'REC-' + b.billNo + '-' + (b.payments.length + 1)
@@ -6495,7 +6567,7 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const entries = billEntries(cino);
             entries.forEach(b => {
                 normalizeBillEntry(b);
-                if (b.remaining > 0) {
+                if ((b.type === 'Asked' || b.type === 'Adjustment') && b.remaining > 0) {
                     b.payments.push({
                         id: Date.now() + Math.random(),
                         date: today(),
@@ -6525,6 +6597,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             g('editBillDate').value = b.date || today();
             g('editBillCategory').value = b.category || '';
             g('editBillAmount').value = b.amount || 0;
+            g('editBillAmount').readOnly = (b.items && b.items.length > 1) || (b.payments && b.payments.length > 0);
+            g('editBillAmount').title = 'Bill totals with multiple services or payments cannot be changed here';
             g('editBillNote').value = b.note || '';
             g('m-bill-edit').classList.remove('hidden');
         }
@@ -6536,6 +6610,9 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
             const b = entries.find(x => x.id === billId);
             if (!b) return;
 
+            const editedAmount = Number(g('editBillAmount').value);
+            if (!Number.isFinite(editedAmount) || editedAmount < 0 || ((b.items?.length > 1 || b.payments?.length) && editedAmount !== +b.amount)) { showToast('Cannot change this bill total after payments or for multiple services'); return; }
+            if (b.items?.length === 1 && editedAmount !== +b.amount) { b.items[0].amount = editedAmount; b.items[0].rate = editedAmount / (+b.items[0].qty || 1); b.subtotal = editedAmount; b.discount = 0; }
             b.billNo = (g('editBillNo').value || b.billNo).trim();
             b.date = g('editBillDate').value || b.date;
             b.category = g('editBillCategory').value || b.category;
@@ -7084,14 +7161,15 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <tbody>
                         ${entries.map((b, i) => {
                             normalizeBillEntry(b);
-                            const servicesStr = (b.items || []).map(x => x.name + (x.qty > 1 ? ' (' + x.qty + 'x)' : '')).join(', ');
+                            const serviceLines = billServiceBalances(b).map(row => `${esc(row.item.name)} (${fmtDS(row.item.serviceDate || b.date)}): ₹${row.amount.toLocaleString('en-IN')} billed, ₹${row.paid.toLocaleString('en-IN')} paid, ₹${row.due.toLocaleString('en-IN')} due`).join('<br>');
+                            const paymentLines = (b.payments || []).map(p => `${fmtDS(p.date)}: ₹${(+p.amount || 0).toLocaleString('en-IN')} ${esc(p.mode || '')}${Number.isInteger(p.serviceIndex) && b.items[p.serviceIndex] ? ' · ' + esc(b.items[p.serviceIndex].name) : ' · bill-wide'}`).join('<br>');
                             return `
                             <tr>
                                 <td>${i + 1}</td>
                                 <td>${fmtDS(b.date)} ${b.time || ''}</td>
                                 <td><strong>${esc(b.billNo)}</strong></td>
-                                <td>${esc(servicesStr || b.category)}${b.note ? `<br><small style="color:#64748b">${esc(b.note)}</small>` : ''}</td>
-                                <td style="text-align:right">₹${(+b.amount || 0).toLocaleString('en-IN')}</td>
+                                <td>${serviceLines}${paymentLines ? `<br><small>Payments:<br>${paymentLines}</small>` : ''}${b.type === 'Paid' ? '<br><small>Standalone receipt, not linked to a bill</small>' : ''}${b.note ? `<br><small style="color:#64748b">${esc(b.note)}</small>` : ''}</td>
+                                <td style="text-align:right">₹${(b.type === 'Paid' ? 0 : (+b.amount || 0)).toLocaleString('en-IN')}</td>
                                 <td style="text-align:right;color:#166534">₹${(+b.paidAmount || 0).toLocaleString('en-IN')}</td>
                                 <td style="text-align:right;font-weight:700;color:${b.remaining>0?'#b91c1c':'#166534'}">₹${(+b.remaining || 0).toLocaleString('en-IN')}</td>
                             </tr>`;
@@ -7105,6 +7183,8 @@ body { -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', 'Helve
                     <div style="color:${totals.pending>0?'#b91c1c':'#166534'}">Outstanding Balance Due: ₹${totals.pending.toLocaleString('en-IN')}</div>
                 </div>
 
+                ${totals.unallocated ? `<p>Standalone receipts of ₹${totals.unallocated.toLocaleString('en-IN')} are included in collections but are not applied to any bill.</p>` : ''}
+                <p>Bill-wide payments are applied to services in order; bill discounts are apportioned proportionally.</p>
                 <div class="foot">
                     For Adv. Indrajit Vasant Chavan<br>
                     Authorized Signatory
